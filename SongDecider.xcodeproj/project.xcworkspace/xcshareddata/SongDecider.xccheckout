@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8A0EDDEC-FB0D-4989-8F1F-A4485CDB85EB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7F9D3CD9B7B9DB3A9C534C01FEDB89CF95D04559</key>
+		<string>github.com:ADWilliams/Song-Decider.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SongDecider.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7F9D3CD9B7B9DB3A9C534C01FEDB89CF95D04559</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:ADWilliams/Song-Decider.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7F9D3CD9B7B9DB3A9C534C01FEDB89CF95D04559</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7F9D3CD9B7B9DB3A9C534C01FEDB89CF95D04559</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SongDecider</string>
+		</dict>
+	</array>
+</dict>
+</plist>
