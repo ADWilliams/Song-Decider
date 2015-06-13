@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Rdio/Rdio.h>
 
 @interface AppDelegate ()
 
@@ -17,6 +18,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    Rdio *rdio = [[Rdio alloc] initWithClientId:@"YOUR CLIENT ID" andSecret:@"YOUR SECRET" delegate:nil];
+    [rdio preparePlayerWithDelegate:nil];
+    [rdio.player performSelector:@selector(play:) withObject:@"t1" afterDelay:2.0];
     return YES;
 }
 
