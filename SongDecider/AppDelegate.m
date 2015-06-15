@@ -19,9 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    Rdio *rdio = [[Rdio alloc] initWithClientId:@"v2m4glmzrjahhahztx3qzn5skq" andSecret:@"1Vc9Hhe-JNLMIkc7UR-k2g" delegate:nil];
-    [rdio preparePlayerWithDelegate:nil];
-    [rdio.player performSelector:@selector(play:) withObject:@"t1" afterDelay:2.0];
+    
     return YES;
 }
 

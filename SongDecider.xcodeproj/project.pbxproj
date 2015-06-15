@@ -22,6 +22,7 @@
 		C8261FE41B2CE7F700CD0C5B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8261FE31B2CE7F700CD0C5B /* Security.framework */; };
 		C8261FE61B2CE80400CD0C5B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8261FE51B2CE80400CD0C5B /* SystemConfiguration.framework */; };
 		C8261FE81B2CE86A00CD0C5B /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8261FE71B2CE86A00CD0C5B /* Rdio.framework */; };
+		C830A5141B2F5C09009F4FDE /* RdioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C830A5131B2F5C09009F4FDE /* RdioManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		C8261FE31B2CE7F700CD0C5B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C8261FE51B2CE80400CD0C5B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C8261FE71B2CE86A00CD0C5B /* Rdio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rdio.framework; sourceTree = "<group>"; };
+		C830A5121B2F5C09009F4FDE /* RdioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioManager.h; sourceTree = "<group>"; };
+		C830A5131B2F5C09009F4FDE /* RdioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RdioManager.m; sourceTree = "<group>"; };
 		D3E32001139EC784739468C3 /* Pods-SongDecider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SongDecider.release.xcconfig"; path = "Pods/Target Support Files/Pods-SongDecider/Pods-SongDecider.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,6 +122,8 @@
 		C8261FB21B2CD97F00CD0C5B /* SongDecider */ = {
 			isa = PBXGroup;
 			children = (
+				C830A5121B2F5C09009F4FDE /* RdioManager.h */,
+				C830A5131B2F5C09009F4FDE /* RdioManager.m */,
 				C8261FB71B2CD97F00CD0C5B /* AppDelegate.h */,
 				C8261FB81B2CD97F00CD0C5B /* AppDelegate.m */,
 				C8261FBA1B2CD97F00CD0C5B /* ViewController.h */,
@@ -306,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C830A5141B2F5C09009F4FDE /* RdioManager.m in Sources */,
 				C8261FBC1B2CD97F00CD0C5B /* ViewController.m in Sources */,
 				C8261FB91B2CD97F00CD0C5B /* AppDelegate.m in Sources */,
 				C8261FB61B2CD97F00CD0C5B /* main.m in Sources */,

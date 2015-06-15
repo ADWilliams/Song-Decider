@@ -7,8 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "RdioManager.h"
+
 
 @interface ViewController ()
+
+@property (nonatomic)Rdio *rdio;
 
 @end
 
@@ -16,7 +20,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    RdioManager *rdioManager = [RdioManager sharedRdio];
+    self.rdio = rdioManager.rdioInstance;
+    
+    
+    [self.rdio preparePlayerWithDelegate:nil];
+    [self.rdio.player performSelector:@selector(play:) withObject:@"t1" afterDelay:2.0];
+
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
