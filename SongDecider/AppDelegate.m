@@ -7,21 +7,37 @@
 //
 
 #import "AppDelegate.h"
-#import <Rdio/Rdio.h>
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
+@property (nonatomic)Rdio *rdio;
 @end
+
+static Rdio * _rdio;
 
 @implementation AppDelegate
 
 
++(Rdio *)sharedRdio {
+    if (_rdio == nil) {
+        _rdio = [[Rdio alloc] initWithClientId:@"v2m4glmzrjahhahztx3qzn5skq" andSecret:@"1Vc9Hhe-JNLMIkc7UR-k2g" delegate:nil];
+    }
+    return _rdio;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    Rdio *rdio = [[Rdio alloc] initWithClientId:@"v2m4glmzrjahhahztx3qzn5skq" andSecret:@"1Vc9Hhe-JNLMIkc7UR-k2g" delegate:nil];
-    [rdio preparePlayerWithDelegate:nil];
-    [rdio.player performSelector:@selector(play:) withObject:@"t1" afterDelay:2.0];
+    //self.rdio = [[Rdio alloc] initWithClientId:@"v2m4glmzrjahhahztx3qzn5skq" andSecret:@"1Vc9Hhe-JNLMIkc7UR-k2g" delegate:nil];
+    //[self.rdio preparePlayerWithDelegate:nil];
+    
+    //UINavigationController *nav = (UINavigationController *)[self.window rootViewController];
+
+    //ViewController *viewController = [nav.viewControllers firstObject];
+    //viewController.rdio = self.rdio;
+    Rdio *r = [AppDelegate sharedRdio];
+    
     return YES;
 }
 
@@ -33,6 +49,9 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.rdio.user forKey:@"user"];
+    [defaults synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

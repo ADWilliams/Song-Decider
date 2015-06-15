@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Rdio/Rdio.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
++(Rdio *)sharedRdio;
 
 @end
 

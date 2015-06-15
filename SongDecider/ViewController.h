@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <Rdio/Rdio.h>
 @interface ViewController : UIViewController
+
+@property (nonatomic) Rdio *rdio;
 
 
 @end
