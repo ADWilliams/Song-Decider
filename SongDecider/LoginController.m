@@ -6,17 +6,17 @@
 //  Copyright (c) 2015 Aaron Williams. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "LoginController.h"
 #import "RdioManager.h"
 
 
-@interface ViewController ()
+@interface LoginController ()
 
 @property (nonatomic)Rdio *rdio;
 
 @end
 
-@implementation ViewController
+@implementation LoginController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,6 +31,9 @@
     
     
 }
+- (IBAction)loginButtonPressed:(id)sender {
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

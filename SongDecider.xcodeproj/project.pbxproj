@@ -10,7 +10,7 @@
 		6C609FBDEB0A985B9CF83F5A /* libPods-SongDecider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B037ECEC7792572C7ADB42DF /* libPods-SongDecider.a */; };
 		C8261FB61B2CD97F00CD0C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C8261FB51B2CD97F00CD0C5B /* main.m */; };
 		C8261FB91B2CD97F00CD0C5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C8261FB81B2CD97F00CD0C5B /* AppDelegate.m */; };
-		C8261FBC1B2CD97F00CD0C5B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8261FBB1B2CD97F00CD0C5B /* ViewController.m */; };
+		C8261FBC1B2CD97F00CD0C5B /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8261FBB1B2CD97F00CD0C5B /* LoginController.m */; };
 		C8261FBF1B2CD97F00CD0C5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8261FBD1B2CD97F00CD0C5B /* Main.storyboard */; };
 		C8261FC11B2CD97F00CD0C5B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8261FC01B2CD97F00CD0C5B /* Images.xcassets */; };
 		C8261FC41B2CD97F00CD0C5B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8261FC21B2CD97F00CD0C5B /* LaunchScreen.xib */; };
@@ -23,6 +23,9 @@
 		C8261FE61B2CE80400CD0C5B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8261FE51B2CE80400CD0C5B /* SystemConfiguration.framework */; };
 		C8261FE81B2CE86A00CD0C5B /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8261FE71B2CE86A00CD0C5B /* Rdio.framework */; };
 		C830A5141B2F5C09009F4FDE /* RdioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C830A5131B2F5C09009F4FDE /* RdioManager.m */; };
+		C830A5171B2F7ED9009F4FDE /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C830A5161B2F7ED9009F4FDE /* MainViewController.m */; };
+		C830A51A1B2F7EFC009F4FDE /* PlaylistController.m in Sources */ = {isa = PBXBuildFile; fileRef = C830A5191B2F7EFC009F4FDE /* PlaylistController.m */; };
+		C830A51D1B2F7F29009F4FDE /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C830A51C1B2F7F29009F4FDE /* DetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,8 +46,8 @@
 		C8261FB51B2CD97F00CD0C5B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C8261FB71B2CD97F00CD0C5B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C8261FB81B2CD97F00CD0C5B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C8261FBA1B2CD97F00CD0C5B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C8261FBB1B2CD97F00CD0C5B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C8261FBA1B2CD97F00CD0C5B /* LoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		C8261FBB1B2CD97F00CD0C5B /* LoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		C8261FBE1B2CD97F00CD0C5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C8261FC01B2CD97F00CD0C5B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C8261FC31B2CD97F00CD0C5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -60,6 +63,12 @@
 		C8261FE71B2CE86A00CD0C5B /* Rdio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rdio.framework; sourceTree = "<group>"; };
 		C830A5121B2F5C09009F4FDE /* RdioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioManager.h; sourceTree = "<group>"; };
 		C830A5131B2F5C09009F4FDE /* RdioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RdioManager.m; sourceTree = "<group>"; };
+		C830A5151B2F7ED9009F4FDE /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		C830A5161B2F7ED9009F4FDE /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		C830A5181B2F7EFC009F4FDE /* PlaylistController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistController.h; sourceTree = "<group>"; };
+		C830A5191B2F7EFC009F4FDE /* PlaylistController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistController.m; sourceTree = "<group>"; };
+		C830A51B1B2F7F29009F4FDE /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		C830A51C1B2F7F29009F4FDE /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		D3E32001139EC784739468C3 /* Pods-SongDecider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SongDecider.release.xcconfig"; path = "Pods/Target Support Files/Pods-SongDecider/Pods-SongDecider.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,8 +135,7 @@
 				C830A5131B2F5C09009F4FDE /* RdioManager.m */,
 				C8261FB71B2CD97F00CD0C5B /* AppDelegate.h */,
 				C8261FB81B2CD97F00CD0C5B /* AppDelegate.m */,
-				C8261FBA1B2CD97F00CD0C5B /* ViewController.h */,
-				C8261FBB1B2CD97F00CD0C5B /* ViewController.m */,
+				C830A51E1B2F7F3F009F4FDE /* View Controllers */,
 				C8261FBD1B2CD97F00CD0C5B /* Main.storyboard */,
 				C8261FC01B2CD97F00CD0C5B /* Images.xcassets */,
 				C8261FC21B2CD97F00CD0C5B /* LaunchScreen.xib */,
@@ -160,6 +168,21 @@
 				C8261FCE1B2CD98000CD0C5B /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C830A51E1B2F7F3F009F4FDE /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C8261FBA1B2CD97F00CD0C5B /* LoginController.h */,
+				C8261FBB1B2CD97F00CD0C5B /* LoginController.m */,
+				C830A5151B2F7ED9009F4FDE /* MainViewController.h */,
+				C830A5161B2F7ED9009F4FDE /* MainViewController.m */,
+				C830A5181B2F7EFC009F4FDE /* PlaylistController.h */,
+				C830A5191B2F7EFC009F4FDE /* PlaylistController.m */,
+				C830A51B1B2F7F29009F4FDE /* DetailViewController.h */,
+				C830A51C1B2F7F29009F4FDE /* DetailViewController.m */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		DBD438D9CFD8DD2CEA546463 /* Frameworks */ = {
@@ -312,9 +335,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C830A5141B2F5C09009F4FDE /* RdioManager.m in Sources */,
-				C8261FBC1B2CD97F00CD0C5B /* ViewController.m in Sources */,
+				C830A51A1B2F7EFC009F4FDE /* PlaylistController.m in Sources */,
+				C8261FBC1B2CD97F00CD0C5B /* LoginController.m in Sources */,
 				C8261FB91B2CD97F00CD0C5B /* AppDelegate.m in Sources */,
+				C830A5171B2F7ED9009F4FDE /* MainViewController.m in Sources */,
 				C8261FB61B2CD97F00CD0C5B /* main.m in Sources */,
+				C830A51D1B2F7F29009F4FDE /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +476,7 @@
 				INFOPLIST_FILE = SongDecider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -465,6 +492,7 @@
 				INFOPLIST_FILE = SongDecider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
