@@ -18,11 +18,16 @@
 
 @implementation LoginController
 
+-(void)viewWillAppear:(BOOL)animated {
+    RdioManager *rdioManager = [RdioManager sharedRdio];
+    self.rdio = rdioManager.rdioInstance;
+    self.rdio.delegate = self;
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    RdioManager *rdioManager = [RdioManager sharedRdio];
-    self.rdio = rdioManager.rdioInstance;
+ 
     self.rdio.delegate = self;
     
 

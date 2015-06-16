@@ -8,16 +8,52 @@
 
 #import "AppDelegate.h"
 #import <Rdio/Rdio.h>
+#import "RdioManager.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<RdioDelegate>
 
 @end
 
 @implementation AppDelegate
 
+-(void)rdioDidAuthorizeUser:(NSDictionary *)user {
+    UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"mainView"];
+           self.window.rootViewController = navcontroller;
+}
+//
+//-(void)rdioAuthorizationFailed:(NSError *)error {
+//    UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"loginView"];
+//    self.window.rootViewController = navcontroller;
+//}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    RdioManager * manager = [RdioManager sharedRdio];
+    Rdio *rdio = manager.rdioInstance;
+    rdio.delegate = self;
+    
+    
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    [self.window makeKeyAndVisible];
+    
+    if (rdio.user) {
+        UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"mainView"];
+        self.window.rootViewController = navcontroller;
+    }
+    else {
+         UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"loginView"];
+        self.window.rootViewController = navcontroller;
+
+    }
+    
+    
+    
+//    if (rdi) {
+//        UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"mainView"];
+//        self.window.rootViewController = navcontroller;
+//    }
+    
     
     
     return YES;
