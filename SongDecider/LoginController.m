@@ -31,7 +31,7 @@
     
 }
 - (IBAction)loginButtonPressed:(id)sender {
-    
+    [self.rdio logout];
     [self.rdio authorizeFromController:self];
 }
 
