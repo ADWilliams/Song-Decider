@@ -10,6 +10,7 @@
 #import "RdioManager.h"
 #import <Rdio/Rdio.h>
 
+
 @interface MainViewController () <RdioDelegate, RDPlayerDelegate>
 
 @property (nonatomic,strong) Rdio *rdio;
@@ -95,12 +96,6 @@
 //    
 //    [task resume];
     
-
-    
-    
-    
-    
-
     
 }
 
@@ -119,4 +114,12 @@
 }
 */
 
+
+
+
+- (IBAction)skipButtonWasPressed:(UIButton *)sender {
+    
+    [self.rdio.player next];
+    
+}
 @end

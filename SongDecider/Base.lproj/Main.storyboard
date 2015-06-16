@@ -105,17 +105,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music-notes_400x400_360" translatesAutoresizingMaskIntoConstraints="NO" id="f3U-6G-AAU">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music-notes_400x400_360" translatesAutoresizingMaskIntoConstraints="NO" id="f3U-6G-AAU">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <variation key="widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="0.0" y="50" width="400" height="536"/>
                                 </variation>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4F-ot-ghx">
+                                <rect key="frame" x="209" y="520" width="183" height="60"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Uq3-Yc-uvo"/>
+                                    <constraint firstAttribute="width" constant="183" id="wwW-H2-6AM"/>
+                                </constraints>
+                                <state key="normal" title="Skip Button">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="skipButtonWasPressed:" destination="anK-jn-NpQ" eventType="touchUpInside" id="jH0-hd-p4o"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="f3U-6G-AAU" firstAttribute="top" secondItem="8c0-9G-pLM" secondAttribute="bottom" id="3rn-2X-UUg"/>
+                            <constraint firstAttribute="centerX" secondItem="Q4F-ot-ghx" secondAttribute="centerX" id="EFD-W8-074"/>
                             <constraint firstItem="oTh-Dd-q5M" firstAttribute="top" secondItem="f3U-6G-AAU" secondAttribute="bottom" id="MUl-CM-9VN"/>
+                            <constraint firstItem="oTh-Dd-q5M" firstAttribute="top" secondItem="Q4F-ot-ghx" secondAttribute="bottom" constant="20" id="T1K-cl-28P"/>
                             <constraint firstItem="f3U-6G-AAU" firstAttribute="top" secondItem="tCh-Bh-2OK" secondAttribute="top" id="TbB-pr-hFK"/>
                             <constraint firstItem="f3U-6G-AAU" firstAttribute="leading" secondItem="tCh-Bh-2OK" secondAttribute="leading" id="UGv-z0-sPg"/>
                             <constraint firstAttribute="trailing" secondItem="f3U-6G-AAU" secondAttribute="trailing" id="UhD-JM-lfL"/>
