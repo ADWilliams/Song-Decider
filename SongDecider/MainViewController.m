@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "RdioManager.h"
 #import <Rdio/Rdio.h>
+#import "ArtworkView.h"
 
 @interface MainViewController () <RdioDelegate, RDPlayerDelegate>
 
@@ -22,6 +23,7 @@
 
 @property (nonatomic) UISwipeGestureRecognizer *swipeRight;
 
+@property (weak, nonatomic) IBOutlet ArtworkView *artworkView;
 @end
 
 @implementation MainViewController
@@ -63,6 +65,8 @@
     
     if ([sender isEqual: self.swipeLeft]) {
         [self.rdio.player next];
+        [self.artworkView animateLeft];
+        
     }
     
     if ([sender isEqual: self.swipeRight]) {

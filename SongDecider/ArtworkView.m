@@ -11,7 +11,11 @@
 @implementation ArtworkView
 
 
-
+-(void)animateLeft {
+    [UIView animateWithDuration:0.5 animations:^{
+        self.center = CGPointMake(-self.frame.size.width, self.center.y);
+    }];
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

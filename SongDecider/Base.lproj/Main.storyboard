@@ -161,6 +161,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="albumImage" destination="f3U-6G-AAU" id="avh-vT-7WC"/>
+                        <outlet property="artworkView" destination="o8N-Jf-Exz" id="SiL-Un-old"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dmw-Zl-YFW" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -10,6 +10,9 @@
 
 @interface ArtworkView : UIView
 
+
+
+
 -(void)animateLeft; 
 
 @end
