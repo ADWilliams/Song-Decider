@@ -24,6 +24,7 @@
 @property (nonatomic) UISwipeGestureRecognizer *swipeRight;
 
 @property (weak, nonatomic) IBOutlet ArtworkView *artworkView;
+
 @end
 
 @implementation MainViewController
@@ -57,6 +58,8 @@
     [self.view addGestureRecognizer:self.swipeRight];
     [self.view addGestureRecognizer:self.swipeLeft];
     
+    
+    
 }
 
 
@@ -71,7 +74,17 @@
     
     if ([sender isEqual: self.swipeRight]) {
         [self.rdio.player next];
+        [self.artworkView animateRight];
     }
+    
+    CGRect nextViewRect = CGRectMake(self.view.frame.origin.x, -self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+    
+    ArtworkView *nextView = [[ArtworkView alloc]initWithFrame:nextViewRect];
+    
+    [nextView setImage:[self fetchTrackImage]];
+    //[self.view addSubview:nextView];
+    
+    
 }
 
 
@@ -87,41 +100,49 @@
     //NSDictionary *tracks = self.rdio.player.currentSource;
     NSLog(@"%d", self.rdio.player.currentTrackIndex);
     
+    [self fetchTrackImage];
     
-        NSDictionary *currentTrack = [self.rdio.player valueForKey:@"currentTrackInfo_"];
-        NSString *urlStr = [currentTrack valueForKey:@"icon400"];
-        NSString *str = [urlStr stringByReplacingOccurrencesOfString:@"400" withString:@"600"];
-        NSURL *url =[NSURL URLWithString:str ];
-        NSLog(@"%@",url);
-        
-        NSURLSession *session = [NSURLSession sharedSession];
-        
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        
-        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-            
-            
-            NSData *imageData = [[NSData alloc] initWithContentsOfURL:location];
-            
-            UIImage *image = [[UIImage alloc] initWithData:imageData];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.albumImage.image = image;
-            });
-            
-        }];
-        
-        [task resume];
 
     }
     
 
     
     
+-(UIImage *)fetchTrackImage {
     
-    
+    __block UIImage *fetchedImage = [[UIImage alloc]init];
 
+    NSDictionary *currentTrack = [self.rdio.player valueForKey:@"currentTrackInfo_"];
+    NSString *urlStr = [currentTrack valueForKey:@"icon400"];
+    NSString *str = [urlStr stringByReplacingOccurrencesOfString:@"400" withString:@"600"];
+    NSURL *url =[NSURL URLWithString:str ];
+    NSLog(@"%@",url);
     
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        
+        
+        NSData *imageData = [[NSData alloc] initWithContentsOfURL:location];
+        
+        fetchedImage = [[UIImage alloc] initWithData:imageData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.albumImage.image = fetchedImage;
+            
+        });
+    }];
+    
+    [task resume];
+    
+    return fetchedImage;
+    
+}
+
+
+
 
 
 - (void)didReceiveMemoryWarning {

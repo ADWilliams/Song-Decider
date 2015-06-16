@@ -11,8 +11,12 @@
 @interface ArtworkView : UIView
 
 
+-(void)animateRight;
+
+-(void)animateLeft;
+
+-(void)setImage: (UIImage *)image;
 
 
--(void)animateLeft; 
 
 @end
