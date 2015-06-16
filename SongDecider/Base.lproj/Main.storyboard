@@ -8,7 +8,7 @@
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Login" customClass="LoginController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginView" id="BYZ-38-t0r" userLabel="Login" customClass="LoginController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -97,7 +97,7 @@
         <!--MainView-->
         <scene sceneID="zga-9w-poO">
             <objects>
-                <viewController id="anK-jn-NpQ" userLabel="MainView" customClass="MainViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainView" id="anK-jn-NpQ" userLabel="MainView" customClass="MainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8c0-9G-pLM"/>
                         <viewControllerLayoutGuide type="bottom" id="oTh-Dd-q5M"/>
@@ -106,57 +106,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music-notes_400x400_360" translatesAutoresizingMaskIntoConstraints="NO" id="f3U-6G-AAU">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="50" width="400" height="536"/>
-                                </variation>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OGL-lR-Tct">
-                                <rect key="frame" x="504" y="72" width="80" height="73"/>
-                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o8N-Jf-Exz" userLabel="artworkView" customClass="ArtworkView">
+                                <rect key="frame" x="16" y="64" width="568" height="536"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music-notes_400x400_360" translatesAutoresizingMaskIntoConstraints="NO" id="f3U-6G-AAU">
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="536"/>
+                                        <variation key="widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="50" width="400" height="536"/>
+                                        </variation>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OGL-lR-Tct">
+                                        <rect key="frame" x="480" y="8" width="80" height="73"/>
+                                        <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="RK0-WJ-pMI"/>
+                                            <constraint firstAttribute="width" constant="80" id="SVl-Mc-Ksb"/>
+                                            <constraint firstAttribute="height" constant="73" id="VvE-Ba-tjG"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="73" id="b0b-Hc-NUb"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Skip">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="skip:" destination="anK-jn-NpQ" eventType="touchUpInside" id="hzb-Nx-iGK"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="SVl-Mc-Ksb"/>
-                                    <constraint firstAttribute="height" constant="73" id="VvE-Ba-tjG"/>
+                                    <constraint firstAttribute="trailing" secondItem="f3U-6G-AAU" secondAttribute="trailing" id="7lM-eA-k0Y"/>
+                                    <constraint firstAttribute="bottom" secondItem="f3U-6G-AAU" secondAttribute="bottom" id="GqZ-Up-7Sp"/>
+                                    <constraint firstItem="f3U-6G-AAU" firstAttribute="top" secondItem="o8N-Jf-Exz" secondAttribute="top" id="os5-yd-Lfm"/>
+                                    <constraint firstItem="f3U-6G-AAU" firstAttribute="leading" secondItem="o8N-Jf-Exz" secondAttribute="leading" id="pA3-ls-alA"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="OGL-lR-Tct" secondAttribute="trailing" id="sLa-dk-NJx"/>
+                                    <constraint firstItem="OGL-lR-Tct" firstAttribute="top" secondItem="o8N-Jf-Exz" secondAttribute="topMargin" id="vyn-vF-siR"/>
                                 </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Skip">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="skip:" destination="anK-jn-NpQ" eventType="touchUpInside" id="hzb-Nx-iGK"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="f3U-6G-AAU" firstAttribute="top" secondItem="8c0-9G-pLM" secondAttribute="bottom" id="3rn-2X-UUg"/>
-                            <constraint firstItem="oTh-Dd-q5M" firstAttribute="top" secondItem="f3U-6G-AAU" secondAttribute="bottom" id="MUl-CM-9VN"/>
-                            <constraint firstItem="f3U-6G-AAU" firstAttribute="top" secondItem="tCh-Bh-2OK" secondAttribute="top" id="TbB-pr-hFK"/>
-                            <constraint firstItem="f3U-6G-AAU" firstAttribute="leading" secondItem="tCh-Bh-2OK" secondAttribute="leading" id="UGv-z0-sPg"/>
-                            <constraint firstAttribute="trailing" secondItem="f3U-6G-AAU" secondAttribute="trailing" id="UhD-JM-lfL"/>
-                            <constraint firstAttribute="trailing" secondItem="f3U-6G-AAU" secondAttribute="trailing" id="ZcS-7s-kE0"/>
-                            <constraint firstItem="OGL-lR-Tct" firstAttribute="top" secondItem="8c0-9G-pLM" secondAttribute="bottom" constant="8" id="a8J-G0-z4T"/>
-                            <constraint firstItem="oTh-Dd-q5M" firstAttribute="top" secondItem="f3U-6G-AAU" secondAttribute="bottom" id="fqd-0n-Fqu"/>
-                            <constraint firstItem="f3U-6G-AAU" firstAttribute="leading" secondItem="tCh-Bh-2OK" secondAttribute="leading" id="jQc-kU-JFT"/>
-                            <constraint firstItem="OGL-lR-Tct" firstAttribute="trailing" secondItem="tCh-Bh-2OK" secondAttribute="trailingMargin" id="mOf-87-iEA"/>
+                            <constraint firstItem="o8N-Jf-Exz" firstAttribute="top" secondItem="8c0-9G-pLM" secondAttribute="bottom" id="Dg8-7Z-8m5"/>
+                            <constraint firstItem="oTh-Dd-q5M" firstAttribute="top" secondItem="o8N-Jf-Exz" secondAttribute="bottom" id="JuG-7N-mOx"/>
+                            <constraint firstItem="o8N-Jf-Exz" firstAttribute="leading" secondItem="tCh-Bh-2OK" secondAttribute="leadingMargin" id="aaL-cu-0nk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="o8N-Jf-Exz" secondAttribute="trailing" id="pQe-Bs-iTV"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="3rn-2X-UUg"/>
-                                <exclude reference="ZcS-7s-kE0"/>
-                                <exclude reference="jQc-kU-JFT"/>
-                                <exclude reference="fqd-0n-Fqu"/>
-                            </mask>
-                        </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="constraints">
-                                <include reference="3rn-2X-UUg"/>
-                                <include reference="ZcS-7s-kE0"/>
-                                <include reference="jQc-kU-JFT"/>
-                                <include reference="fqd-0n-Fqu"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Main View" id="hmn-XH-C4g">
                         <barButtonItem key="rightBarButtonItem" title="Playlist" id="xJZ-DB-bzf">

@@ -18,6 +18,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *albumImage;
 
+@property (nonatomic) UISwipeGestureRecognizer *swipeLeft;
+
+@property (nonatomic) UISwipeGestureRecognizer *swipeRight;
 
 @end
 
@@ -27,10 +30,13 @@
     [self.rdio.player next];
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+   
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     self.rdio.delegate = self;
@@ -41,32 +47,31 @@
     [self.rdio.player play:@"gr723"];
     
     
-//    self.trackArray = [NSMutableArray array];
+    self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     
-//    NSDictionary *param = @{@"type": @"stations"};
-//    [self.rdio callAPIMethod:@"getHeavyRotation" withParameters:param success:^(NSDictionary *result) {
-//        
-//        for (NSDictionary *track in result) {
-//            
-//            [self.trackArray addObject: [track objectForKey:@"key"]];
-//        }
+    self.swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
+    self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
     
-//        NSLog(@"%@", self.trackArray);
-    
-    
-//        [self.rdio.player.queue add:self.trackArray];
-//        
-//        [self.rdio.player playFromQueue:0];
-        
-//    } failure:^(NSError *error) {
-//        NSLog(@"%@", error);
-//    }];
-    
-
-    
-    
+    [self.view addGestureRecognizer:self.swipeRight];
+    [self.view addGestureRecognizer:self.swipeLeft];
     
 }
+
+
+
+-(void) swipeHandler: (UIGestureRecognizer *)sender {
+    
+    if ([sender isEqual: self.swipeLeft]) {
+        [self.rdio.player next];
+    }
+    
+    if ([sender isEqual: self.swipeRight]) {
+        [self.rdio.player next];
+    }
+}
+
+
+#pragma mark - Rdio
 
 -(BOOL)rdioIsPlayingElsewhere {
     
