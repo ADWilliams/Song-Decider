@@ -23,6 +23,10 @@
 
 @implementation MainViewController
 
+- (IBAction)skip:(id)sender {
+    [self.rdio.player next];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -70,30 +74,37 @@
 }
 
 -(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState {
-    NSLog(@"Here HErer %@", self.rdio.player.currentSource);
-    NSDictionary *tracks = self.rdio.player.currentSource;
-//    NSDictionary *currentTrack = [[tracks objectForKey:@"tracks"]objectAtIndex:self.rdio.player.currentTrackIndex];
-//    NSURL *url = [NSURL URLWithString:[currentTrack objectForKey:@"bigIcon"]];
-//    NSLog(@"%@",url);
-//    
-//    NSURLSession *session = [NSURLSession sharedSession];
-//    
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//    
-//    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-//        
-//
-//        NSData *imageData = [[NSData alloc] initWithContentsOfURL:location];
-//        
-//        UIImage *image = [[UIImage alloc] initWithData:imageData];
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            self.albumImage.image = image;
-//        });
-//  
-//    }];
-//    
-//    [task resume];
+    //NSLog(@"Here HErer %@", self.rdio.player.currentSource);
+    //NSDictionary *tracks = self.rdio.player.currentSource;
+    NSLog(@"%d", self.rdio.player.currentTrackIndex);
+    
+    
+        NSDictionary *currentTrack = [self.rdio.player valueForKey:@"currentTrackInfo_"];
+        NSString *urlStr = [currentTrack valueForKey:@"icon400"];
+        NSString *str = [urlStr stringByReplacingOccurrencesOfString:@"400" withString:@"600"];
+        NSURL *url =[NSURL URLWithString:str ];
+        NSLog(@"%@",url);
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+            
+            
+            NSData *imageData = [[NSData alloc] initWithContentsOfURL:location];
+            
+            UIImage *image = [[UIImage alloc] initWithData:imageData];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.albumImage.image = image;
+            });
+            
+        }];
+        
+        [task resume];
+
+    }
     
 
     
@@ -102,7 +113,7 @@
     
 
     
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
