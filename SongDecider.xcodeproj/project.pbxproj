@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6C609FBDEB0A985B9CF83F5A /* libPods-SongDecider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B037ECEC7792572C7ADB42DF /* libPods-SongDecider.a */; };
+		964BE7BD1B2F8A24000B6DB2 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 964BE7BC1B2F8A24000B6DB2 /* Song.m */; };
 		C8261FB61B2CD97F00CD0C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C8261FB51B2CD97F00CD0C5B /* main.m */; };
 		C8261FB91B2CD97F00CD0C5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C8261FB81B2CD97F00CD0C5B /* AppDelegate.m */; };
 		C8261FBC1B2CD97F00CD0C5B /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8261FBB1B2CD97F00CD0C5B /* LoginController.m */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		964BE7BB1B2F8A24000B6DB2 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
+		964BE7BC1B2F8A24000B6DB2 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		ACDE25E59A6210BD28FF8E0B /* Pods-SongDecider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SongDecider.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SongDecider/Pods-SongDecider.debug.xcconfig"; sourceTree = "<group>"; };
 		B037ECEC7792572C7ADB42DF /* libPods-SongDecider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SongDecider.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8261FB01B2CD97F00CD0C5B /* SongDecider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SongDecider.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +138,8 @@
 				C830A5131B2F5C09009F4FDE /* RdioManager.m */,
 				C8261FB71B2CD97F00CD0C5B /* AppDelegate.h */,
 				C8261FB81B2CD97F00CD0C5B /* AppDelegate.m */,
+				964BE7BB1B2F8A24000B6DB2 /* Song.h */,
+				964BE7BC1B2F8A24000B6DB2 /* Song.m */,
 				C830A51E1B2F7F3F009F4FDE /* View Controllers */,
 				C8261FBD1B2CD97F00CD0C5B /* Main.storyboard */,
 				C8261FC01B2CD97F00CD0C5B /* Images.xcassets */,
@@ -334,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				964BE7BD1B2F8A24000B6DB2 /* Song.m in Sources */,
 				C830A5141B2F5C09009F4FDE /* RdioManager.m in Sources */,
 				C830A51A1B2F7EFC009F4FDE /* PlaylistController.m in Sources */,
 				C8261FBC1B2CD97F00CD0C5B /* LoginController.m in Sources */,

@@ -5,12 +5,12 @@
 //  Created by Aaron Williams on 2015-06-13.
 //  Copyright (c) 2015 Aaron Williams. All rights reserved.
 //
-
+#import "MainViewController.h"
 #import "LoginController.h"
 #import "RdioManager.h"
 
 
-@interface LoginController ()
+@interface LoginController () <RdioDelegate>
 
 @property (nonatomic)Rdio *rdio;
 
@@ -23,17 +23,23 @@
     
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
+    self.rdio.delegate = self;
     
-    
-    [self.rdio preparePlayerWithDelegate:nil];
-    [self.rdio.player performSelector:@selector(play:) withObject:@"t1" afterDelay:2.0];
+
 
     
     
 }
 - (IBAction)loginButtonPressed:(id)sender {
+    
+    [self.rdio authorizeFromController:self];
 }
 
+-(void)rdioDidAuthorizeUser:(NSDictionary *)user {
+    
+    [self performSegueWithIdentifier:@"showMainView" sender:self];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
