@@ -9,10 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @interface ArtworkView : UIView
+@property (nonatomic) UIImageView *imageView;
 
 
+-(void)animateRight;
+
+-(void)animateLeft;
+
+-(void)setImage: (UIImage *)image;
 
 
--(void)animateLeft; 
 
 @end
