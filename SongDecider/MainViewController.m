@@ -11,6 +11,8 @@
 #import <Rdio/Rdio.h>
 #import "ArtworkView.h"
 #import "PlaylistController.h"
+#import "ArtworkContainerController.h"
+
 
 @interface MainViewController () <RdioDelegate, RDPlayerDelegate>
 
@@ -57,7 +59,7 @@
     
     
     
-    [self.rdio preparePlayerWithDelegate:self];
+    //[self.rdio preparePlayerWithDelegate:self.childViewControllers[0];
 
     [self.rdio.player play:@"gr723"];
     
@@ -88,13 +90,13 @@
 
 
 -(void)nextView {
-    CGRect nextViewRect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     
-    ArtworkView *nextView = [[ArtworkView alloc]initWithFrame:nextViewRect];
-    nextView.backgroundColor = [UIColor blackColor];
+    ArtworkContainerController *nextView = [[ArtworkContainerController alloc]init];
+    [nextView awakeFromNib];
+    [self addChildViewController:nextView];
     
     //[nextView setImage:[self fetchTrackImage]];
-    [self.view addSubview:nextView];
+    //[self.view addSubview:nextView];
     //self.currentTrack = nextView;
 }
 

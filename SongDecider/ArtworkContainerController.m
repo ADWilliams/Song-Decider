@@ -10,7 +10,7 @@
 #import "MainViewController.h"
 #import "RdioManager.h"
 
-@interface ArtworkContainerController ()
+@interface ArtworkContainerController () <RDPlayerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *artworkImageView;
 
 @property (nonatomic) UISwipeGestureRecognizer *swipeLeft;
@@ -32,10 +32,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-    self.mainView = (MainViewController *)self.parentViewController;
+   
+    
     
     RdioManager *manager = [RdioManager sharedRdio];
     self.rdio = manager.rdioInstance;
+    
+    [self.rdio preparePlayerWithDelegate:self];
     
     self.mainView.playlistKey = [NSUserDefaults standardUserDefaults];
     self.mainView.playlist = [self.mainView.playlistKey objectForKey:@"playlistKey"];
@@ -50,6 +53,11 @@
     
 
     
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+   
+    self.mainView = (MainViewController *)self.parentViewController;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -115,9 +123,16 @@
 }
 
 -(void)animateLeft {
+    
     [UIView animateWithDuration:0.5 animations:^{
         self.view.center = CGPointMake(-self.view.frame.size.width, self.view.center.y);
+
+    } completion:^(BOOL finished) {
+        self.view.center = CGPointMake(self.view.frame.size.width/2, -self.view.frame.size.height);
         
+        [UIView animateWithDuration:0.5 animations:^{
+            self.view.frame = self.mainView.view.frame;
+        } completion:nil];
     }];
 }
 
@@ -128,6 +143,18 @@
     }];
 }
 
+
+
+
+#pragma mark - Rdio Delegate Methods
+
+-(BOOL)rdioIsPlayingElsewhere{
+    return NO;
+}
+
+-(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState {
+    [self fetchTrackImage];
+}
 
 -(UIImage *)fetchTrackImage {
     

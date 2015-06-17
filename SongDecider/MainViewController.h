@@ -14,4 +14,7 @@
 
 @property (nonatomic, strong) NSUserDefaults *playlistKey;
 
+-(void)nextView;
+
 @end
+
