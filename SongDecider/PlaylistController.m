@@ -32,7 +32,7 @@
     
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
-    self.rdio.delegate = self;
+    //self.rdio.delegate = self;
     
     NSDictionary *param = @{@"keys": self.playlist,
                             @"extras": @"tracks"};
@@ -148,10 +148,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    if ([[segue identifier] isEqualToString:@""]) {
-        <#statements#>
-    }
-    
+  
     
 }
 
