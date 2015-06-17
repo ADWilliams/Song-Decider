@@ -24,6 +24,10 @@
 @property (nonatomic) UISwipeGestureRecognizer *swipeRight;
 
 @property (weak, nonatomic) IBOutlet ArtworkView *artworkView;
+
+@property (nonatomic, strong) NSString *playlistKey;
+
+
 @end
 
 @implementation MainViewController
@@ -35,19 +39,24 @@
 
 
 - (void)viewDidLoad {
+    
+
+    
+    
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-   
+    
+    
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     self.rdio.delegate = self;
     
     
     [self.rdio preparePlayerWithDelegate:self];
-    
+
     [self.rdio.player play:@"gr723"];
-    
     
     self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     
@@ -59,18 +68,66 @@
     
 }
 
-
+#pragma mark - SwipeGesture
 
 -(void) swipeHandler: (UIGestureRecognizer *)sender {
+    
+    NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
+    self.playlistKey = [playlistKey objectForKey:@"playlistKey"];
     
     if ([sender isEqual: self.swipeLeft]) {
         [self.rdio.player next];
         [self.artworkView animateLeft];
         
     }
-    
+
     if ([sender isEqual: self.swipeRight]) {
-        [self.rdio.player next];
+        
+        if (self.playlistKey ==  nil) {
+            
+            NSDictionary *param = @{@"name": @"mobile playlist",
+                                    @"description": @"mobile playlist",
+                                    @"tracks": self.rdio.player.currentTrack};
+            
+            [self.rdio callAPIMethod:@"createPlaylist" withParameters:param success:^(NSDictionary *result) {
+                
+                NSLog(@"%@", result);
+                
+                self.playlistKey = [result objectForKey:@"key"];
+                
+                [playlistKey setObject:self.playlistKey forKey:@"playlistKey"];
+                
+                NSLog(@"Data Saved");
+
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@", error);
+                
+            }];
+        }
+        else {
+            
+            NSLog(@"key have been retrieved !!! %@", self.playlistKey);
+            
+            NSDictionary *param = @{@"playlist": self.playlistKey,
+                                    @"tracks": self.rdio.player.currentTrack};
+            
+            [self.rdio callAPIMethod:@"addToPlaylist" withParameters:param success:^(NSDictionary *result) {
+                
+                NSLog(@"current track number %@", self.rdio.player.currentTrack);
+                
+                NSLog(@"playlist returned %@", result);
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@", error);
+                
+            }];
+          
+        }
+
+//        [self.rdio.player next];
     }
 }
 
