@@ -7,8 +7,15 @@
 //
 
 #import "PlaylistController.h"
+#import "RdioManager.h"
+#import <Rdio/Rdio.h>
+#import "PlaylistCell.h"
 
-@interface PlaylistController ()
+@interface PlaylistController () <RdioDelegate>
+
+@property (nonatomic, assign) int length;
+
+@property (nonatomic, strong) Rdio *rdio;
 
 @end
 
@@ -16,6 +23,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    RdioManager *rdioManager = [RdioManager sharedRdio];
+    self.rdio = rdioManager.rdioInstance;
+    self.rdio.delegate = self;
+    
+    NSDictionary *param = @{@"playlist": self.playlist,
+                            @"extras": @"tracks",
+                            @"extras": @"length"};
+    
+    [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
+        
+        NSLog(@"result %@", result);
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@", error);
+        
+    }];
+    
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -29,29 +56,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)setPlaylist:(NSString *)playlist {
+    
+    _playlist = playlist;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 1;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    PlaylistCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     // Configure the cell...
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
