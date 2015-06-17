@@ -19,14 +19,14 @@
     // Do any additional setup after loading the view.
 }
 
--(void)setSong:(Song *)song {
+-(void)setSongItem:(Song *)song {
     
     _song = song;
-    
-    [self configure];
 }
 
 -(void)configure {
+    
+    
     
     
 }

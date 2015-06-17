@@ -71,7 +71,7 @@
 
 -(void) swipeHandler: (UIGestureRecognizer *)sender {
     
-    self.playlistKey = [self.playlistKey objectForKey:@"playlistKey"];
+    self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
     
     if ([sender isEqual: self.swipeLeft]) {
         [self.rdio.player next];

@@ -41,6 +41,8 @@
         
         NSMutableArray *temp = [NSMutableArray array];
         
+        NSString *numTracks = [[result objectForKey:self.playlist] objectForKey:@"length"];
+        
         NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
         
         for (NSDictionary *dictionary in tracks) {
@@ -48,9 +50,11 @@
             Song *song = [[Song alloc] init];
             
             song.songName = [dictionary objectForKey:@"name"];
-            song.albumName = [dictionary objectForKey:@"albumArtist"];
+            song.albumName = [dictionary objectForKey:@"album"];
             song.artistName = [dictionary objectForKey:@"artist"];
             song.albumImage = [dictionary objectForKey:@"icon400"];
+            
+            NSLog(@"song %@", song);
             
             [temp addObject:song];
             
@@ -58,8 +62,15 @@
         
         self.songData = temp;
         
-        NSLog(@"%@", self.songData);
-       
+        self.length = numTracks;
+        
+        NSLog(@"%lu", (unsigned long)self.songData.count);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            [self.tableView reloadData];
+            
+        });
         
     } failure:^(NSError *error) {
         
@@ -93,7 +104,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.songData count];
+    
+    NSLog(@"song data coount %d", [self.length intValue]);
+    
+    return [self.length intValue];
 }
 
 
@@ -102,7 +116,6 @@
     
     cell.song = (self.songData)[indexPath.row];
     
-    [self.tableView reloadData];
     
     return cell;
 }
@@ -155,7 +168,8 @@
         
         DetailViewController *playlistDetailVC = segue.destinationViewController;
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        playlistDetailVC.song = (self.songData)[indexPath.row];
+        Song *song = (self.songData)[indexPath.row];
+        [playlistDetailVC setSongItem:song];
         
     }
     

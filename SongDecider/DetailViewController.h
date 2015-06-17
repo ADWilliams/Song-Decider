@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) Song *song;
 
+-(void)setSongItem:(Song *)song;
+
 @end
