@@ -10,4 +10,8 @@
 
 @interface MainViewController : UIViewController
 
+@property (nonatomic, strong) NSString *playlist;
+
+@property (nonatomic, strong) NSUserDefaults *playlistKey;
+
 @end

@@ -26,11 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet ArtworkView *artworkView;
 
-@property (nonatomic, strong) NSString *playlist;
 
-@property (nonatomic, strong) NSUserDefaults *playlistKey;
-
-@property (nonatomic) ArtworkView *currentTrack;
 
 
 
@@ -46,9 +42,7 @@
 
 - (void)viewDidLoad {
 
-    self.playlistKey = [NSUserDefaults standardUserDefaults];
-    self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
-    
+       
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
@@ -58,18 +52,13 @@
     
     
     
-    NSLog(@"playlist key %@", self.playlistKey);
     
     
     [self.rdio preparePlayerWithDelegate:self];
 
     [self.rdio.player play:@"gr723"];
     
-    self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
-    self.swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
-    self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.view addGestureRecognizer:self.swipeRight];
-    [self.view addGestureRecognizer:self.swipeLeft];
+    
     
 }
 
@@ -87,54 +76,12 @@
 
     if ([sender isEqual: self.swipeRight]) {
         
-        if (self.playlist ==  nil) {
-            
-            NSDictionary *param = @{@"name": @"mobile playlist",
-                                    @"description": @"mobile playlist",
-                                    @"tracks": self.rdio.player.currentTrack};
-            
-            [self.rdio callAPIMethod:@"createPlaylist" withParameters:param success:^(NSDictionary *result) {
-                
-                NSLog(@"%@", result);
-                
-                self.playlist = [result objectForKey:@"key"];
-                
-                [self.playlistKey setObject:self.playlist forKey:@"playlistKey"];
-                
-                NSLog(@"Data Saved");
-
-                
-            } failure:^(NSError *error) {
-                
-                NSLog(@"%@", error);
-                
-            }];
-        }
-        else {
-            
-            NSLog(@"key have been retrieved !!! %@", self.playlist);
-            
-            NSDictionary *param = @{@"playlist": self.playlist,
-                                    @"tracks": self.rdio.player.currentTrack};
-            
-            [self.rdio callAPIMethod:@"addToPlaylist" withParameters:param success:^(NSDictionary *result) {
-                
-                NSLog(@"current track number %@", self.rdio.player.currentTrack);
-                
-                NSLog(@"playlist returned %@", result);
-                
-            } failure:^(NSError *error) {
-                
-                NSLog(@"%@", error);
-                
-            }];
-          
         }
         [self.rdio.player next];
         [self.artworkView animateRight];
     }
 
-}
+
 
 
 -(void)nextView {
@@ -143,10 +90,13 @@
     ArtworkView *nextView = [[ArtworkView alloc]initWithFrame:nextViewRect];
     nextView.backgroundColor = [UIColor blackColor];
     
-    [nextView setImage:[self fetchTrackImage]];
+    //[nextView setImage:[self fetchTrackImage]];
     [self.view addSubview:nextView];
-    self.currentTrack = nextView;
+    //self.currentTrack = nextView;
 }
+
+
+
 
 #pragma mark - Rdio
 
@@ -160,7 +110,7 @@
     //NSDictionary *tracks = self.rdio.player.currentSource;
     NSLog(@"%d", self.rdio.player.currentTrackIndex);
     
-    [self fetchTrackImage];
+    //[self fetchTrackImage];
 
 
 }
@@ -170,39 +120,7 @@
 
     
     
--(UIImage *)fetchTrackImage {
-    
-    __block UIImage *fetchedImage = [[UIImage alloc]init];
 
-    NSDictionary *currentTrack = [self.rdio.player valueForKey:@"currentTrackInfo_"];
-    NSString *urlStr = [currentTrack valueForKey:@"icon400"];
-    NSString *str = [urlStr stringByReplacingOccurrencesOfString:@"400" withString:@"600"];
-    NSURL *url =[NSURL URLWithString:str ];
-    NSLog(@"%@",url);
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-        
-        
-        NSData *imageData = [[NSData alloc] initWithContentsOfURL:location];
-        
-        fetchedImage = [[UIImage alloc] initWithData:imageData];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //self.albumImage.image = fetchedImage;
-            [self.currentTrack setImage:fetchedImage];
-            
-        });
-    }];
-    
-    [task resume];
-    
-    return fetchedImage;
-    
-}
 
 
 
