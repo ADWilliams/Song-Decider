@@ -8,6 +8,18 @@
 
 #import "PlaylistCell.h"
 
+@interface PlaylistCell ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *albumImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *artistNameLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *albumNameLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *songNameLabel;
+
+@end
+
 @implementation PlaylistCell
 
 - (void)awakeFromNib {
@@ -29,7 +41,9 @@
 
 -(void)configure {
     
-    
+    self.albumNameLabel.text = self.song.albumName;
+    self.artistNameLabel.text = self.song.artistName;
+    self.songNameLabel.text = self.song.songName;
     
     [self configureImage];
     
@@ -55,11 +69,13 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                //set image
+                self.albumImageView.image = image;
                 
             });
         }
     }];
+    
+    [task resume];
 
 }
 

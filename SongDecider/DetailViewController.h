@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Song.h"
 
 @interface DetailViewController : UIViewController
+
+@property (nonatomic, strong) Song *song;
 
 @end
