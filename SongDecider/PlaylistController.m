@@ -102,6 +102,8 @@
     
     cell.song = (self.songData)[indexPath.row];
     
+    [self.tableView reloadData];
+    
     return cell;
 }
 
@@ -148,9 +150,15 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-  
+
+    if ([[segue identifier] isEqualToString:@"showPlaylistDetail"]) {
+        
+        DetailViewController *playlistDetailVC = segue.destinationViewController;
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        playlistDetailVC.song = (self.songData)[indexPath.row];
+        
+    }
     
+
 }
-
-
 @end

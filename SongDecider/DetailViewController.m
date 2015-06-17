@@ -19,6 +19,18 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)setSong:(Song *)song {
+    
+    _song = song;
+    
+    [self configure];
+}
+
+-(void)configure {
+    
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
