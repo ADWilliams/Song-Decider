@@ -13,11 +13,11 @@
 
 @property (nonatomic, strong) NSString *songName;
 
-@property (nonatomic, strong) NSString *songArtist;
+@property (nonatomic, strong) NSString *artistName;
 
-@property (nonatomic, strong) NSString *songAlbum;
+@property (nonatomic, strong) NSString *albumName;
 
-@property (nonatomic, strong) UIImage *albumImage;
+@property (nonatomic, strong) NSString *albumImage;
 
 
 @end

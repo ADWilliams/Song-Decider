@@ -10,12 +10,16 @@
 #import "RdioManager.h"
 #import <Rdio/Rdio.h>
 #import "PlaylistCell.h"
+#import "Song.h"
+#import "DetailViewController.h"
 
 @interface PlaylistController () <RdioDelegate>
 
-@property (nonatomic, assign) int length;
+@property (nonatomic, strong) NSString *length;
 
 @property (nonatomic, strong) Rdio *rdio;
+
+@property (nonatomic, strong) NSMutableArray *songData;
 
 @end
 
@@ -24,25 +28,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"playlist key in table view %@", self.playlist);
+    
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     self.rdio.delegate = self;
     
-    NSDictionary *param = @{@"playlist": self.playlist,
-                            @"extras": @"tracks",
-                            @"extras": @"length"};
+    NSDictionary *param = @{@"keys": self.playlist,
+                            @"extras": @"tracks"};
     
     [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
         
-        NSLog(@"result %@", result);
+        NSMutableArray *temp = [NSMutableArray array];
+        
+        NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
+        
+        for (NSDictionary *dictionary in tracks) {
+            
+            Song *song = [[Song alloc] init];
+            
+            song.songName = [dictionary objectForKey:@"name"];
+            song.albumName = [dictionary objectForKey:@"albumArtist"];
+            song.artistName = [dictionary objectForKey:@"artist"];
+            song.albumImage = [dictionary objectForKey:@"icon400"];
+            
+            [temp addObject:song];
+            
+        }
+        
+        self.songData = temp;
+        
+        NSLog(@"%@", self.songData);
+       
         
     } failure:^(NSError *error) {
         
         NSLog(@"%@", error);
         
     }];
-    
-    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -70,14 +93,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 1;
+    return [self.songData count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlaylistCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    cell.song = (self.songData)[indexPath.row];
     
     return cell;
 }
@@ -117,14 +140,20 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    if ([[segue identifier] isEqualToString:@""]) {
+        <#statements#>
+    }
+    
+    
 }
-*/
+
 
 @end

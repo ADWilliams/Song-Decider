@@ -48,6 +48,7 @@
 
     self.playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
+    NSLog(@">>>>> playlist Key before view did load %@", self.playlist);
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
