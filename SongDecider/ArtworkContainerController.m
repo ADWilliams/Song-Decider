@@ -179,6 +179,11 @@
 -(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState {
     //[self fetchTrackImage];
     
+    
+    if (oldState == RDPlayerStateInitializing && newState == RDPlayerStateBuffering) {
+        [self fetchTrackImage];
+        
+    }
     if (newState == RDPlayerStatePlaying) {
         [self fetchNextImage];
         
@@ -187,19 +192,18 @@
         }
     }
     
+    
 }
 
 -(UIImage *)fetchTrackImage {
     
     __block UIImage *fetchedImage = [[UIImage alloc]init];
     
-    
-    
-    
+
     NSDictionary *currentTrack = [self.rdio.player valueForKey:@"currentTrackInfo_"];
     NSString *urlStr = [currentTrack valueForKey:@"icon400"];
-    NSString *str = [urlStr stringByReplacingOccurrencesOfString:@"400" withString:@"600"];
-    NSURL *url =[NSURL URLWithString:str ];
+    //NSString *str = [urlStr stringByReplacingOccurrencesOfString:@"400" withString:@"600"];
+    NSURL *url =[NSURL URLWithString:urlStr ];
     NSLog(@"%@",url);
     
     NSURLSession *session = [NSURLSession sharedSession];
