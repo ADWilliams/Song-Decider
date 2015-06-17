@@ -10,4 +10,6 @@
 
 @interface PlaylistController : UITableViewController
 
+@property (nonatomic, strong) NSString *playlist;
+
 @end

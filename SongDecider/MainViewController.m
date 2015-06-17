@@ -10,6 +10,7 @@
 #import "RdioManager.h"
 #import <Rdio/Rdio.h>
 #import "ArtworkView.h"
+#import "PlaylistController.h"
 
 @interface MainViewController () <RdioDelegate, RDPlayerDelegate>
 
@@ -25,7 +26,9 @@
 
 @property (weak, nonatomic) IBOutlet ArtworkView *artworkView;
 
-@property (nonatomic, strong) NSString *playlistKey;
+@property (nonatomic, strong) NSString *playlist;
+
+@property (nonatomic, strong) NSUserDefaults *playlistKey;
 
 
 @end
@@ -39,19 +42,20 @@
 
 
 - (void)viewDidLoad {
-    
 
-    
-    
+    self.playlistKey = [NSUserDefaults standardUserDefaults];
+    self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    
-    
+
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     self.rdio.delegate = self;
+    
+    
+    
+    NSLog(@"playlist key %@", self.playlistKey);
     
     
     [self.rdio preparePlayerWithDelegate:self];
@@ -72,8 +76,7 @@
 
 -(void) swipeHandler: (UIGestureRecognizer *)sender {
     
-    NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
-    self.playlistKey = [playlistKey objectForKey:@"playlistKey"];
+    self.playlistKey = [self.playlistKey objectForKey:@"playlistKey"];
     
     if ([sender isEqual: self.swipeLeft]) {
         [self.rdio.player next];
@@ -83,7 +86,7 @@
 
     if ([sender isEqual: self.swipeRight]) {
         
-        if (self.playlistKey ==  nil) {
+        if (self.playlist ==  nil) {
             
             NSDictionary *param = @{@"name": @"mobile playlist",
                                     @"description": @"mobile playlist",
@@ -93,9 +96,9 @@
                 
                 NSLog(@"%@", result);
                 
-                self.playlistKey = [result objectForKey:@"key"];
+                self.playlist = [result objectForKey:@"key"];
                 
-                [playlistKey setObject:self.playlistKey forKey:@"playlistKey"];
+                [self.playlistKey setObject:self.playlist forKey:@"playlistKey"];
                 
                 NSLog(@"Data Saved");
 
@@ -108,9 +111,9 @@
         }
         else {
             
-            NSLog(@"key have been retrieved !!! %@", self.playlistKey);
+            NSLog(@"key have been retrieved !!! %@", self.playlist);
             
-            NSDictionary *param = @{@"playlist": self.playlistKey,
+            NSDictionary *param = @{@"playlist": self.playlist,
                                     @"tracks": self.rdio.player.currentTrack};
             
             [self.rdio callAPIMethod:@"addToPlaylist" withParameters:param success:^(NSDictionary *result) {
@@ -170,30 +173,27 @@
         
         [task resume];
 
-    }
-    
-
-    
-    
-    
-    
-
-    
-
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
+    if ([[segue identifier] isEqualToString:@"playlistSegue"]) {
+        
+        PlaylistController *playlistVC = segue.destinationViewController;
+        playlistVC.playlist = self.playlist;
+        
+    }
+    
 }
-*/
+
 
 @end
