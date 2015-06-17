@@ -44,8 +44,9 @@
     self.albumNameLabel.text = self.song.albumName;
     self.artistNameLabel.text = self.song.artistName;
     self.songNameLabel.text = self.song.songName;
-    
     [self configureImage];
+    
+    [self modifyCell];
     
 }
 
@@ -77,6 +78,15 @@
     
     [task resume];
 
+}
+
+-(void)modifyCell {
+    
+    self.backgroundColor = [UIColor blackColor];
+    self.albumNameLabel.backgroundColor = [UIColor blackColor];
+    self.albumNameLabel.textColor = [UIColor grayColor];
+    self.artistNameLabel.backgroundColor = [UIColor blackColor];
+    
 }
 
 
