@@ -20,4 +20,56 @@
     // Configure the view for the selected state
 }
 
+-(void)setSong:(Song *)song {
+    
+    _song = song;
+    
+    [self configure];
+}
+
+-(void)configure {
+    
+    
+    
+    [self configureImage];
+    
+}
+
+-(void)configureImage {
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURL *url = [NSURL URLWithString:self.song.albumImage];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+        }
+        else {
+            
+            NSData *data = [NSData dataWithContentsOfURL:location];
+            
+            UIImage *image = [UIImage imageWithData:data];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                //set image
+                
+            });
+        }
+    }];
+
+}
+
+
+
+
+
+
+
+
+
+
 @end

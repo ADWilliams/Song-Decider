@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Song.h"
 
 @interface PlaylistCell : UITableViewCell
+
+@property (nonatomic, strong) Song *song;
+
+//-(void)configure;
 
 @end
