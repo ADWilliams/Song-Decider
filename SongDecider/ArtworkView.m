@@ -8,9 +8,10 @@
 
 #import "ArtworkView.h"
 
-@interface ArtworkView ()
+@interface ArtworkView () <UIGestureRecognizerDelegate>
 
-@property (nonatomic) UIImageView *imageView;
+@property (nonatomic)UISwipeGestureRecognizer *swipeRight;
+@property (nonatomic)UISwipeGestureRecognizer *swipeLeft;
 
 @end
 
@@ -19,18 +20,61 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        [self setupView];
+        [self setTranslatesAutoresizingMaskIntoConstraints: NO];
+
+        self.imageView = [[UIImageView alloc]initWithFrame:frame];
+        [self.imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.imageView setUserInteractionEnabled: NO];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self setUserInteractionEnabled:YES];
+        
+        [self addSubview:self.imageView];
+        
+        
     }
+    
+    
+//    self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self.imageView action:@selector(swipeHandler:)];
+//    
+//    self.swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self.imageView action:@selector(swipeHandler:)];
+//    
+//    
+//    self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+//    
+//    [self.imageView addGestureRecognizer:self.swipeRight];
+//    [self.imageView addGestureRecognizer:self.swipeLeft];
+
+    
     return self;
 }
+
+
+
+-(void) swipeHandler: (UIGestureRecognizer *)sender {
+    
+    if ([sender isEqual: self.swipeLeft]) {
+        //[self.rdio.player next];
+        [self animateLeft];
+        
+    }
+    
+    if ([sender isEqual: self.swipeRight]) {
+        //[self.rdio.player next];
+        [self animateRight];
+    }
+    
+    
+    
+    
+}
+
 
 -(void)setImage: (UIImage *)image {
     self.imageView.image = image;
 }
 
 -(void)setupView {
-    self.imageView = [[UIImageView alloc]initWithFrame:self.frame];
-    [self addSubview:self.imageView];
+   
     
 }
 

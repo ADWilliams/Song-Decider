@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ArtworkView : UIView
+@property (nonatomic) UIImageView *imageView;
 
 
 -(void)animateRight;
