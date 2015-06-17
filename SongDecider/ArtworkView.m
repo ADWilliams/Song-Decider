@@ -50,24 +50,6 @@
 
 
 
--(void) swipeHandler: (UIGestureRecognizer *)sender {
-    
-    if ([sender isEqual: self.swipeLeft]) {
-        //[self.rdio.player next];
-        [self animateLeft];
-        
-    }
-    
-    if ([sender isEqual: self.swipeRight]) {
-        //[self.rdio.player next];
-        [self animateRight];
-    }
-    
-    
-    
-    
-}
-
 
 -(void)setImage: (UIImage *)image {
     self.imageView.image = image;

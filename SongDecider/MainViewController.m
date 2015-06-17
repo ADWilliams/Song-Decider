@@ -51,21 +51,32 @@
     
     [self.rdio.player play:@"gr723"];
     
-    self.artworkView.hidden = YES;
-    [self nextView];
+    self.artworkView.hidden = NO;
     
-    self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(gestureHandler:)];
+    self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
+    self.swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
+    self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:self.swipeRight];
+    [self.view addGestureRecognizer:self.swipeLeft];
     
 }
 
 
 
--(void)gestureHandler: (UIGestureRecognizer *)sender {
-    [self.currentTrack animateRight];
+-(void) swipeHandler: (UIGestureRecognizer *)sender {
+    
+    if ([sender isEqual: self.swipeLeft]) {
+        [self.rdio.player next];
+        [self.artworkView animateLeft];
+        
+    }
+    
+    if ([sender isEqual: self.swipeRight]) {
+        [self.rdio.player next];
+        [self.artworkView animateRight];
+    }
+
 }
-
-
 
 
 -(void)nextView {
