@@ -26,11 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet ArtworkView *artworkView;
 
-@property (nonatomic, strong) NSString *playlist;
 
-@property (nonatomic, strong) NSUserDefaults *playlistKey;
-
-@property (nonatomic) ArtworkView *currentTrack;
 
 
 
@@ -46,9 +42,7 @@
 
 - (void)viewDidLoad {
 
-    self.playlistKey = [NSUserDefaults standardUserDefaults];
-    self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
-    
+       
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
@@ -58,7 +52,6 @@
     
     
     
-    NSLog(@"playlist key %@", self.playlistKey);
     
     
     [self.rdio preparePlayerWithDelegate:self];
@@ -83,54 +76,12 @@
 
     if ([sender isEqual: self.swipeRight]) {
         
-        if (self.playlist ==  nil) {
-            
-            NSDictionary *param = @{@"name": @"mobile playlist",
-                                    @"description": @"mobile playlist",
-                                    @"tracks": self.rdio.player.currentTrack};
-            
-            [self.rdio callAPIMethod:@"createPlaylist" withParameters:param success:^(NSDictionary *result) {
-                
-                NSLog(@"%@", result);
-                
-                self.playlist = [result objectForKey:@"key"];
-                
-                [self.playlistKey setObject:self.playlist forKey:@"playlistKey"];
-                
-                NSLog(@"Data Saved");
-
-                
-            } failure:^(NSError *error) {
-                
-                NSLog(@"%@", error);
-                
-            }];
-        }
-        else {
-            
-            NSLog(@"key have been retrieved !!! %@", self.playlist);
-            
-            NSDictionary *param = @{@"playlist": self.playlist,
-                                    @"tracks": self.rdio.player.currentTrack};
-            
-            [self.rdio callAPIMethod:@"addToPlaylist" withParameters:param success:^(NSDictionary *result) {
-                
-                NSLog(@"current track number %@", self.rdio.player.currentTrack);
-                
-                NSLog(@"playlist returned %@", result);
-                
-            } failure:^(NSError *error) {
-                
-                NSLog(@"%@", error);
-                
-            }];
-          
         }
         [self.rdio.player next];
         [self.artworkView animateRight];
     }
 
-}
+
 
 
 -(void)nextView {
@@ -141,7 +92,7 @@
     
     //[nextView setImage:[self fetchTrackImage]];
     [self.view addSubview:nextView];
-    self.currentTrack = nextView;
+    //self.currentTrack = nextView;
 }
 
 

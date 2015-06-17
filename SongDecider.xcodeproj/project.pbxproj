@@ -151,8 +151,6 @@
 				964BE7BC1B2F8A24000B6DB2 /* Song.m */,
 				C86F15371B309A85003745BD /* ArtworkView.h */,
 				C86F15381B309A85003745BD /* ArtworkView.m */,
-				C8A70FA11B31E83000F97BBC /* ArtworkContainerController.h */,
-				C8A70FA21B31E83000F97BBC /* ArtworkContainerController.m */,
 				C830A51E1B2F7F3F009F4FDE /* View Controllers */,
 				C8261FBD1B2CD97F00CD0C5B /* Main.storyboard */,
 				C8261FC01B2CD97F00CD0C5B /* Images.xcassets */,
@@ -191,6 +189,8 @@
 		C830A51E1B2F7F3F009F4FDE /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C8A70FA11B31E83000F97BBC /* ArtworkContainerController.h */,
+				C8A70FA21B31E83000F97BBC /* ArtworkContainerController.m */,
 				C8261FBA1B2CD97F00CD0C5B /* LoginController.h */,
 				C8261FBB1B2CD97F00CD0C5B /* LoginController.m */,
 				C830A5151B2F7ED9009F4FDE /* MainViewController.h */,
