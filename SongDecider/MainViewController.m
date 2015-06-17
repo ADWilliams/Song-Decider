@@ -40,9 +40,12 @@
 
 
 
-- (void)viewDidLoad {
-
+- (void)viewDidLoad{
        
+    self.playlistKey = [NSUserDefaults standardUserDefaults];
+    self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
+   
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
