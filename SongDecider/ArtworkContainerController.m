@@ -21,6 +21,7 @@
 
 @property (nonatomic) Rdio *rdio;
 
+@property (nonatomic) UIImage *nextImage;
 
 
 
@@ -31,8 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
-   
+    
+    
     
     
     RdioManager *manager = [RdioManager sharedRdio];
@@ -44,20 +45,22 @@
     self.mainView.playlist = [self.mainView.playlistKey objectForKey:@"playlistKey"];
     
     NSLog(@"playlist key %@", self.mainView.playlistKey);
-
+    
     self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     self.swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:self.swipeRight];
     [self.view addGestureRecognizer:self.swipeLeft];
     
-
+    
     
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-   
+    
     self.mainView = (MainViewController *)self.parentViewController;
+    
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -115,24 +118,32 @@
                 NSLog(@"%@", error);
                 
             }];
-
-    }
+            
+        }
         [self animateRight];
         [self.rdio.player next];
-}
+    }
 }
 
 -(void)animateLeft {
     
     [UIView animateWithDuration:0.5 animations:^{
         self.view.center = CGPointMake(-self.view.frame.size.width, self.view.center.y);
-
+        
     } completion:^(BOOL finished) {
+        
         self.view.center = CGPointMake(self.view.frame.size.width/2, -self.view.frame.size.height);
+        self.artworkImageView.image = nil;
+        self.artworkImageView.image = self.nextImage;
+        self.nextImage = nil;
         
         [UIView animateWithDuration:0.5 animations:^{
             self.view.frame = self.mainView.view.frame;
-        } completion:nil];
+            [self.view layoutIfNeeded];
+        } completion:^(BOOL finnished) {
+           
+        }];
+        
     }];
 }
 
@@ -140,6 +151,19 @@
 -(void)animateRight {
     [UIView animateWithDuration:0.5 animations:^{
         self.view.center = CGPointMake(self.view.frame.size.width * 2 , self.view.center.y);
+        
+    }completion:^(BOOL finished) {
+        
+        self.view.center = CGPointMake(self.view.frame.size.width/2, -self.view.frame.size.height);
+        self.artworkImageView.image = nil;
+        self.artworkImageView.image = self.nextImage;
+        self.nextImage = nil;
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            self.view.frame = self.mainView.view.frame;
+            [self.view layoutIfNeeded];
+        }];
+        
     }];
 }
 
@@ -153,12 +177,24 @@
 }
 
 -(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState {
-    [self fetchTrackImage];
+    //[self fetchTrackImage];
+    
+    if (newState == RDPlayerStatePlaying) {
+        [self fetchNextImage];
+        
+        if (self.nextImage == nil) {
+            [self fetchTrackImage];
+        }
+    }
+    
 }
 
 -(UIImage *)fetchTrackImage {
     
     __block UIImage *fetchedImage = [[UIImage alloc]init];
+    
+    
+    
     
     NSDictionary *currentTrack = [self.rdio.player valueForKey:@"currentTrackInfo_"];
     NSString *urlStr = [currentTrack valueForKey:@"icon400"];
@@ -190,14 +226,48 @@
     
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)fetchNextImage {
+    int nextTrackIndex = (int)[[self.rdio.player valueForKey:@"nextTrackIndex_"] integerValue];
+    NSString *nextTrackKey =[[self.rdio.player valueForKey:@"trackKeys_"]objectAtIndex:nextTrackIndex];
+    
+    
+    NSDictionary *params = @{@"keys":nextTrackKey};
+    [self.rdio callAPIMethod:@"get" withParameters:params success:^(NSDictionary *result) {
+        NSDictionary *nextTrack = [result objectForKey:nextTrackKey];
+        
+        NSURL *imageURL = [NSURL URLWithString:[nextTrack valueForKey:@"icon400"]];
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:imageURL];
+        
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+            NSData *imageData = [[NSData alloc] initWithContentsOfURL:location];
+            UIImage *image = [UIImage imageWithData:imageData];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.nextImage = image;
+            });
+        }];
+        
+        [task resume];
+        
+    } failure:^(NSError *error) {
+        NSLog(@"%@", error);
+    }];
+    
+    
 }
-*/
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
