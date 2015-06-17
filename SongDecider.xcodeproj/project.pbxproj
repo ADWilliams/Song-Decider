@@ -29,6 +29,7 @@
 		C830A51A1B2F7EFC009F4FDE /* PlaylistController.m in Sources */ = {isa = PBXBuildFile; fileRef = C830A5191B2F7EFC009F4FDE /* PlaylistController.m */; };
 		C830A51D1B2F7F29009F4FDE /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C830A51C1B2F7F29009F4FDE /* DetailViewController.m */; };
 		C86F15391B309A85003745BD /* ArtworkView.m in Sources */ = {isa = PBXBuildFile; fileRef = C86F15381B309A85003745BD /* ArtworkView.m */; };
+		C8A70FA31B31E83000F97BBC /* ArtworkContainerController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A70FA21B31E83000F97BBC /* ArtworkContainerController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		C830A51C1B2F7F29009F4FDE /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		C86F15371B309A85003745BD /* ArtworkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtworkView.h; sourceTree = "<group>"; };
 		C86F15381B309A85003745BD /* ArtworkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtworkView.m; sourceTree = "<group>"; };
+		C8A70FA11B31E83000F97BBC /* ArtworkContainerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtworkContainerController.h; sourceTree = "<group>"; };
+		C8A70FA21B31E83000F97BBC /* ArtworkContainerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtworkContainerController.m; sourceTree = "<group>"; };
 		D3E32001139EC784739468C3 /* Pods-SongDecider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SongDecider.release.xcconfig"; path = "Pods/Target Support Files/Pods-SongDecider/Pods-SongDecider.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,6 +151,8 @@
 				964BE7BC1B2F8A24000B6DB2 /* Song.m */,
 				C86F15371B309A85003745BD /* ArtworkView.h */,
 				C86F15381B309A85003745BD /* ArtworkView.m */,
+				C8A70FA11B31E83000F97BBC /* ArtworkContainerController.h */,
+				C8A70FA21B31E83000F97BBC /* ArtworkContainerController.m */,
 				C830A51E1B2F7F3F009F4FDE /* View Controllers */,
 				C8261FBD1B2CD97F00CD0C5B /* Main.storyboard */,
 				C8261FC01B2CD97F00CD0C5B /* Images.xcassets */,
@@ -355,6 +360,7 @@
 				C8261FBC1B2CD97F00CD0C5B /* LoginController.m in Sources */,
 				C8261FB91B2CD97F00CD0C5B /* AppDelegate.m in Sources */,
 				C830A5171B2F7ED9009F4FDE /* MainViewController.m in Sources */,
+				C8A70FA31B31E83000F97BBC /* ArtworkContainerController.m in Sources */,
 				C8261FB61B2CD97F00CD0C5B /* main.m in Sources */,
 				C830A51D1B2F7F29009F4FDE /* DetailViewController.m in Sources */,
 				C86F15391B309A85003745BD /* ArtworkView.m in Sources */,

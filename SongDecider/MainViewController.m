@@ -65,11 +65,7 @@
 
     [self.rdio.player play:@"gr723"];
     
-    self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
-    self.swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
-    self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.view addGestureRecognizer:self.swipeRight];
-    [self.view addGestureRecognizer:self.swipeLeft];
+    
     
 }
 
@@ -143,10 +139,13 @@
     ArtworkView *nextView = [[ArtworkView alloc]initWithFrame:nextViewRect];
     nextView.backgroundColor = [UIColor blackColor];
     
-    [nextView setImage:[self fetchTrackImage]];
+    //[nextView setImage:[self fetchTrackImage]];
     [self.view addSubview:nextView];
     self.currentTrack = nextView;
 }
+
+
+
 
 #pragma mark - Rdio
 
@@ -160,7 +159,7 @@
     //NSDictionary *tracks = self.rdio.player.currentSource;
     NSLog(@"%d", self.rdio.player.currentTrackIndex);
     
-    [self fetchTrackImage];
+    //[self fetchTrackImage];
 
 
 }
@@ -170,39 +169,7 @@
 
     
     
--(UIImage *)fetchTrackImage {
-    
-    __block UIImage *fetchedImage = [[UIImage alloc]init];
 
-    NSDictionary *currentTrack = [self.rdio.player valueForKey:@"currentTrackInfo_"];
-    NSString *urlStr = [currentTrack valueForKey:@"icon400"];
-    NSString *str = [urlStr stringByReplacingOccurrencesOfString:@"400" withString:@"600"];
-    NSURL *url =[NSURL URLWithString:str ];
-    NSLog(@"%@",url);
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-        
-        
-        NSData *imageData = [[NSData alloc] initWithContentsOfURL:location];
-        
-        fetchedImage = [[UIImage alloc] initWithData:imageData];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //self.albumImage.image = fetchedImage;
-            [self.currentTrack setImage:fetchedImage];
-            
-        });
-    }];
-    
-    [task resume];
-    
-    return fetchedImage;
-    
-}
 
 
 
