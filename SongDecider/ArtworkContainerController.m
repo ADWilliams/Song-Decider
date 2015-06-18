@@ -180,6 +180,8 @@
     //[self fetchTrackImage];
     
     
+    
+    
     if (oldState == RDPlayerStateInitializing && newState == RDPlayerStateBuffering) {
         [self fetchTrackImage];
         
