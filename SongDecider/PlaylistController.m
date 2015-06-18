@@ -21,12 +21,16 @@
 
 @property (nonatomic, strong) NSMutableArray *songData;
 
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+
 @end
 
 @implementation PlaylistController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = [UIColor blackColor];
     
     NSLog(@"playlist key in table view %@", self.playlist);
     
@@ -120,6 +124,54 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    PlaylistCell *cell = (PlaylistCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.iTunesButton.backgroundColor = [UIColor colorWithRed:128.0/255.0 green:0.0 blue:0.0 alpha:1.0];
+    
+    if (self.selectedIndexPath != nil && [self.selectedIndexPath compare:indexPath] == NSOrderedSame) {
+        
+        [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:YES];
+        
+        self.selectedIndexPath = nil;
+        
+        [self.tableView beginUpdates];
+        
+//        cell.iTunesButton.hidden = YES;
+//        [self.tableView bringSubviewToFront:cell.iTunesButton];
+        
+        [self.tableView endUpdates];
+        
+    }
+    else {
+        
+        self.selectedIndexPath = indexPath;
+        
+        [self.tableView beginUpdates];
+        
+//        cell.iTunesButton.hidden = NO;
+        
+        [self.tableView endUpdates];
+
+    }
+    
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (self.selectedIndexPath != nil && [self.selectedIndexPath compare:indexPath] == NSOrderedSame) {
+        
+        return 150;
+    }
+    
+    return 100;
+}
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -158,21 +210,20 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
-
-    if ([[segue identifier] isEqualToString:@"showPlaylistDetail"]) {
-        
-        DetailViewController *playlistDetailVC = segue.destinationViewController;
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Song *song = (self.songData)[indexPath.row];
-        [playlistDetailVC setSongItem:song];
-        
-    }
-    
-
-}
+//// In a storyboard-based application, you will often want to do a little preparation before navigation
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    // Get the new view controller using [segue destinationViewController].
+//    // Pass the selected object to the new view controller.
+//    
+//
+//    if ([[segue identifier] isEqualToString:@"showPlaylistDetail"]) {
+//        
+//        DetailViewController *playlistDetailVC = segue.destinationViewController;
+//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+//        Song *song = (self.songData)[indexPath.row];
+//        
+//    }
+//    
+//
+//}
 @end

@@ -41,9 +41,14 @@
 
 -(void)configure {
     
-    self.albumNameLabel.text = self.song.albumName;
     self.artistNameLabel.text = self.song.artistName;
+
+//    self.albumNameLabel.text = [NSString stringWithFormat:@"Album: %@", self.song.albumName];
+//    self.songNameLabel.text = [NSString stringWithFormat:@"Song: %@", self.song.songName];
+    
+    self.albumNameLabel.text = self.song.albumName;
     self.songNameLabel.text = self.song.songName;
+    
     [self configureImage];
     
     [self modifyCell];
@@ -84,8 +89,14 @@
     
     self.backgroundColor = [UIColor blackColor];
     self.albumNameLabel.backgroundColor = [UIColor blackColor];
-    self.albumNameLabel.textColor = [UIColor grayColor];
     self.artistNameLabel.backgroundColor = [UIColor blackColor];
+    self.albumNameLabel.backgroundColor = [UIColor blackColor];
+    
+    self.albumNameLabel.textColor = [UIColor grayColor];
+    self.songNameLabel.textColor = [UIColor grayColor];
+    self.artistNameLabel.textColor = [UIColor grayColor];
+    
+    self.iTunesButton.layer.cornerRadius = 12;
     
 }
 
@@ -98,4 +109,6 @@
 
 
 
+- (IBAction)iTunesButtonPressed:(UIButton *)sender {
+}
 @end
