@@ -44,7 +44,10 @@
     
     [self performSegueWithIdentifier:@"showMainView" sender:self];
     
+    
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
