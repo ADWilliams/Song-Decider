@@ -11,6 +11,7 @@
 #import "RdioManager.h"
 
 @interface ArtworkContainerController () <RDPlayerDelegate>
+
 @property (weak, nonatomic) IBOutlet UIImageView *artworkImageView;
 
 @property (nonatomic) UISwipeGestureRecognizer *swipeLeft;
@@ -23,6 +24,9 @@
 
 @property (nonatomic) UIImage *nextImage;
 
+@property (nonatomic) int leftSwipeCounter;
+
+@property (nonatomic) NSArray *genres;
 
 
 @end
@@ -33,13 +37,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.genres = @[ @"gr359",@"sr2885343",@"gr498",@"gr58",@"gr324",@"gr216",@"gr575",@"gr593", @"gr443",@"gr308",@"gr723"];
     
-    
+    self.leftSwipeCounter = 0;
     
     RdioManager *manager = [RdioManager sharedRdio];
     self.rdio = manager.rdioInstance;
     
     [self.rdio preparePlayerWithDelegate:self];
+    
+    int rand = arc4random() % (self.genres.count -1);
+
+    [self.rdio.player play:self.genres[rand]];
+
     
     self.mainView.playlistKey = [NSUserDefaults standardUserDefaults];
     self.mainView.playlist = [self.mainView.playlistKey objectForKey:@"playlistKey"];
@@ -54,13 +64,16 @@
     
     
     
+    
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     
     self.mainView = (MainViewController *)self.parentViewController;
     
-   
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,55 +84,28 @@
 
 -(void)swipeHandler: (UISwipeGestureRecognizer *)sender {
     if ([sender isEqual:self.swipeLeft]) {
+        self.leftSwipeCounter += 1;
+        
+        if (self.leftSwipeCounter > 4) {
+            self.leftSwipeCounter = 0;
+            NSLog(@"genre switch");
+            
+            self.nextImage = nil;
+            [self fetchTrackImage];
+            
+            int rand = arc4random() % (self.genres.count -1);
+            NSLog(@"%d", rand);
+            [self.rdio.player play:self.genres[rand]];
+        }
+             
         [self animateLeft];
         [self.rdio.player next];
     }
     
     if ([sender isEqual: self.swipeRight]) {
+        self.leftSwipeCounter = 0;
+        [self addToPlaylist];
         
-        if (self.mainView.playlist ==  nil) {
-            
-            NSDictionary *param = @{@"name": @"mobile playlist",
-                                    @"description": @"mobile playlist",
-                                    @"tracks": self.rdio.player.currentTrack};
-            
-            [self.rdio callAPIMethod:@"createPlaylist" withParameters:param success:^(NSDictionary *result) {
-                
-                NSLog(@"%@", result);
-                
-                self.mainView.playlist = [result objectForKey:@"key"];
-                
-                [self.mainView.playlistKey setObject:self.mainView.playlist forKey:@"playlistKey"];
-                
-                NSLog(@"Data Saved");
-                
-                
-            } failure:^(NSError *error) {
-                
-                NSLog(@"%@", error);
-                
-            }];
-        }
-        else {
-            
-            NSLog(@"key have been retrieved !!! %@", self.mainView.playlist);
-            
-            NSDictionary *param = @{@"playlist": self.mainView.playlist,
-                                    @"tracks": self.rdio.player.currentTrack};
-            
-            [self.rdio callAPIMethod:@"addToPlaylist" withParameters:param success:^(NSDictionary *result) {
-                
-                NSLog(@"current track number %@", self.rdio.player.currentTrack);
-                
-                NSLog(@"playlist returned %@", result);
-                
-            } failure:^(NSError *error) {
-                
-                NSLog(@"%@", error);
-                
-            }];
-            
-        }
         [self animateRight];
         [self.rdio.player next];
     }
@@ -135,14 +121,14 @@
         self.view.center = CGPointMake(self.view.frame.size.width/2, -self.view.frame.size.height);
         self.artworkImageView.image = nil;
         self.artworkImageView.image = self.nextImage;
+        
+        if (self.nextImage == nil) {
+            self.artworkImageView.image = nil;
+        }
+        
         self.nextImage = nil;
         
-        [UIView animateWithDuration:0.5 animations:^{
-            self.view.frame = self.mainView.view.frame;
-            [self.view layoutIfNeeded];
-        } completion:^(BOOL finnished) {
-           
-        }];
+        [self dropInAnimation];
         
     }];
 }
@@ -157,16 +143,36 @@
         self.view.center = CGPointMake(self.view.frame.size.width/2, -self.view.frame.size.height);
         self.artworkImageView.image = nil;
         self.artworkImageView.image = self.nextImage;
+        
+        if (self.nextImage == nil) {
+            self.artworkImageView.image = nil;
+        }
+        
         self.nextImage = nil;
+        
+        [self dropInAnimation];
+    }];
+}
+
+
+-(void)dropInAnimation {
+    if (self.artworkImageView != nil) {
         
         [UIView animateWithDuration:0.5 animations:^{
             self.view.frame = self.mainView.view.frame;
             [self.view layoutIfNeeded];
         }];
-        
-    }];
-}
+    }
+    else {
+        [self fetchTrackImage];
+        [UIView animateWithDuration:0.5 delay:2 usingSpringWithDamping:1 initialSpringVelocity:1 options:UIViewAnimationOptionCurveLinear animations:^{
+            self.view.frame = self.mainView.view.frame;
+            [self.view layoutIfNeeded];
 
+        } completion:nil];
+    }
+   
+}
 
 
 
@@ -178,9 +184,6 @@
 
 -(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState {
     //[self fetchTrackImage];
-    
-    
-    
     
     if (oldState == RDPlayerStateInitializing && newState == RDPlayerStateBuffering) {
         [self fetchTrackImage];
@@ -197,11 +200,59 @@
     
 }
 
+-(void) addToPlaylist {
+    if (self.mainView.playlist ==  nil) {
+        
+        NSDictionary *param = @{@"name": @"mobile playlist",
+                                @"description": @"mobile playlist",
+                                @"tracks": self.rdio.player.currentTrack};
+        
+        [self.rdio callAPIMethod:@"createPlaylist" withParameters:param success:^(NSDictionary *result) {
+            
+            NSLog(@"%@", result);
+            
+            self.mainView.playlist = [result objectForKey:@"key"];
+            
+            [self.mainView.playlistKey setObject:self.mainView.playlist forKey:@"playlistKey"];
+            
+            NSLog(@"Data Saved");
+            
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@", error);
+            
+        }];
+    }
+    else {
+        
+        NSLog(@"key have been retrieved !!! %@", self.mainView.playlist);
+        
+        NSDictionary *param = @{@"playlist": self.mainView.playlist,
+                                @"tracks": self.rdio.player.currentTrack};
+        
+        [self.rdio callAPIMethod:@"addToPlaylist" withParameters:param success:^(NSDictionary *result) {
+            
+            NSLog(@"current track number %@", self.rdio.player.currentTrack);
+            
+            NSLog(@"playlist returned %@", result);
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@", error);
+            
+        }];
+        
+    }
+    
+}
+
+
 -(UIImage *)fetchTrackImage {
     
     __block UIImage *fetchedImage = [[UIImage alloc]init];
     
-
+    
     NSDictionary *currentTrack = [self.rdio.player valueForKey:@"currentTrackInfo_"];
     NSString *urlStr = [currentTrack valueForKey:@"icon400"];
     //NSString *str = [urlStr stringByReplacingOccurrencesOfString:@"400" withString:@"600"];
