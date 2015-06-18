@@ -61,7 +61,6 @@
     
     //[self.rdio preparePlayerWithDelegate:self.childViewControllers[0];
 
-    [self.rdio.player play:@"gr723"];
     
     
     
