@@ -28,6 +28,14 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
+    
+//    self.itunesButton = [[UIButton alloc] initWithFrame:CGRectZero];
+//    [self.itunesButton setTitle:@"iTunes" forState:UIControlStateNormal];
+//    [self.itunesButton setBackgroundColor:[UIColor blackColor]];
+//    [self.itunesButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//    [self.itunesButton addTarget:self action:@selector(openItunes:) forControlEvents:UIControlEventTouchUpInside];
+//    [self addSubview:self.itunesButton];
+    
 
     // Configure the view for the selected state
 }
@@ -102,4 +110,6 @@
 
 
 
+- (IBAction)iTunesButtonPressed:(UIButton *)sender {
+}
 @end

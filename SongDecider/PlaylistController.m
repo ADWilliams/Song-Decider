@@ -21,11 +21,9 @@
 
 @property (nonatomic, strong) NSMutableArray *songData;
 
-@property (nonatomic, assign) BOOL isExpanded;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
-@property (nonatomic, strong) NSIndexPath *selectedRow;
 
-@property (nonatomic, strong) NSIndexPath *deselectedRow;
 
 @end
 
@@ -36,7 +34,7 @@
     
     [self.view setBackgroundColor:[UIColor blackColor]];
     
-    self.isExpanded = NO;
+
     
     NSLog(@"playlist key in table view %@", self.playlist);
     
@@ -115,7 +113,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     
-    NSLog(@"song data coount %d", [self.length intValue]);
+
     
     return [self.length intValue];
 }
@@ -125,8 +123,7 @@
     PlaylistCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     cell.song = (self.songData)[indexPath.row];
-    cell.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    cell.clipsToBounds = YES;
+
     
     
     return cell;
@@ -134,40 +131,44 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    self.selectedRow = indexPath;
+    PlaylistCell *cell = (PlaylistCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
-    PlaylistCell *cell = (PlaylistCell *)[tableView cellForRowAtIndexPath:indexPath];
-    
-    [tableView beginUpdates];
-    [tableView endUpdates];
-    cell.itunesButton.hidden = NO;
+    if (self.selectedIndexPath && [indexPath compare:self.selectedIndexPath] == NSOrderedSame) {
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        self.selectedIndexPath = nil;
+        [self.tableView beginUpdates];
+        
+        cell.iTunesButton.hidden = YES;
+        
+        [self.tableView endUpdates];
+    }
+    else {
+        self.selectedIndexPath = indexPath;
+        [self.tableView beginUpdates];
 
-    
+        cell.iTunesButton.hidden = NO;
+        
+        [self.tableView endUpdates];
+    }
+
 }
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    self.deselectedRow = indexPath;
-    
-    PlaylistCell *cell = (PlaylistCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [tableView beginUpdates];
-    [tableView endUpdates];
-    cell.itunesButton.hidden = YES;
-    
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
     
 }
 
+
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (self.selectedRow && indexPath.row == self.selectedRow.row) {
+    if (self.selectedIndexPath != nil && [self.selectedIndexPath compare:indexPath] == NSOrderedSame) {
         return 200;
     }
-    else if (self.selectedRow && indexPath.row == self.deselectedRow.row) {
-        
-        return 100;
-        
-    }
-    
+
     return 100;
 
 }

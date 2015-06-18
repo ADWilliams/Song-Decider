@@ -13,8 +13,11 @@
 
 @property (nonatomic, strong) Song *song;
 
-@property (nonatomic, strong) UIButton *itunesButton;
+@property (nonatomic, assign) BOOL isExpanded;
 
-//-(void)configure;
+//@property (nonatomic, strong) UIButton *itunesButton;
+
+
+
 
 @end
