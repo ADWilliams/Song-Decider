@@ -135,6 +135,11 @@
 
 
 -(void)animateRight {
+    
+    NSString *stationKey = [[ [self.rdio.player valueForKey:@"currentTrackInfo_" ]objectForKey:@"radio" ]valueForKey:@"key"];
+    
+    [self.rdio.player play:stationKey];
+    
     [UIView animateWithDuration:0.5 animations:^{
         self.view.center = CGPointMake(self.view.frame.size.width * 2 , self.view.center.y);
         
@@ -156,7 +161,7 @@
 
 
 -(void)dropInAnimation {
-    if (self.artworkImageView != nil) {
+    if (self.artworkImageView.image != nil) {
         
         [UIView animateWithDuration:0.5 animations:^{
             self.view.frame = self.mainView.view.frame;
@@ -165,7 +170,7 @@
     }
     else {
         [self fetchTrackImage];
-        [UIView animateWithDuration:0.5 delay:2 usingSpringWithDamping:1 initialSpringVelocity:1 options:UIViewAnimationOptionCurveLinear animations:^{
+        [UIView animateWithDuration:0.5 delay:1 usingSpringWithDamping:1 initialSpringVelocity:1 options:UIViewAnimationOptionCurveLinear animations:^{
             self.view.frame = self.mainView.view.frame;
             [self.view layoutIfNeeded];
 
