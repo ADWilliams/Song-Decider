@@ -84,8 +84,12 @@
     
     self.backgroundColor = [UIColor blackColor];
     self.albumNameLabel.backgroundColor = [UIColor blackColor];
-    self.albumNameLabel.textColor = [UIColor grayColor];
     self.artistNameLabel.backgroundColor = [UIColor blackColor];
+    self.songNameLabel.backgroundColor = [UIColor blackColor];
+    
+    self.albumNameLabel.textColor = [UIColor grayColor];
+    self.artistNameLabel.textColor = [UIColor grayColor];
+    self.songNameLabel.textColor = [UIColor grayColor];
     
 }
 

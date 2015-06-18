@@ -21,12 +21,22 @@
 
 @property (nonatomic, strong) NSMutableArray *songData;
 
+@property (nonatomic, assign) BOOL isExpanded;
+
+@property (nonatomic, strong) NSIndexPath *selectedRow;
+
+@property (nonatomic, strong) NSIndexPath *deselectedRow;
+
 @end
 
 @implementation PlaylistController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.view setBackgroundColor:[UIColor blackColor]];
+    
+    self.isExpanded = NO;
     
     NSLog(@"playlist key in table view %@", self.playlist);
     
@@ -115,9 +125,51 @@
     PlaylistCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     cell.song = (self.songData)[indexPath.row];
+    cell.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    cell.clipsToBounds = YES;
     
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    self.selectedRow = indexPath;
+    
+    PlaylistCell *cell = (PlaylistCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    [tableView beginUpdates];
+    [tableView endUpdates];
+    cell.itunesButton.hidden = NO;
+
+    
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    self.deselectedRow = indexPath;
+    
+    PlaylistCell *cell = (PlaylistCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [tableView beginUpdates];
+    [tableView endUpdates];
+    cell.itunesButton.hidden = YES;
+    
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (self.selectedRow && indexPath.row == self.selectedRow.row) {
+        return 200;
+    }
+    else if (self.selectedRow && indexPath.row == self.deselectedRow.row) {
+        
+        return 100;
+        
+    }
+    
+    return 100;
+
 }
 
 

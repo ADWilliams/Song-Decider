@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) Song *song;
 
+@property (nonatomic, strong) UIButton *itunesButton;
+
 //-(void)configure;
 
 @end
