@@ -14,6 +14,10 @@
 
 @property (nonatomic, strong) NSUserDefaults *playlistKey;
 
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *visualEffect;
+
+@property (weak, nonatomic) IBOutlet UIImageView *bgImage;
+
 -(void)nextView;
 
 @end
