@@ -36,9 +36,7 @@
 
 @implementation MainViewController
 
-- (IBAction)skip:(id)sender {
-    [self.rdio.player next];
-}
+
 
 
 
@@ -53,14 +51,13 @@
 
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
-    self.rdio.delegate = self;
+    //self.rdio.delegate = self;
     
     
     
     
     
-    //[self.rdio preparePlayerWithDelegate:self.childViewControllers[0];
-
+  
     
     
     
