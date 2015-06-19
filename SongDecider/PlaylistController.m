@@ -57,8 +57,9 @@
             song.albumName = [dictionary objectForKey:@"album"];
             song.artistName = [dictionary objectForKey:@"artist"];
             song.albumImage = [dictionary objectForKey:@"icon400"];
+            song.songTrackKey = [dictionary objectForKey:@"key"];
             
-            NSLog(@"song %@", song);
+            NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
             
             [temp addObject:song];
             
@@ -111,7 +112,7 @@
     
     NSLog(@"song data coount %d", [self.length intValue]);
     
-    return [self.length intValue];
+    return [self.songData count];
 }
 
 
@@ -119,6 +120,10 @@
     PlaylistCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     cell.song = (self.songData)[indexPath.row];
+    
+    UISwipeGestureRecognizer *swipeToRemove = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(removeTrack:)];
+    swipeToRemove.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.tableView addGestureRecognizer:swipeToRemove];
     
     
     return cell;
@@ -172,40 +177,56 @@
     return 100;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)removeTrack:(UISwipeGestureRecognizer *)sender {
+    
+    CGPoint pt = [sender locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:pt];
+    
+    Song *song = [self.songData objectAtIndex:indexPath.row];
+    
+    NSDictionary *param = @{@"playlist": self.playlist,
+                            @"index": [NSString stringWithFormat:@"%lu", (unsigned long)[self.songData indexOfObject:song]],
+                            @"count": @"1",
+                            @"tracks": song.songTrackKey};
+    
+    [self.rdio callAPIMethod:@"removeFromPlaylist" withParameters:param success:^(NSDictionary *result) {
+        
+        NSLog(@">>>>>> Succeed %@", result);
+        
+        self.playlist = [result objectForKey:@"key"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            
+            
+            [self.songData removeObject:song];
+            
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            
+            [self.tableView reloadData];
+            
+        });
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@", error);
+        
+    }];
+    
+    
+    
+    
+    
+    
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+     
+-(void)removeSong:(NSString *)song FromPlaylist:(NSString *)playlist AtIndex:(NSString *)index {
+    
+    
+    
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation

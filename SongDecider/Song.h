@@ -19,5 +19,9 @@
 
 @property (nonatomic, strong) NSString *albumImage;
 
+@property (nonatomic, strong) NSString *songTrackKey;
+
+
+
 
 @end
