@@ -195,17 +195,17 @@
         
         self.playlist = [result objectForKey:@"key"];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            
-            
-            [self.songData removeObject:song];
-            
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-            
-            [self.tableView reloadData];
-            
-        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            
+//            
+//            [self.songData removeObject:song];
+//            
+//            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//            
+//            [self.tableView reloadData];
+//            
+//        });
         
     } failure:^(NSError *error) {
         
@@ -213,7 +213,11 @@
         
     }];
     
+    [self.songData removeObject:song];
     
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
+    [self.tableView reloadData];
     
     
     
@@ -221,7 +225,7 @@
 }
 
 
-     
+
 -(void)removeSong:(NSString *)song FromPlaylist:(NSString *)playlist AtIndex:(NSString *)index {
     
     
