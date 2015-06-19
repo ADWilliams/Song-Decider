@@ -13,6 +13,10 @@
 
 @property (nonatomic, strong) Song *song;
 
+@property (weak, nonatomic) IBOutlet UIButton *iTunesButton;
+
+- (IBAction)iTunesButtonPressed:(UIButton *)sender;
+
 //-(void)configure;
 
 @end
