@@ -141,6 +141,7 @@
         if (self.switching == NO) {
             
             self.artworkImageView.image = self.nextImage;
+            self.mainView.bgImage.image = self.artworkImageView.image;
             
             if (self.nextImage == nil) {
                 self.artworkImageView.image = nil;
@@ -170,6 +171,7 @@
         if (self.switching == YES) {
             
             self.artworkImageView.image = self.nextImage;
+            self.mainView.bgImage.image = self.artworkImageView.image;
             if (self.nextImage == nil) {
                 self.artworkImageView.image = nil;
             }
@@ -316,6 +318,7 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.artworkImageView.image = fetchedImage;
+            
             
         });
     }];
