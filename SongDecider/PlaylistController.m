@@ -45,8 +45,6 @@
         
         NSMutableArray *temp = [NSMutableArray array];
         
-        NSString *numTracks = [[result objectForKey:self.playlist] objectForKey:@"length"];
-        
         NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
         
         for (NSDictionary *dictionary in tracks) {
@@ -82,8 +80,6 @@
         }
         
         self.songData = temp;
-        
-        self.length = numTracks;
         
         NSLog(@"%lu", (unsigned long)self.songData.count);
         
@@ -158,9 +154,6 @@
         
         [self.tableView beginUpdates];
         
-//        cell.iTunesButton.hidden = YES;
-//        [self.tableView bringSubviewToFront:cell.iTunesButton];
-        
         [self.tableView endUpdates];
         
     }
@@ -170,16 +163,9 @@
         
         [self.tableView beginUpdates];
         
-//        cell.iTunesButton.hidden = NO;
-        
         [self.tableView endUpdates];
 
     }
-    
-}
-
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     
 }
 
@@ -211,18 +197,6 @@
         
         self.playlist = [result objectForKey:@"key"];
         
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            
-//            
-//            
-//            [self.songData removeObject:song];
-//            
-//            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-//            
-//            [self.tableView reloadData];
-//            
-//        });
-        
     } failure:^(NSError *error) {
         
         NSLog(@"%@", error);
@@ -231,20 +205,11 @@
     
     [self.songData removeObject:song];
     
+    [self.tableView beginUpdates];
+    
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     
-    [self.tableView reloadData];
-    
-    
-    
-    
-}
-
-
-
--(void)removeSong:(NSString *)song FromPlaylist:(NSString *)playlist AtIndex:(NSString *)index {
-    
-    
+    [self.tableView endUpdates];
     
 }
 
