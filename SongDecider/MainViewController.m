@@ -54,14 +54,7 @@
     self.rdio = rdioManager.rdioInstance;
     //self.rdio.delegate = self;
     
-    
-    
-    
-    
-  
-    
-    
-    
+
 }
 
 #pragma mark - SwipeGesture
