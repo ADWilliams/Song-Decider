@@ -61,7 +61,23 @@
             
             NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
             
-            [temp addObject:song];
+            BOOL containsSong = NO;
+            
+            for (Song *playlistSong in temp) {
+                
+                if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
+                    
+                    containsSong = YES;
+                    
+                }
+                
+            }
+            
+            if (!containsSong) {
+                
+                [temp addObject:song];
+                
+            }
             
         }
         
