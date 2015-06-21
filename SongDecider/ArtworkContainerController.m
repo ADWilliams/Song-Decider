@@ -30,6 +30,8 @@
 
 @property (nonatomic) BOOL  switching;
 
+@property (nonatomic, strong) SlideMenuViewController *slideMenuViewController;
+
 @end
 
 @implementation ArtworkContainerController
@@ -37,6 +39,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.slideMenuViewController.delegate = self;
     
     self.genres = @[ @"gr359",@"sr2885343",@"gr498",@"gr58",@"gr324",@"gr216",@"gr575",@"gr593", @"gr443",@"gr308",@"gr723"];
     

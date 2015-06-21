@@ -12,6 +12,7 @@
 #import "ArtworkView.h"
 #import "PlaylistController.h"
 #import "ArtworkContainerController.h"
+#import "SlideMenuViewController.h"
 
 
 @interface MainViewController () <RdioDelegate, RDPlayerDelegate>
@@ -28,6 +29,10 @@
 
 @property (weak, nonatomic) IBOutlet ArtworkView *artworkView;
 
+@property (nonatomic, strong) ArtworkContainerController *artworkContainerController;
+
+@property (nonatomic, strong) SlideMenuViewController *slideMenuViewController;
+@property (nonatomic, assign) BOOL showSlideMenu;
 
 
 
@@ -45,9 +50,14 @@
        
     self.playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
-   
     
     [super viewDidLoad];
+    
+    //Setup Slide Menu Controller
+    
+    
+    
+    
     // Do any additional setup after loading the view.
 
     RdioManager *rdioManager = [RdioManager sharedRdio];
@@ -79,11 +89,13 @@
 
 
 
+
+
 -(void)nextView {
     
-    ArtworkContainerController *nextView = [[ArtworkContainerController alloc]init];
-    [nextView awakeFromNib];
-    [self addChildViewController:nextView];
+    self.artworkContainerController = [[ArtworkContainerController alloc]init];
+    [self.artworkContainerController awakeFromNib];
+    [self addChildViewController:self.artworkContainerController];
     
     //[nextView setImage:[self fetchTrackImage]];
     //[self.view addSubview:nextView];
@@ -111,7 +123,6 @@
 }
 
 
-    
 
     
     
@@ -136,6 +147,99 @@
         playlistVC.playlist = self.playlist;
         
     }
+    
+}
+
+
+
+- (IBAction)slideMenuWasPressed:(UIBarButtonItem *)sender {
+    
+    NSLog(@"Button was pressed");
+    
+    UIBarButtonItem *button = sender;
+    
+    switch (button.tag) {
+        case 0:
+            [self slideBackToOriginalSpot];
+            NSLog(@"button tag at 0");
+            break;
+        case 1:
+            [self slideRight];
+            NSLog(@"button tag at 1");
+            
+        default:
+            break;
+    }
+}
+
+-(void)slideRight {
+    
+    UIView *childView = [self getSlideMenu];
+    [self.view sendSubviewToBack:childView];
+    
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        
+        self.view.frame = CGRectMake(self.view.frame.size.width - 60, 0, self.view.frame.size.width, self.view.frame.size.height);
+        
+    } completion:^(BOOL finished) {
+        
+        if (finished) {
+            
+            self.slideMenuBarButton.tag = 0;
+            NSLog(@"button tag slide right");
+        }
+        
+    }];
+}
+
+-(void)slideBackToOriginalSpot {
+    
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        
+        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        
+    } completion:^(BOOL finished) {
+        
+        [self resetView];
+        
+    }];
+}
+
+-(void)resetView {
+    
+    if (self.slideMenuViewController != nil) {
+        
+        [self.slideMenuViewController.view removeFromSuperview];
+        self.slideMenuViewController = nil;
+        
+        self.slideMenuBarButton.tag = 1;
+        self.showSlideMenu = NO;
+        NSLog(@"button tag reset");
+
+    }
+    
+}
+
+- (UIView *)getSlideMenu {
+    
+    if (self.slideMenuViewController == nil) {
+        
+        self.slideMenuViewController = [[SlideMenuViewController alloc] init];
+        self.slideMenuViewController.view.tag = 2;
+        
+        [self.view addSubview:self.slideMenuViewController.view];
+        [self addChildViewController:self.slideMenuViewController];
+        [self.slideMenuViewController didMoveToParentViewController:self];
+        
+        self.slideMenuViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        
+    }
+    
+    self.showSlideMenu = YES;
+    
+    UIView *view = self.slideMenuViewController.view;
+    
+    return view;
     
 }
 

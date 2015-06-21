@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6C609FBDEB0A985B9CF83F5A /* libPods-SongDecider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B037ECEC7792572C7ADB42DF /* libPods-SongDecider.a */; };
+		9627C91A1B36553C00B44F4D /* SlideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627C9191B36553C00B44F4D /* SlideMenuViewController.m */; };
 		964BE7BD1B2F8A24000B6DB2 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 964BE7BC1B2F8A24000B6DB2 /* Song.m */; };
 		96972EAB1B31044100502227 /* PlaylistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96972EAA1B31044100502227 /* PlaylistCell.m */; };
 		C8261FB61B2CD97F00CD0C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C8261FB51B2CD97F00CD0C5B /* main.m */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9627C9181B36553C00B44F4D /* SlideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuViewController.h; sourceTree = "<group>"; };
+		9627C9191B36553C00B44F4D /* SlideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuViewController.m; sourceTree = "<group>"; };
 		964BE7BB1B2F8A24000B6DB2 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		964BE7BC1B2F8A24000B6DB2 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		96972EA91B31044100502227 /* PlaylistCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistCell.h; sourceTree = "<group>"; };
@@ -199,6 +202,8 @@
 				C830A5191B2F7EFC009F4FDE /* PlaylistController.m */,
 				96972EA91B31044100502227 /* PlaylistCell.h */,
 				96972EAA1B31044100502227 /* PlaylistCell.m */,
+				9627C9181B36553C00B44F4D /* SlideMenuViewController.h */,
+				9627C9191B36553C00B44F4D /* SlideMenuViewController.m */,
 				C830A51B1B2F7F29009F4FDE /* DetailViewController.h */,
 				C830A51C1B2F7F29009F4FDE /* DetailViewController.m */,
 			);
@@ -363,6 +368,7 @@
 				C8A70FA31B31E83000F97BBC /* ArtworkContainerController.m in Sources */,
 				C8261FB61B2CD97F00CD0C5B /* main.m in Sources */,
 				C830A51D1B2F7F29009F4FDE /* DetailViewController.m in Sources */,
+				9627C91A1B36553C00B44F4D /* SlideMenuViewController.m in Sources */,
 				C86F15391B309A85003745BD /* ArtworkView.m in Sources */,
 				96972EAB1B31044100502227 /* PlaylistCell.m in Sources */,
 			);

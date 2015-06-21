@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlideMenuViewController.h"
 
-@interface ArtworkContainerController : UIViewController
+@interface ArtworkContainerController : UIViewController <SlideMenuViewControllerDelegate>
 
 @end

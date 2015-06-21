@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface MainViewController : UIViewController
 
 @property (nonatomic, strong) NSString *playlist;
@@ -17,6 +18,12 @@
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *visualEffect;
 
 @property (weak, nonatomic) IBOutlet UIImageView *bgImage;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *slideMenuBarButton;
+
+- (IBAction)slideMenuWasPressed:(UIBarButtonItem *)sender;
+
+
 
 -(void)nextView;
 
