@@ -67,6 +67,7 @@
 
 }
 
+
 #pragma mark - SwipeGesture
 
 -(void) swipeHandler: (UIGestureRecognizer *)sender {
@@ -227,17 +228,17 @@
         self.slideMenuViewController = [[SlideMenuViewController alloc] init];
         self.slideMenuViewController.view.tag = 2;
         
-        [self.view addSubview:self.slideMenuViewController.view];
+        [self.view addSubview:self.slideMenuViewController.tableView];
         [self addChildViewController:self.slideMenuViewController];
         [self.slideMenuViewController didMoveToParentViewController:self];
         
-        self.slideMenuViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        self.slideMenuViewController.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         
     }
     
     self.showSlideMenu = YES;
     
-    UIView *view = self.slideMenuViewController.view;
+    UIView *view = self.slideMenuViewController.tableView;
     
     return view;
     

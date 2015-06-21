@@ -7,6 +7,7 @@
 //
 
 #import "SlideMenuViewController.h"
+#import "SlideMenuCategoryCell.h"
 
 @interface SlideMenuViewController ()
 
@@ -29,6 +30,8 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -43,12 +46,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.categoryData count];
+    return 10;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    SlideMenuCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+
     
     // Configure the cell...
     

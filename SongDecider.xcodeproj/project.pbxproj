@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6C609FBDEB0A985B9CF83F5A /* libPods-SongDecider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B037ECEC7792572C7ADB42DF /* libPods-SongDecider.a */; };
 		9627C91A1B36553C00B44F4D /* SlideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627C9191B36553C00B44F4D /* SlideMenuViewController.m */; };
+		9627C91D1B373E3100B44F4D /* SlideMenuCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627C91C1B373E3100B44F4D /* SlideMenuCategoryCell.m */; };
 		964BE7BD1B2F8A24000B6DB2 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 964BE7BC1B2F8A24000B6DB2 /* Song.m */; };
 		96972EAB1B31044100502227 /* PlaylistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96972EAA1B31044100502227 /* PlaylistCell.m */; };
 		C8261FB61B2CD97F00CD0C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C8261FB51B2CD97F00CD0C5B /* main.m */; };
@@ -46,6 +47,8 @@
 /* Begin PBXFileReference section */
 		9627C9181B36553C00B44F4D /* SlideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuViewController.h; sourceTree = "<group>"; };
 		9627C9191B36553C00B44F4D /* SlideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuViewController.m; sourceTree = "<group>"; };
+		9627C91B1B373E3100B44F4D /* SlideMenuCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuCategoryCell.h; sourceTree = "<group>"; };
+		9627C91C1B373E3100B44F4D /* SlideMenuCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuCategoryCell.m; sourceTree = "<group>"; };
 		964BE7BB1B2F8A24000B6DB2 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		964BE7BC1B2F8A24000B6DB2 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		96972EA91B31044100502227 /* PlaylistCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistCell.h; sourceTree = "<group>"; };
@@ -204,6 +207,8 @@
 				96972EAA1B31044100502227 /* PlaylistCell.m */,
 				9627C9181B36553C00B44F4D /* SlideMenuViewController.h */,
 				9627C9191B36553C00B44F4D /* SlideMenuViewController.m */,
+				9627C91B1B373E3100B44F4D /* SlideMenuCategoryCell.h */,
+				9627C91C1B373E3100B44F4D /* SlideMenuCategoryCell.m */,
 				C830A51B1B2F7F29009F4FDE /* DetailViewController.h */,
 				C830A51C1B2F7F29009F4FDE /* DetailViewController.m */,
 			);
@@ -369,6 +374,7 @@
 				C8261FB61B2CD97F00CD0C5B /* main.m in Sources */,
 				C830A51D1B2F7F29009F4FDE /* DetailViewController.m in Sources */,
 				9627C91A1B36553C00B44F4D /* SlideMenuViewController.m in Sources */,
+				9627C91D1B373E3100B44F4D /* SlideMenuCategoryCell.m in Sources */,
 				C86F15391B309A85003745BD /* ArtworkView.m in Sources */,
 				96972EAB1B31044100502227 /* PlaylistCell.m in Sources */,
 			);
