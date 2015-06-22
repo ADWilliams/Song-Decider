@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *bgImage;
 
+
 -(void)nextView;
 
 @end

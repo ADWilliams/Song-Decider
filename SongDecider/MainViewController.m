@@ -32,7 +32,6 @@
 
 
 
-
 @end
 
 @implementation MainViewController
@@ -55,9 +54,7 @@
     //self.rdio.delegate = self;
     
     
-    
-    
-    
+       
   
     
     
