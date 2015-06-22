@@ -99,7 +99,7 @@
     [self addChildViewController:self.artworkContainerController];
     
     //[nextView setImage:[self fetchTrackImage]];
-    //[self.view addSubview:nextView];
+    [self.view addSubview:self.artworkContainerController.view];
     //self.currentTrack = nextView;
 }
 
@@ -180,7 +180,10 @@
     
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         
-        self.view.frame = CGRectMake(self.view.frame.size.width - 60, 0, self.view.frame.size.width, self.view.frame.size.height);
+        self.artworkContainerController.view.frame = CGRectMake(self.view.frame.size.width - 60, 0, self.view.frame.size.width, self.view.frame.size.height);
+        
+        self.artworkView.frame = CGRectMake(self.view.frame.size.width - 60, 0, self.view.frame.size.width, self.view.frame.size.height);
+        
         
     } completion:^(BOOL finished) {
         
@@ -197,7 +200,9 @@
     
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         
-        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        self.artworkContainerController.view.frame = CGRectMake(self.view.frame.size.width - 60, 0, self.view.frame.size.width, self.view.frame.size.height);
+        
+        self.artworkView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         
     } completion:^(BOOL finished) {
         
@@ -227,10 +232,12 @@
         
         self.slideMenuViewController = [[SlideMenuViewController alloc] init];
         self.slideMenuViewController.view.tag = 2;
+        self.slideMenuViewController.delegate = self.artworkContainerController;
         
         [self.view addSubview:self.slideMenuViewController.tableView];
         [self addChildViewController:self.slideMenuViewController];
         [self.slideMenuViewController didMoveToParentViewController:self];
+        
         
         self.slideMenuViewController.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         
