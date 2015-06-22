@@ -10,7 +10,7 @@
 #import "MainViewController.h"
 #import "RdioManager.h"
 
-@interface ArtworkContainerController () <RDPlayerDelegate> 
+@interface ArtworkContainerController () <RDPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *artworkImageView;
 
@@ -122,11 +122,46 @@
         self.nextImage = nil;
         [self addToPlaylist];
         
-        [self animateRight];
-        
         NSString *stationKey = [[ [self.rdio.player valueForKey:@"currentTrackInfo_" ]objectForKey:@"radio" ]valueForKey:@"key"];
+        NSDictionary *params = @{@"keys":stationKey};
+        [self.rdio callAPIMethod:@"get" withParameters:params success:^(NSDictionary *result) {
+            
+            NSMutableArray *array = [[NSMutableArray alloc]init];
+            
+            for (NSString *string in [result objectForKey:stationKey]) {
+                if ([string isEqualToString:@"icon400"]) {
+                    [array addObject:string];
+                }
+                
+                
+            }
+            
+            NSString *urlStr = [array firstObject];
+            
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSURLRequest *request = [ NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+            
+            NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                NSData *imageData = [NSData dataWithContentsOfURL:location];
+                UIImage *image = [UIImage imageWithData:imageData];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.artworkImageView.image = image;
+                });
+            }];
+            [task resume];
+            ;
+            
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+        }];
         
         [self.rdio.player play:stationKey];
+        
+        
+        [self animateRight];
+        
+        
     }
 }
 
@@ -175,20 +210,11 @@
         self.view.transform = CGAffineTransformMakeRotation(0);
         
         self.artworkImageView.image = nil;
+        [self dropInAnimation];
         
+        self.mainView.bgImage.image = self.artworkImageView.image;
         
-        if (self.switching == YES) {
-            
-            self.mainView.bgImage.image = self.artworkImageView.image;
-            
-            if (self.nextImage == nil) {
-                self.artworkImageView.image = nil;
-            }
-            
-            self.nextImage = nil;
-            
-            [self dropInAnimation];
-        }
+        self.nextImage = nil;
         
         
     }];
@@ -216,7 +242,7 @@
             //[self.view layoutIfNeeded];
             
         } completion:^(BOOL finished) {
-          
+            
             self.mainView.bgImage.image = self.artworkImageView.image;
             
         }];
@@ -244,6 +270,8 @@
     //        }
     //    }
     
+    
+
     
     if (newState == RDPlayerStatePlaying) {
         if (self.switching == YES) {
