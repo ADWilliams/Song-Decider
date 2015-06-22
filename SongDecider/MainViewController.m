@@ -12,6 +12,8 @@
 #import "ArtworkView.h"
 #import "PlaylistController.h"
 #import "ArtworkContainerController.h"
+#import "GenreCell.h"
+#import "Genre.h"
 
 
 @interface MainViewController () <RdioDelegate, RDPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -30,6 +32,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *slideMenuView;
 
+@property (nonatomic, strong) NSMutableArray *genreArray;
 
 
 
@@ -47,6 +50,43 @@
     self.playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
     self.slideMenuView.delegate = self;
+    
+    self.genreArray = [NSMutableArray array];
+    
+    Genre *genre = [[Genre alloc] initWithName:@"Pop" Key:@"gr723"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Soft Hits" Key:@"sr2885343"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Country" Key:@"gr359"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Rock" Key:@"gr498"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Indie" Key:@"gr58"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Hip Hop" Key:@"gr324"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Electronic" Key:@"gr216"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Reggae" Key:@"gr575"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Dance" Key:@"gr593"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Jazz" Key:@"gr308"];
+    [self.genreArray addObject:genre];
+    
+    genre = [[Genre alloc] initWithName:@"Blues" Key:@"gr475"];
+    [self.genreArray addObject:genre];
+    
+    [self.slideMenuView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
    
     
     [super viewDidLoad];
@@ -77,21 +117,6 @@
         [self.rdio.player next];
         [self.artworkView animateRight];
     }
-
-
-
-
-//-(void)nextView {
-//    
-//    ArtworkContainerController *nextView = [[ArtworkContainerController alloc]init];
-//    [nextView awakeFromNib];
-//    [self addChildViewController:nextView];
-//    
-//    [nextView setImage:[self fetchTrackImage]];
-//    [self.view addSubview:nextView];
-//    self.currentTrack = nextView;
-//}
-
 
 
 
@@ -127,6 +152,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [self.slideMenuView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    cell.textLabel.text = [[self.genreArray objectAtIndex:indexPath.row] genreName];
     
     return cell;
 }

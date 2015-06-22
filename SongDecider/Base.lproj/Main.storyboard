@@ -225,7 +225,7 @@
                                             <segue destination="pSZ-Sx-wZE" kind="embed" id="cmm-AY-Oj6"/>
                                         </connections>
                                     </containerView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7y6-HD-cEX">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7y6-HD-cEX">
                                         <rect key="frame" x="0.0" y="0.0" width="509" height="487"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
@@ -241,17 +241,21 @@
                                     <constraint firstItem="cSR-v2-4ci" firstAttribute="leading" secondItem="o8N-Jf-Exz" secondAttribute="leading" id="AtG-P7-1f5"/>
                                     <constraint firstItem="cSR-v2-4ci" firstAttribute="top" secondItem="o8N-Jf-Exz" secondAttribute="top" id="B3C-wt-RS3"/>
                                     <constraint firstItem="cSR-v2-4ci" firstAttribute="leading" secondItem="o8N-Jf-Exz" secondAttribute="leadingMargin" id="BpY-lU-lVB"/>
+                                    <constraint firstItem="7y6-HD-cEX" firstAttribute="leading" secondItem="o8N-Jf-Exz" secondAttribute="leading" id="DLp-b9-D0c"/>
                                     <constraint firstAttribute="centerX" secondItem="cSR-v2-4ci" secondAttribute="centerX" id="EIB-E2-CpK"/>
                                     <constraint firstAttribute="centerX" secondItem="cSR-v2-4ci" secondAttribute="centerX" id="Frg-1g-Jtc"/>
                                     <constraint firstAttribute="centerY" secondItem="cSR-v2-4ci" secondAttribute="centerY" id="HLJ-qG-gjJ"/>
                                     <constraint firstAttribute="trailing" secondItem="cSR-v2-4ci" secondAttribute="trailing" id="HSY-8M-bp7"/>
                                     <constraint firstItem="cSR-v2-4ci" firstAttribute="leading" secondItem="o8N-Jf-Exz" secondAttribute="leading" id="KXG-mh-dMo"/>
                                     <constraint firstAttribute="trailing" secondItem="cSR-v2-4ci" secondAttribute="trailing" id="LDU-pO-vDc"/>
+                                    <constraint firstItem="7y6-HD-cEX" firstAttribute="top" secondItem="o8N-Jf-Exz" secondAttribute="top" id="PS3-LH-Wqd"/>
                                     <constraint firstItem="cSR-v2-4ci" firstAttribute="top" secondItem="o8N-Jf-Exz" secondAttribute="topMargin" id="QIL-73-vxE"/>
+                                    <constraint firstItem="7y6-HD-cEX" firstAttribute="trailing" secondItem="cSR-v2-4ci" secondAttribute="leading" id="RyE-ba-ci1"/>
                                     <constraint firstItem="cSR-v2-4ci" firstAttribute="top" secondItem="o8N-Jf-Exz" secondAttribute="top" id="SrX-Eb-zzE"/>
                                     <constraint firstAttribute="centerX" secondItem="jgO-4X-wKm" secondAttribute="centerX" id="THC-bM-lVr"/>
                                     <constraint firstAttribute="centerY" secondItem="0TO-M0-p1Q" secondAttribute="centerY" id="Wgf-8R-8rl"/>
                                     <constraint firstAttribute="centerX" secondItem="0TO-M0-p1Q" secondAttribute="centerX" id="XPt-pQ-xf2"/>
+                                    <constraint firstAttribute="bottom" secondItem="7y6-HD-cEX" secondAttribute="bottom" id="cD7-nA-rp4"/>
                                     <constraint firstItem="cSR-v2-4ci" firstAttribute="bottom" secondItem="o8N-Jf-Exz" secondAttribute="bottomMargin" id="gVf-4f-6OR"/>
                                     <constraint firstAttribute="trailing" secondItem="cSR-v2-4ci" secondAttribute="trailing" id="hOO-P9-WiH"/>
                                     <constraint firstAttribute="bottom" secondItem="cSR-v2-4ci" secondAttribute="bottom" id="hrv-WB-KYp"/>
@@ -311,6 +315,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Main View" id="hmn-XH-C4g">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="E4c-j1-lUf"/>
                         <barButtonItem key="rightBarButtonItem" title="Playlist" id="xJZ-DB-bzf">
                             <connections>
                                 <segue destination="tnu-IA-Iai" kind="show" identifier="playlistSegue" id="XNa-rA-NO9"/>
