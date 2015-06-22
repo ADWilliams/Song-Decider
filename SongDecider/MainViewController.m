@@ -34,6 +34,8 @@
 
 @property (nonatomic, strong) NSMutableArray *genreArray;
 
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+
 
 
 
@@ -50,6 +52,13 @@
     self.playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
     self.slideMenuView.delegate = self;
+
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+
+    RdioManager *rdioManager = [RdioManager sharedRdio];
+    self.rdio = rdioManager.rdioInstance;
+    //self.rdio.delegate = self;
     
     self.genreArray = [NSMutableArray array];
     
@@ -86,15 +95,6 @@
     genre = [[Genre alloc] initWithName:@"Blues" Key:@"gr475"];
     [self.genreArray addObject:genre];
     
-    [self.slideMenuView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-   
-    
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-
-    RdioManager *rdioManager = [RdioManager sharedRdio];
-    self.rdio = rdioManager.rdioInstance;
-    //self.rdio.delegate = self;
     
 
 }
@@ -146,18 +146,23 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 10;
+    return self.genreArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [self.slideMenuView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    GenreCell *cell = [self.slideMenuView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    cell.textLabel.text = [[self.genreArray objectAtIndex:indexPath.row] genreName];
+    cell.genreLabel.text = [[self.genreArray objectAtIndex:indexPath.row] genreName];
     
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    
+}
     
 
     
@@ -185,6 +190,85 @@
     }
     
 }
+
+
+- (IBAction)slideoutMenuButtonWasPressed:(UIBarButtonItem *)sender {
+    
+    NSLog(@"Button was pressed");
+    
+    UIBarButtonItem *button = sender;
+    
+    switch (button.tag) {
+        case 0:
+            [self slideBackToOriginalSpot];
+            NSLog(@"button tag at 0");
+            break;
+        case 1:
+            [self slideRight];
+            NSLog(@"button tag at 1");
+            
+        default:
+            break;
+    }
+    
+}
+
+-(void)slideRight {
+    
+    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        
+        self.slidemenuWidthConstraint.constant = 200;
+        
+        [self.view layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        
+        if (finished) {
+            
+            self.slideoutMenuButton.tag = 0;
+            
+        }
+        
+    }];
+    
+}
+
+-(void)slideBackToOriginalSpot {
+    
+    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        
+        self.slidemenuWidthConstraint.constant = 0;
+        
+        [self.view layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        
+        if (finished) {
+            
+            self.slideoutMenuButton.tag = 1;
+            
+            [self.rdio.player play:];
+            
+        }
+        
+    }];
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

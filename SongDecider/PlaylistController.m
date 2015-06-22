@@ -28,6 +28,10 @@
 @implementation PlaylistController
 
 - (void)viewDidLoad {
+    
+    NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
+    self.playlist = [playlistKey objectForKey:@"playlistKey"];
+    
     [super viewDidLoad];
     
     self.tableView.backgroundColor = [UIColor blackColor];

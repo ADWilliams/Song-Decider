@@ -20,4 +20,16 @@
     // Configure the view for the selected state
 }
 
+//-(void)setGenre:(Genre *)genre {
+//    
+//    _genre = genre;
+//    
+//    [self configure];
+//}
+//
+//-(void)configure {
+//    
+//    self.genreLabel.text = self.genre.genreName;
+//}
+
 @end

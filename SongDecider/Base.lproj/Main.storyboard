@@ -168,7 +168,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uxX-Ee-HDL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2734" y="-521"/>
+            <point key="canvasLocation" x="2750" y="-521"/>
         </scene>
         <!--MainView-->
         <scene sceneID="zga-9w-poO">
@@ -227,7 +227,38 @@
                                     </containerView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7y6-HD-cEX">
                                         <rect key="frame" x="0.0" y="0.0" width="509" height="487"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.1843137255" green="0.1764705882" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="0.77395044189999995" green="0.77395044189999995" blue="0.77395044189999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <prototypes>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="aQ6-0N-2lv" customClass="GenreCell">
+                                                <rect key="frame" x="0.0" y="0.0" width="509" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQ6-0N-2lv" id="JWC-jD-oxM">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIM-fh-ZzA">
+                                                            <rect key="frame" x="8" y="11" width="493" height="21"/>
+                                                            <color key="backgroundColor" red="0.1843137255" green="0.1764705882" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="21" id="rU7-yE-QYF"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.77395044189999995" green="0.77395044189999995" blue="0.77395044189999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="jIM-fh-ZzA" firstAttribute="leading" secondItem="JWC-jD-oxM" secondAttribute="leadingMargin" id="3da-jz-gGy"/>
+                                                        <constraint firstAttribute="centerY" secondItem="jIM-fh-ZzA" secondAttribute="centerY" id="utw-wQ-4PA"/>
+                                                        <constraint firstItem="jIM-fh-ZzA" firstAttribute="trailing" secondItem="JWC-jD-oxM" secondAttribute="trailingMargin" id="zFg-Q6-8NV"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" red="0.1843137255" green="0.1764705882" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <connections>
+                                                    <outlet property="genreLabel" destination="jIM-fh-ZzA" id="y8M-w1-kdx"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
                                         <connections>
                                             <outlet property="dataSource" destination="anK-jn-NpQ" id="y03-b7-nrX"/>
                                             <outlet property="delegate" destination="anK-jn-NpQ" id="VCJ-vs-VxT"/>
@@ -315,7 +346,11 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Main View" id="hmn-XH-C4g">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="E4c-j1-lUf"/>
+                        <barButtonItem key="leftBarButtonItem" tag="1" image="Menu Filled-25" id="E4c-j1-lUf">
+                            <connections>
+                                <action selector="slideoutMenuButtonWasPressed:" destination="anK-jn-NpQ" id="UKS-Gc-68I"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Playlist" id="xJZ-DB-bzf">
                             <connections>
                                 <segue destination="tnu-IA-Iai" kind="show" identifier="playlistSegue" id="XNa-rA-NO9"/>
@@ -326,6 +361,8 @@
                         <outlet property="artworkView" destination="o8N-Jf-Exz" id="SiL-Un-old"/>
                         <outlet property="bgImage" destination="jgO-4X-wKm" id="54I-P8-Sfh"/>
                         <outlet property="slideMenuView" destination="7y6-HD-cEX" id="t3a-PA-dQX"/>
+                        <outlet property="slidemenuWidthConstraint" destination="RyE-ba-ci1" id="rDk-AV-JWo"/>
+                        <outlet property="slideoutMenuButton" destination="E4c-j1-lUf" id="6EW-ai-ZNI"/>
                         <outlet property="visualEffect" destination="0TO-M0-p1Q" id="qWz-pC-nEY"/>
                     </connections>
                 </viewController>
@@ -402,7 +439,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="tnu-IA-Iai" kind="relationship" relationship="rootViewController" id="Dnp-PF-0o7"/>
+                        <segue destination="tnu-IA-Iai" kind="relationship" relationship="rootViewController" id="CFh-Mb-ZJQ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SHc-AU-JuZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -451,6 +488,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Menu Filled-25" width="25" height="25"/>
         <image name="music-notes_400x400_360" width="360" height="360"/>
     </resources>
     <inferredMetricsTieBreakers>

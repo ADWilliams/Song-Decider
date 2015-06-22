@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Genre.h"
 
 @interface GenreCell : UITableViewCell
 
-@property (nonatomic, strong) NSString *genreName;
+@property (nonatomic, strong) Genre *genre;
 
-@property (nonatomic, strong) NSString *genreKey;
+@property (weak, nonatomic) IBOutlet UILabel *genreLabel;
+
 
 
 @end
