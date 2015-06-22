@@ -34,7 +34,7 @@
 
 @property (nonatomic, strong) NSMutableArray *genreArray;
 
-@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property (nonatomic, strong) Genre *selectedGenre;
 
 
 
@@ -153,14 +153,14 @@
     
     GenreCell *cell = [self.slideMenuView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    cell.genreLabel.text = [[self.genreArray objectAtIndex:indexPath.row] genreName];
+    cell.genre = [self.genreArray objectAtIndex:indexPath.row];
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
+    self.selectedGenre = [self.genreArray objectAtIndex:indexPath.row];
     
 }
     
@@ -245,9 +245,9 @@
         
         if (finished) {
             
-            self.slideoutMenuButton.tag = 1;
+            [self.rdio.player play:[self.selectedGenre genreKey]];
             
-            [self.rdio.player play:];
+            self.slideoutMenuButton.tag = 1;
             
         }
         
