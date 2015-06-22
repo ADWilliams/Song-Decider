@@ -14,7 +14,7 @@
 #import "ArtworkContainerController.h"
 
 
-@interface MainViewController () <RdioDelegate, RDPlayerDelegate>
+@interface MainViewController () <RdioDelegate, RDPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic,strong) Rdio *rdio;
 
@@ -28,6 +28,7 @@
 
 @property (weak, nonatomic) IBOutlet ArtworkView *artworkView;
 
+@property (weak, nonatomic) IBOutlet UITableView *slideMenuView;
 
 
 
@@ -45,6 +46,7 @@
        
     self.playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
+    self.slideMenuView.delegate = self;
    
     
     [super viewDidLoad];
@@ -79,16 +81,16 @@
 
 
 
--(void)nextView {
-    
-    ArtworkContainerController *nextView = [[ArtworkContainerController alloc]init];
-    [nextView awakeFromNib];
-    [self addChildViewController:nextView];
-    
-    //[nextView setImage:[self fetchTrackImage]];
-    //[self.view addSubview:nextView];
-    //self.currentTrack = nextView;
-}
+//-(void)nextView {
+//    
+//    ArtworkContainerController *nextView = [[ArtworkContainerController alloc]init];
+//    [nextView awakeFromNib];
+//    [self addChildViewController:nextView];
+//    
+//    [nextView setImage:[self fetchTrackImage]];
+//    [self.view addSubview:nextView];
+//    self.currentTrack = nextView;
+//}
 
 
 
@@ -110,6 +112,24 @@
 
 }
 
+#pragma mark - TableView Delegate and Data Source
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return 10;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [self.slideMenuView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    return cell;
+}
 
     
 

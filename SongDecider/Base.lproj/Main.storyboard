@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="w2Z-3U-Cga">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -41,12 +41,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="JQT-3h-nyx"/>
                     <connections>
-                        <segue destination="9Fg-Ba-1S0" kind="show" identifier="showMainView" id="Lvl-qs-M4u"/>
+                        <segue destination="Wmc-jo-tT4" kind="show" identifier="showMainView" id="lU9-ki-1Ux"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1207" y="229"/>
+            <point key="canvasLocation" x="453" y="-241"/>
         </scene>
         <!--Playlist View-->
         <scene sceneID="IGx-NJ-SNO">
@@ -182,7 +182,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o8N-Jf-Exz" userLabel="artworkView" customClass="ArtworkView">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o8N-Jf-Exz" userLabel="artworkView" customClass="ArtworkView">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jgO-4X-wKm">
@@ -225,6 +225,14 @@
                                             <segue destination="pSZ-Sx-wZE" kind="embed" id="cmm-AY-Oj6"/>
                                         </connections>
                                     </containerView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7y6-HD-cEX">
+                                        <rect key="frame" x="0.0" y="0.0" width="509" height="487"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="anK-jn-NpQ" id="y03-b7-nrX"/>
+                                            <outlet property="delegate" destination="anK-jn-NpQ" id="VCJ-vs-VxT"/>
+                                        </connections>
+                                    </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -312,12 +320,13 @@
                     <connections>
                         <outlet property="artworkView" destination="o8N-Jf-Exz" id="SiL-Un-old"/>
                         <outlet property="bgImage" destination="jgO-4X-wKm" id="54I-P8-Sfh"/>
+                        <outlet property="slideMenuView" destination="7y6-HD-cEX" id="t3a-PA-dQX"/>
                         <outlet property="visualEffect" destination="0TO-M0-p1Q" id="qWz-pC-nEY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dmw-Zl-YFW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2733" y="229"/>
+            <point key="canvasLocation" x="2734" y="229"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="f1n-aS-riB">
@@ -336,12 +345,32 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wiv-Sg-THI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="416" y="229"/>
+            <point key="canvasLocation" x="-320" y="235"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Tab Bar Controller-->
+        <scene sceneID="8aF-PW-jU1">
+            <objects>
+                <tabBarController id="Wmc-jo-tT4" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Trg-kJ-Jg8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="9Fg-Ba-1S0" kind="relationship" relationship="viewControllers" id="6on-3a-k60"/>
+                        <segue destination="Ja0-qU-upV" kind="relationship" relationship="viewControllers" id="K9w-0p-tEC"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AB5-qS-Zvo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1147" y="-241"/>
+        </scene>
+        <!--Item-->
         <scene sceneID="fK5-jy-Osr">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Fg-Ba-1S0" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="mMG-qQ-NgQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="E3Q-AH-UkT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -354,12 +383,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hwl-NH-hwF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1982" y="229"/>
+            <point key="canvasLocation" x="2002" y="229"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Item-->
         <scene sceneID="vqn-NH-SuR">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ja0-qU-upV" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="dgM-Im-4mG"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BCd-NW-QKh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
