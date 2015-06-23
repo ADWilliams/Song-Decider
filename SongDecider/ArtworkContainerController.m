@@ -30,6 +30,8 @@
 
 @property (nonatomic) BOOL  switching;
 
+
+
 @end
 
 @implementation ArtworkContainerController
@@ -49,11 +51,11 @@
     [self.rdio preparePlayerWithDelegate:self];
     
     int rand = arc4random() % (self.genres.count -1);
-
+    
     self.artworkImageView.image = nil;
     
     [self.rdio.player play:self.genres[rand]];
-
+    
     
     self.mainView.playlistKey = [NSUserDefaults standardUserDefaults];
     self.mainView.playlist = [self.mainView.playlistKey objectForKey:@"playlistKey"];
@@ -65,6 +67,7 @@
     self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:self.swipeRight];
     [self.view addGestureRecognizer:self.swipeLeft];
+    
     
     
     
@@ -97,7 +100,7 @@
             self.nextImage = nil;
             
             [self animateLeft];
-
+            
             int rand = arc4random() % (self.genres.count -1);
             NSLog(@"%d", rand);
             [self.rdio.player play:self.genres[rand]];
@@ -106,9 +109,9 @@
             
         }
         else {
-            
-        [self animateLeft];
-        [self.rdio.player next];
+            NSLog(@"Swiped Left");
+            [self animateLeft];
+            [self.rdio.player next];
         }
     }
     
@@ -119,11 +122,46 @@
         self.nextImage = nil;
         [self addToPlaylist];
         
-        [self animateRight];
-      
         NSString *stationKey = [[ [self.rdio.player valueForKey:@"currentTrackInfo_" ]objectForKey:@"radio" ]valueForKey:@"key"];
+        NSDictionary *params = @{@"keys":stationKey};
+        [self.rdio callAPIMethod:@"get" withParameters:params success:^(NSDictionary *result) {
+            
+            NSMutableArray *array = [[NSMutableArray alloc]init];
+            
+            for (NSString *string in [result objectForKey:stationKey]) {
+                if ([string isEqualToString:@"icon400"]) {
+                    [array addObject:string];
+                }
+                
+                
+            }
+            
+            NSString *urlStr = [array firstObject];
+            
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSURLRequest *request = [ NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+            
+            NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                NSData *imageData = [NSData dataWithContentsOfURL:location];
+                UIImage *image = [UIImage imageWithData:imageData];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.artworkImageView.image = image;
+                });
+            }];
+            [task resume];
+            ;
+            
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+        }];
         
         [self.rdio.player play:stationKey];
+        
+        
+        [self animateRight];
+        
+        
     }
 }
 
@@ -131,10 +169,12 @@
     
     [UIView animateWithDuration:0.5 animations:^{
         self.view.center = CGPointMake(-self.view.frame.size.width, self.view.center.y);
+        self.view.transform = CGAffineTransformMakeRotation(-0.4);
         
     } completion:^(BOOL finished) {
         
-        self.view.center = CGPointMake(self.view.frame.size.width/2, -self.view.frame.size.height);
+        self.view.center = CGPointMake(self.mainView.view.center.x, -(self.view.frame.size.height));
+        self.view.transform = CGAffineTransformMakeRotation(0);
         
         self.artworkImageView.image = nil;
         
@@ -147,11 +187,12 @@
                 self.artworkImageView.image = nil;
             }
             
+            
             self.nextImage = nil;
             
             [self dropInAnimation];
         }
-     
+        
         
     }];
 }
@@ -161,27 +202,21 @@
     
     [UIView animateWithDuration:0.5 animations:^{
         self.view.center = CGPointMake(self.view.frame.size.width * 2 , self.view.center.y);
+        self.view.transform = CGAffineTransformMakeRotation(0.4);
         
     }completion:^(BOOL finished) {
         
-        self.view.center = CGPointMake(self.view.frame.size.width/2, -self.view.frame.size.height);
+        self.view.center = CGPointMake(self.mainView.view.center.x, -self.view.frame.size.height);
+        self.view.transform = CGAffineTransformMakeRotation(0);
+        
         self.artworkImageView.image = nil;
+        [self dropInAnimation];
+        
+        self.mainView.bgImage.image = self.artworkImageView.image;
+        
+        self.nextImage = nil;
         
         
-        if (self.switching == YES) {
-            
-            self.artworkImageView.image = self.nextImage;
-            self.mainView.bgImage.image = self.artworkImageView.image;
-            if (self.nextImage == nil) {
-                self.artworkImageView.image = nil;
-            }
-            
-            self.nextImage = nil;
-            
-            [self dropInAnimation];
-        }
-        
-       
     }];
 }
 
@@ -190,22 +225,29 @@
     
     self.switching = NO;
     
+    
     if (self.artworkImageView.image != nil) {
         
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveLinear animations:^{
             self.view.frame = self.mainView.view.frame;
-            [self.view layoutIfNeeded];
-        }];
-    }
-    else {
-        [self fetchTrackImage];
-        [UIView animateWithDuration:0.5 delay:0.5 usingSpringWithDamping:1 initialSpringVelocity:1 options:UIViewAnimationOptionCurveLinear animations:^{
-            self.view.frame = self.mainView.view.frame;
-            [self.view layoutIfNeeded];
-
+            //[self.view layoutIfNeeded];
+            
         } completion:nil];
     }
-   
+    
+    else {
+        [self fetchTrackImage];
+        [UIView animateWithDuration:0.5 delay:0.5 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveLinear animations:^{
+            self.view.frame = self.mainView.view.frame;
+            //[self.view layoutIfNeeded];
+            
+        } completion:^(BOOL finished) {
+            
+            self.mainView.bgImage.image = self.artworkImageView.image;
+            
+        }];
+    }
+    
 }
 
 
@@ -222,12 +264,14 @@
 -(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState {
     //[self fetchTrackImage];
     
-//    if (oldState == RDPlayerStateBuffering  && newState == RDPlayerStatePlaying) {
-//        if (self.artworkImageView.image == nil) {
-//            [self fetchTrackImage];
-//        }
-//    }
+    //    if (oldState == RDPlayerStateBuffering  && newState == RDPlayerStatePlaying) {
+    //        if (self.artworkImageView.image == nil) {
+    //            [self fetchTrackImage];
+    //        }
+    //    }
     
+    
+
     
     if (newState == RDPlayerStatePlaying) {
         if (self.switching == YES) {

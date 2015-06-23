@@ -38,7 +38,6 @@
 
 
 
-
 @end
 
 @implementation MainViewController
@@ -67,7 +66,7 @@
     
     genre = [[Genre alloc] initWithName:@"Soft Hits" Key:@"sr2885343"];
     [self.genreArray addObject:genre];
-    
+      
     genre = [[Genre alloc] initWithName:@"Country" Key:@"gr359"];
     [self.genreArray addObject:genre];
     
