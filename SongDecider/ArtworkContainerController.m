@@ -30,6 +30,8 @@
 
 @property (nonatomic) BOOL  switching;
 
+@property (nonatomic, strong) NSString *selectedGenreKey;
+
 
 
 @end
@@ -73,6 +75,19 @@
     
     
     
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    
+    NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
+    self.selectedGenreKey = [playlistKey objectForKey:@"selectedGenreKey"];
+    
+    if (self.selectedGenreKey == nil) {
+        
+        
+        
+    }
     
 }
 

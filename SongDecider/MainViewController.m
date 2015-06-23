@@ -36,15 +36,12 @@
 
 @property (nonatomic, strong) Genre *selectedGenre;
 
+@property (nonatomic, strong) NSString *selectedGenreKey;
 
 
 @end
 
 @implementation MainViewController
-
-
-
-
 
 - (void)viewDidLoad{
        
@@ -93,9 +90,12 @@
     
     genre = [[Genre alloc] initWithName:@"Blues" Key:@"gr475"];
     [self.genreArray addObject:genre];
-    
-    
 
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    
+    [self.rdio.player stop];
 }
 
 #pragma mark - SwipeGesture
@@ -245,6 +245,10 @@
     } completion:^(BOOL finished) {
         
         if (finished) {
+            
+            self.selectedGenreKey = [self.selectedGenre genreKey];
+            
+            [self.playlistKey setObject:self.selectedGenreKey forKey:@"selectedGenreKey"];
             
             [self.rdio.player play:[self.selectedGenre genreKey]];
             
