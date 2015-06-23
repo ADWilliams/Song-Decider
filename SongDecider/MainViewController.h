@@ -18,8 +18,12 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *bgImage;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *slideoutMenuButton;
 
--(void)nextView;
+- (IBAction)slideoutMenuButtonWasPressed:(UIBarButtonItem *)sender;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *slidemenuWidthConstraint;
+
 
 @end
 

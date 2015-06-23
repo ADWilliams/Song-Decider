@@ -28,6 +28,10 @@
 @implementation PlaylistController
 
 - (void)viewDidLoad {
+    
+    NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
+    self.playlist = [playlistKey objectForKey:@"playlistKey"];
+    
     [super viewDidLoad];
     
     self.tableView.backgroundColor = [UIColor blackColor];
@@ -45,8 +49,6 @@
         
         NSMutableArray *temp = [NSMutableArray array];
         
-        NSString *numTracks = [[result objectForKey:self.playlist] objectForKey:@"length"];
-        
         NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
         
         for (NSDictionary *dictionary in tracks) {
@@ -57,16 +59,31 @@
             song.albumName = [dictionary objectForKey:@"album"];
             song.artistName = [dictionary objectForKey:@"artist"];
             song.albumImage = [dictionary objectForKey:@"icon400"];
+            song.songTrackKey = [dictionary objectForKey:@"key"];
             
-            NSLog(@"song %@", song);
+            NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
             
-            [temp addObject:song];
+            BOOL containsSong = NO;
+            
+            for (Song *playlistSong in temp) {
+                
+                if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
+                    
+                    containsSong = YES;
+                    
+                }
+                
+            }
+            
+            if (!containsSong) {
+                
+                [temp addObject:song];
+                
+            }
             
         }
         
         self.songData = temp;
-        
-        self.length = numTracks;
         
         NSLog(@"%lu", (unsigned long)self.songData.count);
         
@@ -111,7 +128,7 @@
     
     NSLog(@"song data coount %d", [self.length intValue]);
     
-    return [self.length intValue];
+    return [self.songData count];
 }
 
 
@@ -119,6 +136,10 @@
     PlaylistCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     cell.song = (self.songData)[indexPath.row];
+    
+    UISwipeGestureRecognizer *swipeToRemove = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(removeTrack:)];
+    swipeToRemove.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.tableView addGestureRecognizer:swipeToRemove];
     
     
     return cell;
@@ -137,9 +158,6 @@
         
         [self.tableView beginUpdates];
         
-//        cell.iTunesButton.hidden = YES;
-//        [self.tableView bringSubviewToFront:cell.iTunesButton];
-        
         [self.tableView endUpdates];
         
     }
@@ -149,16 +167,9 @@
         
         [self.tableView beginUpdates];
         
-//        cell.iTunesButton.hidden = NO;
-        
         [self.tableView endUpdates];
 
     }
-    
-}
-
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     
 }
 
@@ -172,40 +183,39 @@
     return 100;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)removeTrack:(UISwipeGestureRecognizer *)sender {
+    
+    CGPoint pt = [sender locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:pt];
+    
+    Song *song = [self.songData objectAtIndex:indexPath.row];
+    
+    NSDictionary *param = @{@"playlist": self.playlist,
+                            @"index": [NSString stringWithFormat:@"%lu", (unsigned long)[self.songData indexOfObject:song]],
+                            @"count": @"1",
+                            @"tracks": song.songTrackKey};
+    
+    [self.rdio callAPIMethod:@"removeFromPlaylist" withParameters:param success:^(NSDictionary *result) {
+        
+        NSLog(@">>>>>> Succeed %@", result);
+        
+        self.playlist = [result objectForKey:@"key"];
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@", error);
+        
+    }];
+    
+    [self.songData removeObject:song];
+    
+    [self.tableView beginUpdates];
+    
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
+    [self.tableView endUpdates];
+    
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation
