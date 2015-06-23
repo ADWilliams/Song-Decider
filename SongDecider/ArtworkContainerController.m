@@ -52,9 +52,10 @@
     
     [self.rdio preparePlayerWithDelegate:self];
     
-    int rand = arc4random() % (self.genres.count -1);
-    
     self.artworkImageView.image = nil;
+    
+    int rand = arc4random() % (self.genres.count -1);
+
     
     [self.rdio.player play:self.genres[rand]];
     
@@ -70,12 +71,6 @@
     [self.view addGestureRecognizer:self.swipeRight];
     [self.view addGestureRecognizer:self.swipeLeft];
     
-    
-    
-    
-    
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -85,7 +80,12 @@
     
     if (self.selectedGenreKey == nil) {
         
+        [self.rdio.player play:self.genres[[self randomGenre]]];
         
+    }
+    else {
+        
+        [self.rdio.player play:self.selectedGenreKey];
         
     }
     
@@ -101,6 +101,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(int)randomGenre {
+    
+    return arc4random() % (self.genres.count -1);
+    
 }
 
 

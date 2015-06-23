@@ -27,6 +27,8 @@
 
 @implementation PlaylistController
 
+
+
 - (void)viewDidLoad {
     
     NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
@@ -40,8 +42,8 @@
     
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
-    //self.rdio.delegate = self;
-    
+    //[self.rdio preparePlayerWithDelegate:nil];
+
     NSDictionary *param = @{@"keys": self.playlist,
                             @"extras": @"tracks"};
     
@@ -132,7 +134,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     
-    NSLog(@"song data coount %d", [self.length intValue]);
+    NSLog(@"song data coount %lu", (unsigned long)[self.songData count]);
     
     return [self.songData count];
 }
@@ -144,12 +146,9 @@
     
     cell.song = (self.songData)[indexPath.row];
     
-    
-    
     UISwipeGestureRecognizer *swipeToRemove = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(removeTrack:)];
     swipeToRemove.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.tableView addGestureRecognizer:swipeToRemove];
-    
     
     return cell;
 }
@@ -163,6 +162,8 @@
         
         [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:YES];
         
+        [self.rdio.player stop];
+        
         self.selectedIndexPath = nil;
         
         [self.tableView beginUpdates];
@@ -173,6 +174,12 @@
     else {
         
         self.selectedIndexPath = indexPath;
+        
+        Song *song = [self.songData objectAtIndex:self.selectedIndexPath.row];
+        
+        NSLog(@"%@", song.songTrackKey);
+        
+        [self.rdio.player play:song.songTrackKey];
         
         [self.tableView beginUpdates];
         
