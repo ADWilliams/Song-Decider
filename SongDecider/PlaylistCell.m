@@ -57,6 +57,8 @@
 
 -(void)configureImage {
     
+    self.imageView.image = nil;
+    
     NSURLSession *session = [NSURLSession sharedSession];
     
     NSURL *url = [NSURL URLWithString:self.song.albumImage];

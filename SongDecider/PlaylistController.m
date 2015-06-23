@@ -106,6 +106,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -132,10 +137,13 @@
 }
 
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlaylistCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     cell.song = (self.songData)[indexPath.row];
+    
+    
     
     UISwipeGestureRecognizer *swipeToRemove = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(removeTrack:)];
     swipeToRemove.direction = UISwipeGestureRecognizerDirectionLeft;

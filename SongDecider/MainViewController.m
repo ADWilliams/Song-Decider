@@ -161,6 +161,8 @@
     
     self.selectedGenre = [self.genreArray objectAtIndex:indexPath.row];
     
+    [self slideBackToOriginalSpot];
+    
 }
     
 
@@ -198,10 +200,10 @@
     UIBarButtonItem *button = sender;
     
     switch (button.tag) {
-        case 0:
-            [self slideBackToOriginalSpot];
-            NSLog(@"button tag at 0");
-            break;
+//        case 0:
+//            [self slideBackToOriginalSpot];
+//            NSLog(@"button tag at 0");
+//            break;
         case 1:
             [self slideRight];
             NSLog(@"button tag at 1");
