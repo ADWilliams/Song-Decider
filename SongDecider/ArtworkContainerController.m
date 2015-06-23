@@ -56,7 +56,6 @@
     
     int rand = arc4random() % (self.genres.count -1);
 
-    
     [self.rdio.player play:self.genres[rand]];
     
     

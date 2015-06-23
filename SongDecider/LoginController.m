@@ -42,6 +42,21 @@
 
 -(void)rdioDidAuthorizeUser:(NSDictionary *)user {
     
+    NSDictionary *param = @{@"extras": @"isUnlimited"};
+    
+    [self.rdio callAPIMethod:@"currentUser" withParameters:param success:^(NSDictionary *result) {
+        
+//        NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
+//        [playlistKey setObject:[result objectForKey:@"isUnlimited"] forKey:@"userStatus"];
+        
+        NSLog(@">>>>>>>>>>>> user status %@", [result objectForKey:@"isUnlimited"]);
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@">>>>>>>>>> %@", error);
+        
+    }];
+    
     [self performSegueWithIdentifier:@"showMainView" sender:self];
     
     

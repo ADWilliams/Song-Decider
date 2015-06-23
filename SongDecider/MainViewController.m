@@ -36,6 +36,8 @@
 
 @property (nonatomic, strong) NSString *selectedGenreKey;
 
+@property (nonatomic, strong) NSString *userStatus;
+
 
 @end
 
@@ -53,6 +55,9 @@
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     //self.rdio.delegate = self;
+    
+    self.userStatus = [self.rdio.user objectForKey:@"productAccess"];
+    NSLog(@"%@", self.userStatus);
     
     self.genreArray = [NSMutableArray array];
     

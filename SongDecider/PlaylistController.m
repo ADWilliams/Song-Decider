@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
+@property (nonatomic) BOOL isFreeUser;
+
 @end
 
 @implementation PlaylistController
@@ -33,6 +35,7 @@
     
     NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [playlistKey objectForKey:@"playlistKey"];
+    self.isFreeUser = [playlistKey objectForKey:@"userStatus"];
     
     [super viewDidLoad];
     
@@ -179,7 +182,11 @@
         
         NSLog(@"%@", song.songTrackKey);
         
-        [self.rdio.player play:song.songTrackKey];
+        if (self.isFreeUser != YES) {
+            
+            [self.rdio.player play:song.songTrackKey];
+
+        }
         
         [self.tableView beginUpdates];
         
