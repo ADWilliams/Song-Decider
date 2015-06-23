@@ -22,8 +22,6 @@
 
 @property (nonatomic, strong) NSMutableArray *trackArray;
 
-@property (weak, nonatomic) IBOutlet UIImageView *albumImage;
-
 @property (nonatomic) UISwipeGestureRecognizer *swipeLeft;
 
 @property (nonatomic) UISwipeGestureRecognizer *swipeRight;

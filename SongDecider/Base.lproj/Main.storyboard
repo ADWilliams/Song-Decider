@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Login-->
@@ -48,7 +49,7 @@
             </objects>
             <point key="canvasLocation" x="453" y="-241"/>
         </scene>
-        <!--Playlist View-->
+        <!--Playlist Controller-->
         <scene sceneID="IGx-NJ-SNO">
             <objects>
                 <tableViewController id="tnu-IA-Iai" customClass="PlaylistController" sceneMemberID="viewController">
@@ -164,7 +165,7 @@
                             <outlet property="delegate" destination="tnu-IA-Iai" id="Eyp-NJ-Oq5"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Playlist View" id="4GA-LQ-6Vy"/>
+                    <navigationItem key="navigationItem" id="4GA-LQ-6Vy"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uxX-Ee-HDL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -345,15 +346,10 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Main View" id="hmn-XH-C4g">
+                    <navigationItem key="navigationItem" id="hmn-XH-C4g">
                         <barButtonItem key="leftBarButtonItem" tag="1" image="Menu Filled-25" id="E4c-j1-lUf">
                             <connections>
                                 <action selector="slideoutMenuButtonWasPressed:" destination="anK-jn-NpQ" id="UKS-Gc-68I"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Playlist" id="xJZ-DB-bzf">
-                            <connections>
-                                <segue destination="tnu-IA-Iai" kind="show" identifier="playlistSegue" id="XNa-rA-NO9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -393,8 +389,8 @@
         <scene sceneID="8aF-PW-jU1">
             <objects>
                 <tabBarController id="Wmc-jo-tT4" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="Trg-kJ-Jg8">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" barStyle="black" id="Trg-kJ-Jg8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -414,7 +410,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Fg-Ba-1S0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="mMG-qQ-NgQ"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="E3Q-AH-UkT">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="E3Q-AH-UkT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -433,7 +430,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ja0-qU-upV" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="dgM-Im-4mG"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="BCd-NW-QKh">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="BCd-NW-QKh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -458,8 +456,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music-notes_400x400_360" translatesAutoresizingMaskIntoConstraints="NO" id="7zT-oL-IRB">
-                                <rect key="frame" x="100" y="0.0" width="400" height="400"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="music-notes_400x400_360" translatesAutoresizingMaskIntoConstraints="NO" id="7zT-oL-IRB">
+                                <rect key="frame" x="100" y="50" width="400" height="400"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="Bpa-eV-A8s"/>
                                     <constraint firstAttribute="width" constant="400" id="iWe-GU-3ee"/>
@@ -468,12 +466,14 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="7zT-oL-IRB" secondAttribute="centerY" id="6oJ-CP-MoW"/>
+                            <constraint firstAttribute="centerY" secondItem="7zT-oL-IRB" secondAttribute="centerY" multiplier="1.2" id="9go-Ar-VOh"/>
                             <constraint firstAttribute="centerX" secondItem="7zT-oL-IRB" secondAttribute="centerX" id="QyI-2k-LFi"/>
-                            <constraint firstItem="7zT-oL-IRB" firstAttribute="top" secondItem="5v0-Zz-m34" secondAttribute="bottom" id="t9D-i8-e2t"/>
+                            <constraint firstItem="7zT-oL-IRB" firstAttribute="top" secondItem="5v0-Zz-m34" secondAttribute="bottom" constant="50" id="t9D-i8-e2t"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="6oJ-CP-MoW"/>
+                                <exclude reference="t9D-i8-e2t"/>
                             </mask>
                         </variation>
                     </view>
@@ -491,7 +491,4 @@
         <image name="Menu Filled-25" width="25" height="25"/>
         <image name="music-notes_400x400_360" width="360" height="360"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="XNa-rA-NO9"/>
-    </inferredMetricsTieBreakers>
 </document>
