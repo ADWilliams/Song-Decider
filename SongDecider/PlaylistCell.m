@@ -18,6 +18,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *songNameLabel;
 
+
+
 @end
 
 @implementation PlaylistCell
@@ -40,6 +42,8 @@
 }
 
 -(void)configure {
+    
+    self.albumImageView.image = nil;
     
     self.artistNameLabel.text = self.song.artistName;
 
@@ -103,7 +107,10 @@
 }
 
 
-
+-(void)prepareForReuse {
+    [super prepareForReuse];
+    self.albumImageView.image = nil;
+}
 
 
 
