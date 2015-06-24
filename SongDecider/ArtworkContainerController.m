@@ -38,7 +38,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.genres = @[ @"gr359",@"sr2885343",@"gr498",@"gr58",@"gr324",@"gr216",@"gr575",@"gr593", @"gr443",@"gr308",@"gr723"];
+    self.genres = @[ @"gr359",@"sr2885343",@"gr498",@"gr58",@"gr324",@"gr216",@"gr575",@"gr593", @"gr443",@"gr308",@"gr723",@"gr227", @"gr471",@"gr14",@"gr381",@"gr201", @"gr122",@"gr538",@"gr593",@"gr155",@"gr489",@"gr560",@"gr71", @"gr205", @"gr515",@"gr493",@"gr293",@"gr53",@"gr312",@"gr1",@"gr155", @"gr342", @"gr105",@"gr385", @"gr339"];
     
     self.leftSwipeCounter = 0;
     self.switching = NO;

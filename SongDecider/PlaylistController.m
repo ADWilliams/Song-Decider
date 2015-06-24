@@ -182,7 +182,7 @@
         
         NSLog(@"%@", song.songTrackKey);
         
-        if (self.isFreeUser != YES) {
+        if (self.isFreeUser != NO) {
             
             [self.rdio.player play:song.songTrackKey];
 
