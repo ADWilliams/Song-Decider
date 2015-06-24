@@ -38,7 +38,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.genres = @[ @"gr359",@"sr2885343",@"gr498",@"gr58",@"gr324",@"gr216",@"gr575",@"gr593", @"gr443",@"gr308",@"gr723"];
+    self.genres = @[ @"gr359",@"sr2885343",@"gr498",@"gr58",@"gr324",@"gr216",@"gr575",@"gr593", @"gr443",@"gr308",@"gr723",@"gr227", @"gr471",@"gr14",@"gr381",@"gr201", @"gr122",@"gr538",@"gr593",@"gr155",@"gr489",@"gr560",@"gr71", @"gr205", @"gr515",@"gr493",@"gr293",@"gr53",@"gr312",@"gr1",@"gr155", @"gr342", @"gr105",@"gr385", @"gr339"];
     
     self.leftSwipeCounter = 0;
     self.switching = NO;
@@ -70,6 +70,9 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
+    self.switching = YES;
+    self.nextImage = nil;
+    
     self.selectedGenreKey = [self.mainView.playlistKey objectForKey:@"selectedGenreKey"];
     
     NSLog(@"%@", self.selectedGenreKey);
@@ -80,8 +83,9 @@
         
     }
     else {
-        
-        [self.rdio.player play:self.genres[5]];
+        int rand = arc4random() % (self.genres.count -1);
+
+        [self.rdio.player play:self.genres[rand]];
         
     }
 }
@@ -275,8 +279,13 @@
     
     
     if (oldState == RDPlayerStateStopped && newState == RDPlayerStateBuffering) {
-            //if user is free
-        [self animateLeft];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL freeUser = (BOOL)[defaults valueForKey:@"userStatus"];
+        
+        if (freeUser == YES) {
+            [self animateLeft];
+        }
     }
 
     
@@ -294,7 +303,10 @@
         }
         
         if (self.nextImage == nil) {
-            [self fetchNextImage];
+            NSArray *trackKeys = [self.rdio.player valueForKey:@"trackKeys_"];
+            if (trackKeys.count > 1 ) {
+                [self fetchNextImage];
+            }
         }
     }
     

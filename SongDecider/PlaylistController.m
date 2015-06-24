@@ -66,6 +66,7 @@
         
         self.songData = [NSMutableArray arrayWithCapacity:10];
         
+
     }
     else {
         
@@ -205,6 +206,7 @@
         
         NSLog(@"%@", song.songTrackKey);
         
+
         if (self.isFreeUser == YES) {
             
             [self.rdio.player play:song.songTrackKey];
