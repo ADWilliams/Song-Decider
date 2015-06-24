@@ -19,34 +19,51 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6HI-pN-xLC">
-                                <rect key="frame" x="170" y="285" width="261" height="30"/>
+                                <rect key="frame" x="220.5" y="285" width="160" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="33d-ii-RzF"/>
+                                    <constraint firstAttribute="width" constant="160" id="71s-b7-eR1"/>
                                     <constraint firstAttribute="width" constant="261" id="mmX-NK-GG4"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Login With Rdio">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
+                                        <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="mmX-NK-GG4"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="loginButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sry-TT-JQs"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ADIO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfv-3p-gmw">
+                                <rect key="frame" x="200" y="177" width="200" height="100"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="70"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" red="0.29411764709999999" green="0.68627450980000004" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <size key="shadowOffset" width="6" height="3"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="bfv-3p-gmw" secondAttribute="centerX" id="0Yu-SQ-81L"/>
                             <constraint firstAttribute="centerX" secondItem="6HI-pN-xLC" secondAttribute="centerX" id="9O4-pV-Ict"/>
                             <constraint firstAttribute="centerY" secondItem="6HI-pN-xLC" secondAttribute="centerY" id="KqG-mt-iYe"/>
+                            <constraint firstItem="6HI-pN-xLC" firstAttribute="top" secondItem="bfv-3p-gmw" secondAttribute="bottom" constant="8" id="fOr-DH-PNI"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Login" id="JQT-3h-nyx"/>
+                    <navigationItem key="navigationItem" id="JQT-3h-nyx"/>
                     <connections>
                         <segue destination="Wmc-jo-tT4" kind="show" identifier="showMainView" id="lU9-ki-1Ux"/>
                     </connections>
