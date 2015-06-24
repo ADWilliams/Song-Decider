@@ -21,6 +21,8 @@
 
 @property (nonatomic, strong) NSMutableArray *songData;
 
+@property (nonatomic, strong) NSArray *emptyArray;
+
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
 @property (nonatomic) BOOL isFreeUser;
@@ -47,6 +49,7 @@
     self.rdio = rdioManager.rdioInstance;
     //[self.rdio preparePlayerWithDelegate:nil];
 
+
     [self fetchPlaylist];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -63,41 +66,69 @@
                             @"extras": @"tracks"};
 
     [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
+    
+    self.emptyArray = @[@"You don't have anything in your playlist"];
+    
+    if (self.isFreeUser == YES) {
         
-        NSMutableArray *temp = [NSMutableArray array];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning"
+                                                        message:@"Please upgrade RDIO account to stream your playlist songs"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
         
-        NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
+    }
+    
+    if (self.playlist == NULL) {
         
-        for (NSDictionary *dictionary in tracks) {
+        self.songData = [NSMutableArray arrayWithCapacity:10];
+        
+
+    }
+    else {
+        
+        NSDictionary *param = @{@"keys": self.playlist,
+                                @"extras": @"tracks"};
+        
+        [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
             
-            Song *song = [[Song alloc] init];
+            NSMutableArray *temp = [NSMutableArray array];
             
-            song.songName = [dictionary objectForKey:@"name"];
-            song.albumName = [dictionary objectForKey:@"album"];
-            song.artistName = [dictionary objectForKey:@"artist"];
-            song.albumImage = [dictionary objectForKey:@"icon"];
-            song.songTrackKey = [dictionary objectForKey:@"key"];
+            NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
             
-            NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
-            
-            BOOL containsSong = NO;
-            
-            for (Song *playlistSong in temp) {
+            for (NSDictionary *dictionary in tracks) {
                 
-                if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
+                Song *song = [[Song alloc] init];
+                
+                song.songName = [dictionary objectForKey:@"name"];
+                song.albumName = [dictionary objectForKey:@"album"];
+                song.artistName = [dictionary objectForKey:@"artist"];
+                song.albumImage = [dictionary objectForKey:@"icon400"];
+                song.songTrackKey = [dictionary objectForKey:@"key"];
+                
+                NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
+                
+                BOOL containsSong = NO;
+                
+                for (Song *playlistSong in temp) {
                     
-                    containsSong = YES;
+                    if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
+                        
+                        containsSong = YES;
+                        
+                    }
+                    
+                }
+                
+                if (!containsSong) {
+                    
+                    [temp addObject:song];
                     
                 }
                 
             }
-            
-            if (!containsSong) {
-                
-                [temp addObject:song];
-                
-            }
-            
+        
         }
         
         self.songData = temp;
@@ -115,8 +146,13 @@
         NSLog(@"%@", error);
         
     }];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
-}
 
 -(void)viewWillAppear:(BOOL)animated {
     [self fetchPlaylist];
@@ -142,8 +178,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    
-    NSLog(@"song data coount %lu", (unsigned long)[self.songData count]);
     
     return [self.songData count];
 }
@@ -188,7 +222,8 @@
         
         NSLog(@"%@", song.songTrackKey);
         
-        if (self.isFreeUser != NO) {
+
+        if (self.isFreeUser == YES) {
             
             [self.rdio.player play:song.songTrackKey];
 
