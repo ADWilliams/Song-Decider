@@ -46,6 +46,17 @@
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     //[self.rdio preparePlayerWithDelegate:nil];
+    
+    if (self.isFreeUser == YES) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning"
+                                                        message:@"Please upgrade RDIO account to stream your playlist songs"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }
 
     NSDictionary *param = @{@"keys": self.playlist,
                             @"extras": @"tracks"};
