@@ -411,7 +411,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="8aF-PW-jU1">
             <objects>
-                <tabBarController id="Wmc-jo-tT4" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabController" id="Wmc-jo-tT4" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" barStyle="black" id="Trg-kJ-Jg8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>

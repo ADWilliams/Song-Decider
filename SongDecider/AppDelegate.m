@@ -16,23 +16,16 @@
 
 @implementation AppDelegate
 
-//-(void)rdioDidAuthorizeUser:(NSDictionary *)user withAccessToken:(NSString *)accessToken{
-////    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-////    [defaults setObject:accessToken forKey:@"acessToken"];
-//    
-//    UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"mainView"];
-//    self.window.rootViewController = navcontroller;
-//}
 
 -(void)rdioDidAuthorizeUser:(NSDictionary *)user {
-    UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"mainView"];
-           self.window.rootViewController = navcontroller;
+    UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TabController"];
+    self.window.rootViewController = navcontroller;
 }
 
-//-(void)rdioAuthorizationFailed:(NSError *)error {
-//    UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"loginView"];
-//    self.window.rootViewController = navcontroller;
-//}
+-(void)rdioAuthorizationFailed:(NSError *)error {
+    UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"loginView"];
+    self.window.rootViewController = navcontroller;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -41,8 +34,9 @@
     Rdio *rdio = manager.rdioInstance;
     rdio.delegate = self;
     
+    self.window = [[UIWindow alloc]initWithFrame:UIScreen.mainScreen.bounds];
+    [self.window makeKeyAndVisible];
 
-//
 //    if (rdio.user) {
 //        UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"mainView"];
 //        self.window.rootViewController = navcontroller;
