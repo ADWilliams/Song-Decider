@@ -63,7 +63,7 @@
             song.songName = [dictionary objectForKey:@"name"];
             song.albumName = [dictionary objectForKey:@"album"];
             song.artistName = [dictionary objectForKey:@"artist"];
-            song.albumImage = [dictionary objectForKey:@"icon400"];
+            song.albumImage = [dictionary objectForKey:@"icon"];
             song.songTrackKey = [dictionary objectForKey:@"key"];
             
             NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
@@ -182,7 +182,7 @@
         
         NSLog(@"%@", song.songTrackKey);
         
-        if (self.isFreeUser != YES) {
+        if (self.isFreeUser != NO) {
             
             [self.rdio.player play:song.songTrackKey];
 

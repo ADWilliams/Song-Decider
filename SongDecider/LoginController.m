@@ -46,8 +46,10 @@
     
     [self.rdio callAPIMethod:@"currentUser" withParameters:param success:^(NSDictionary *result) {
         
-//        NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
-//        [playlistKey setObject:[result objectForKey:@"isUnlimited"] forKey:@"userStatus"];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if (![defaults valueForKey:@"userStatus"]) {
+            [defaults setObject:[result objectForKey:@"isUnlimited"] forKey:@"userStatus"];
+        }
         
         NSLog(@">>>>>>>>>>>> user status %@", [result objectForKey:@"isUnlimited"]);
         
