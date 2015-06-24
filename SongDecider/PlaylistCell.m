@@ -115,18 +115,62 @@
     NSString *artistString = [self.song.artistName stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     NSString *songString = [self.song.songName stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 
-    NSString *stringURL = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@", artistString];
+//    NSString *stringURL = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@", artistString];
+//    
+//    NSURL *url = [NSURL URLWithString:stringURL];
+//    
+//    NSURL *urlTest = [NSURL URLWithString:@"twitter://user?screen_name=username"];
+//    
+//    [[UIApplication sharedApplication] openURL:urlTest];
     
-    NSURL *url = [NSURL URLWithString:stringURL];
+//    NSString* artistTerm = self.artistField.text;  //the artist text.
+//    NSString* songTerm = self.songField.text;      //the song text
+//    // they both need to be non-zero for this to work right.
+    if(artistString.length > 0 && songString.length > 0) {
+        
+        // this creates the base of the Link Maker url call.
+        
+        NSString* baseURLString = @"https://itunes.apple.com/search";
+        NSString* searchTerm = [NSString stringWithFormat:@"%@ %@", artistString, songString];
+        NSString* searchUrlString = [NSString stringWithFormat:@"%@?media=music&entity=song&term=%@&artistTerm=%@&songTerm=%@", baseURLString, searchTerm, artistString, songString];
+        
+//        searchUrlString = [searchUrlString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        
+        searchUrlString = [searchUrlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURL* searchUrl = [NSURL URLWithString:searchUrlString];
+        NSLog(@"searchUrl: %@", searchUrl);
+        
+        NSURLRequest* request = [NSURLRequest requestWithURL:searchUrl];
+        
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
+            if(error) {
+                
+                NSLog(@"Error: %@", error);
+                
+            } else {
+                
+                NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+                
+                NSLog(@">>> result %@", dictData);
+                
+                NSString *urlString = [[dictData objectForKey:@"results"] objectForKey:@"trackViewUrl"];
+                
+                NSURL *trackURL = [NSURL URLWithString:urlString];
+                
+                // dispatch the call to switch to the iTunes store with the proper search url
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[UIApplication sharedApplication] openURL:trackURL];
+                });
+            }
+            
+        }];
     
-    NSURL *urlTest = [NSURL URLWithString:@"twitter://user?screen_name=username"];
-    
-    [[UIApplication sharedApplication] openURL:urlTest];
-    
-    
-    
-    
-    
+    [task resume];
+        
+    }
     
 }
 @end
