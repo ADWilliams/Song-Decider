@@ -365,7 +365,7 @@
                         <outlet property="slideMenuView" destination="7y6-HD-cEX" id="t3a-PA-dQX"/>
                         <outlet property="slidemenuWidthConstraint" destination="RyE-ba-ci1" id="rDk-AV-JWo"/>
                         <outlet property="slideoutMenuButton" destination="E4c-j1-lUf" id="6EW-ai-ZNI"/>
-                        <outlet property="visualEffect" destination="0TO-M0-p1Q" id="qWz-pC-nEY"/>
+                        <outlet property="visualEffect" destination="0TO-M0-p1Q" id="YcO-C2-gaE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dmw-Zl-YFW" userLabel="First Responder" sceneMemberID="firstResponder"/>

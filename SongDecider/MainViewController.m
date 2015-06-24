@@ -39,12 +39,16 @@
 @property (nonatomic, strong) NSString *userStatus;
 
 
+
 @end
 
 @implementation MainViewController
 
 - (void)viewDidLoad{
-       
+    
+    UIVisualEffectView *vibrancy = [[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    [self.visualEffect.contentView addSubview:vibrancy];
+    
     self.playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
     self.slideMenuView.delegate = self;
