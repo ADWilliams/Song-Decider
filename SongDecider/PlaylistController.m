@@ -48,24 +48,7 @@
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     //[self.rdio preparePlayerWithDelegate:nil];
-
-
-    [self fetchPlaylist];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-
--(void)fetchPlaylist {
-    
-    NSDictionary *param = @{@"keys": self.playlist,
-                            @"extras": @"tracks"};
-
-    [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
     
     self.emptyArray = @[@"You don't have anything in your playlist"];
     
@@ -80,55 +63,72 @@
         
     }
     
-    if (self.playlist == NULL) {
+    if (self.playlist == nil) {
         
         self.songData = [NSMutableArray arrayWithCapacity:10];
         
-
+        
     }
     else {
         
-        NSDictionary *param = @{@"keys": self.playlist,
-                                @"extras": @"tracks"};
+        [self fetchPlaylist];
+
         
-        [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
+    }
+    
+    
+    
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+
+-(void)fetchPlaylist {
+    
+    
+    NSDictionary *param = @{@"keys": self.playlist,
+                            @"extras": @"tracks"};
+    
+    [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
+        
+        NSMutableArray *temp = [NSMutableArray array];
+        
+        NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
+        
+        for (NSDictionary *dictionary in tracks) {
             
-            NSMutableArray *temp = [NSMutableArray array];
+            Song *song = [[Song alloc] init];
             
-            NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
+            song.songName = [dictionary objectForKey:@"name"];
+            song.albumName = [dictionary objectForKey:@"album"];
+            song.artistName = [dictionary objectForKey:@"artist"];
+            song.albumImage = [dictionary objectForKey:@"icon400"];
+            song.songTrackKey = [dictionary objectForKey:@"key"];
             
-            for (NSDictionary *dictionary in tracks) {
+            NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
+            
+            BOOL containsSong = NO;
+            
+            for (Song *playlistSong in temp) {
                 
-                Song *song = [[Song alloc] init];
-                
-                song.songName = [dictionary objectForKey:@"name"];
-                song.albumName = [dictionary objectForKey:@"album"];
-                song.artistName = [dictionary objectForKey:@"artist"];
-                song.albumImage = [dictionary objectForKey:@"icon400"];
-                song.songTrackKey = [dictionary objectForKey:@"key"];
-                
-                NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
-                
-                BOOL containsSong = NO;
-                
-                for (Song *playlistSong in temp) {
+                if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
                     
-                    if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
-                        
-                        containsSong = YES;
-                        
-                    }
-                    
-                }
-                
-                if (!containsSong) {
-                    
-                    [temp addObject:song];
+                    containsSong = YES;
                     
                 }
                 
             }
-        
+            
+            if (!containsSong) {
+                
+                [temp addObject:song];
+                
+            }
+            
         }
         
         self.songData = temp;
@@ -146,13 +146,10 @@
         NSLog(@"%@", error);
         
     }];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
 
+
+     
 
 -(void)viewWillAppear:(BOOL)animated {
     [self fetchPlaylist];
