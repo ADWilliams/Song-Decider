@@ -70,6 +70,8 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
+    self.switching = YES;
+    
     self.selectedGenreKey = [self.mainView.playlistKey objectForKey:@"selectedGenreKey"];
     
     NSLog(@"%@", self.selectedGenreKey);
@@ -80,8 +82,9 @@
         
     }
     else {
-        
-        [self.rdio.player play:self.genres[5]];
+        int rand = arc4random() % (self.genres.count -1);
+
+        [self.rdio.player play:self.genres[rand]];
         
     }
 }
@@ -294,7 +297,10 @@
         }
         
         if (self.nextImage == nil) {
-            [self fetchNextImage];
+            NSArray *trackKeys = [self.rdio.player valueForKey:@"trackKeys_"];
+            if (trackKeys.count > 1 ) {
+                [self fetchNextImage];
+            }
         }
     }
     
