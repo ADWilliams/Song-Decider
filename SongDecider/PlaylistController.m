@@ -63,7 +63,7 @@
             song.songName = [dictionary objectForKey:@"name"];
             song.albumName = [dictionary objectForKey:@"album"];
             song.artistName = [dictionary objectForKey:@"artist"];
-            song.albumImage = [dictionary objectForKey:@"icon400"];
+            song.albumImage = [dictionary objectForKey:@"icon"];
             song.songTrackKey = [dictionary objectForKey:@"key"];
             
             NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);

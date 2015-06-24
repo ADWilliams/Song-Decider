@@ -71,6 +71,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     
     self.switching = YES;
+    self.nextImage = nil;
     
     self.selectedGenreKey = [self.mainView.playlistKey objectForKey:@"selectedGenreKey"];
     
@@ -278,8 +279,13 @@
     
     
     if (oldState == RDPlayerStateStopped && newState == RDPlayerStateBuffering) {
-            //if user is free
-        [self animateLeft];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL freeUser = (BOOL)[defaults valueForKey:@"userStatus"];
+        
+        if (freeUser == YES) {
+            [self animateLeft];
+        }
     }
 
     
