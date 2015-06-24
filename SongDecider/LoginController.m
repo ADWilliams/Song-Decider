@@ -30,10 +30,6 @@
  
     self.rdio.delegate = self;
     
-
-
-    
-    
 }
 - (IBAction)loginButtonPressed:(id)sender {
     [self.rdio logout];
@@ -48,7 +44,12 @@
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         if (![defaults valueForKey:@"userStatus"]) {
-            [defaults setObject:[result objectForKey:@"isUnlimited"] forKey:@"userStatus"];
+            
+            BOOL userStatus = [defaults objectForKey:@"isUnlimited"];
+            
+            NSLog(userStatus ? @"Yes" : @"No");
+            
+            [defaults setBool:userStatus forKey:@"userStatus"];
         }
         
         NSLog(@">>>>>>>>>>>> user status %@", [result objectForKey:@"isUnlimited"]);

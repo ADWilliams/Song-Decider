@@ -50,7 +50,12 @@
     //[self.rdio preparePlayerWithDelegate:nil];
     
     
-    self.emptyArray = @[@"You don't have anything in your playlist"];
+    if (self.playlist == nil) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nothing Here" message:@"Go add some songs to your playlist" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        [alert show];
+    }
     
     if (self.isFreeUser == YES) {
         
@@ -63,93 +68,14 @@
         
     }
     
-    if (self.playlist == nil) {
-        
-        self.songData = [NSMutableArray arrayWithCapacity:10];
-        
-        
-    }
-    else {
-        
-        [self fetchPlaylist];
+    [self fetchPlaylist];
 
-        
-    }
-    
-    
-    
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
-
--(void)fetchPlaylist {
-    
-    
-    NSDictionary *param = @{@"keys": self.playlist,
-                            @"extras": @"tracks"};
-    
-    [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
-        
-        NSMutableArray *temp = [NSMutableArray array];
-        
-        NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
-        
-        for (NSDictionary *dictionary in tracks) {
-            
-            Song *song = [[Song alloc] init];
-            
-            song.songName = [dictionary objectForKey:@"name"];
-            song.albumName = [dictionary objectForKey:@"album"];
-            song.artistName = [dictionary objectForKey:@"artist"];
-            song.albumImage = [dictionary objectForKey:@"icon400"];
-            song.songTrackKey = [dictionary objectForKey:@"key"];
-            
-            NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
-            
-            BOOL containsSong = NO;
-            
-            for (Song *playlistSong in temp) {
-                
-                if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
-                    
-                    containsSong = YES;
-                    
-                }
-                
-            }
-            
-            if (!containsSong) {
-                
-                [temp addObject:song];
-                
-            }
-            
-        }
-        
-        self.songData = temp;
-        
-        NSLog(@"%lu", (unsigned long)self.songData.count);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-        });
-        
-    } failure:^(NSError *error) {
-        
-        NSLog(@"%@", error);
-        
-    }];
-}
-
-
-     
 
 -(void)viewWillAppear:(BOOL)animated {
     [self fetchPlaylist];
@@ -159,6 +85,77 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+-(void)fetchPlaylist {
+    
+    if (self.playlist == nil) {
+        
+        self.songData = [NSMutableArray arrayWithCapacity:10];
+        
+    }
+    else {
+    
+        NSDictionary *param = @{@"keys": self.playlist,
+                                @"extras": @"tracks"};
+        
+        [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
+            
+            NSMutableArray *temp = [NSMutableArray array];
+            
+            NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
+            
+            for (NSDictionary *dictionary in tracks) {
+                
+                Song *song = [[Song alloc] init];
+                
+                song.songName = [dictionary objectForKey:@"name"];
+                song.albumName = [dictionary objectForKey:@"album"];
+                song.artistName = [dictionary objectForKey:@"artist"];
+                song.albumImage = [dictionary objectForKey:@"icon400"];
+                song.songTrackKey = [dictionary objectForKey:@"key"];
+                
+                NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
+                
+                BOOL containsSong = NO;
+                
+                for (Song *playlistSong in temp) {
+                    
+                    if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
+                        
+                        containsSong = YES;
+                        
+                    }
+                    
+                }
+                
+                if (!containsSong) {
+                    
+                    [temp addObject:song];
+                    
+                }
+                
+            }
+            
+            self.songData = temp;
+            
+            NSLog(@"%lu", (unsigned long)self.songData.count);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                
+            });
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@", error);
+            
+        }];
+        
+    }
+}
+
 
 -(void)setPlaylist:(NSString *)playlist {
     

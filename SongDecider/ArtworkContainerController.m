@@ -316,7 +316,7 @@
 -(void) addToPlaylist {
     if (self.mainView.playlist ==  nil) {
         
-        NSDictionary *param = @{@"name": @"mobile playlist",
+        NSDictionary *param = @{@"name": @"Adio Playlist",
                                 @"description": @"mobile playlist",
                                 @"tracks": self.rdio.player.currentTrack};
         

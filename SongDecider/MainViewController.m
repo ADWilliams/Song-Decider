@@ -14,6 +14,7 @@
 #import "ArtworkContainerController.h"
 #import "GenreCell.h"
 #import "Genre.h"
+#import "Playlist.h"
 
 
 @interface MainViewController () <RdioDelegate, RDPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -38,6 +39,8 @@
 
 @property (nonatomic, strong) NSString *userStatus;
 
+@property (nonatomic, strong) NSString *currentUserKey;
+
 
 
 @end
@@ -59,6 +62,65 @@
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     //self.rdio.delegate = self;
+    
+
+    NSDictionary *currentUser = @{@"": @""};
+    
+    [self.rdio callAPIMethod:@"currentUser" withParameters:currentUser success:^(NSDictionary *result) {
+        
+        self.currentUserKey = [result objectForKey:@"key"];
+        
+        NSDictionary *param = @{@"user": self.currentUserKey};
+        
+        
+        [self.rdio callAPIMethod:@"getPlaylists" withParameters:param success:^(NSDictionary *result) {
+            
+            NSLog(@">>>>>>>>> %@", result);
+            
+            NSMutableArray *tempArray = [NSMutableArray array];
+            
+            NSDictionary *ownedDictionary = [result objectForKey:@"owned"];
+            
+            for (NSDictionary *playlistDictonary in ownedDictionary) {
+                
+                Playlist *playlist = [[Playlist alloc] initWithName:[playlistDictonary objectForKey:@"name"] key:[playlistDictonary objectForKey:@"key"]];
+                
+                [tempArray addObject:playlist];
+
+            }
+            
+            for (Playlist *playlist in tempArray) {
+                
+                if ([playlist.playlistName isEqualToString:@"Adio Playlist"]) {
+                    
+                    self.playlist = playlist.playlistKey;
+                    
+                    [self.playlistKey setObject:self.playlist forKey:@"playlistKey"];
+
+                }
+                else {
+                    
+                    self.playlist =  nil;
+                    
+                }
+                
+                
+            }
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@", error);
+            
+        }];
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@", error);
+
+    }];
+    
+    
+    
     
     self.userStatus = [self.rdio.user objectForKey:@"productAccess"];
     NSLog(@"%@", self.userStatus);
