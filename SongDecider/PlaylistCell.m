@@ -156,13 +156,16 @@
                 
                 NSLog(@">>> result %@", dictData);
                 
-                NSString *urlString = [[dictData objectForKey:@"results"] objectForKey:@"trackViewUrl"];
+                NSString *urlString = dictData[@"results"][0][@"trackViewUrl"];
+                
+                NSLog(@">>>> url %@", urlString);
                 
                 NSURL *trackURL = [NSURL URLWithString:urlString];
                 
-                // dispatch the call to switch to the iTunes store with the proper search url
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    
                     [[UIApplication sharedApplication] openURL:trackURL];
+                    
                 });
             }
             
