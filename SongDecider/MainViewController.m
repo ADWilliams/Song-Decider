@@ -252,6 +252,10 @@
             
             self.slideoutMenuButton.tag = 1;
             
+            ArtworkContainerController * container = (ArtworkContainerController *)[self.childViewControllers firstObject];
+            container.switching = YES;
+            container.leftSwipeCounter = 0;
+            [container animateLeft];
         }
         
     }];

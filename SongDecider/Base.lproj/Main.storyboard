@@ -389,7 +389,7 @@
         <scene sceneID="8aF-PW-jU1">
             <objects>
                 <tabBarController id="Wmc-jo-tT4" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" barStyle="black" id="Trg-kJ-Jg8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

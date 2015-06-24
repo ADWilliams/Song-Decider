@@ -24,11 +24,7 @@
 
 @property (nonatomic) UIImage *nextImage;
 
-@property (nonatomic) int leftSwipeCounter;
-
 @property (nonatomic) NSArray *genres;
-
-@property (nonatomic) BOOL  switching;
 
 @property (nonatomic, strong) NSString *selectedGenreKey;
 
@@ -202,10 +198,8 @@
                 self.artworkImageView.image = nil;
             }
             
-            
-            self.nextImage = nil;
-            
             [self dropInAnimation];
+            self.nextImage = nil;
         }
         
         
@@ -276,19 +270,22 @@
     return NO;
 }
 
+
+
 -(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState {
     //[self fetchTrackImage];
     
-    //    if (oldState == RDPlayerStateBuffering  && newState == RDPlayerStatePlaying) {
-    //        if (self.artworkImageView.image == nil) {
-    //            [self fetchTrackImage];
-    //        }
-    //    }
     
-    
+    if (oldState == RDPlayerStateStopped && newState == RDPlayerStateBuffering) {
+            //if user is free
+        [self animateLeft];
+    }
 
     
     if (newState == RDPlayerStatePlaying) {
+
+        
+        
         if (self.switching == YES) {
             [self dropInAnimation];
             

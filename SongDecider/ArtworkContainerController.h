@@ -10,4 +10,10 @@
 
 @interface ArtworkContainerController : UIViewController
 
+@property (nonatomic) int leftSwipeCounter;
+
+@property (nonatomic) BOOL  switching;
+
+-(void)animateLeft;
+
 @end
