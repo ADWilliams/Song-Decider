@@ -47,9 +47,21 @@
     self.rdio = rdioManager.rdioInstance;
     //[self.rdio preparePlayerWithDelegate:nil];
 
+    [self fetchPlaylist];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+
+-(void)fetchPlaylist {
+    
     NSDictionary *param = @{@"keys": self.playlist,
                             @"extras": @"tracks"};
-    
+
     [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
         
         NSMutableArray *temp = [NSMutableArray array];
@@ -93,8 +105,8 @@
         NSLog(@"%lu", (unsigned long)self.songData.count);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-           
-            [self.tableView reloadData];
+            
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
             
         });
         
@@ -103,17 +115,11 @@
         NSLog(@"%@", error);
         
     }];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
-    [self.tableView reloadData];
+    [self fetchPlaylist];
 }
 
 - (void)didReceiveMemoryWarning {
