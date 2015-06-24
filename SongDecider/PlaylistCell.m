@@ -119,7 +119,7 @@
     
     NSURL *url = [NSURL URLWithString:stringURL];
     
-    NSURL *urlTest = [NSURL URLWithString:@"https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewArtist?id=909253"];
+    NSURL *urlTest = [NSURL URLWithString:@"twitter://user?screen_name=username"];
     
     [[UIApplication sharedApplication] openURL:urlTest];
     
