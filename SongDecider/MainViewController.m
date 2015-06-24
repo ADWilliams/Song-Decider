@@ -36,6 +36,8 @@
 
 @property (nonatomic, strong) NSString *selectedGenreKey;
 
+@property (nonatomic, strong) NSString *userStatus;
+
 
 @end
 
@@ -53,6 +55,9 @@
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     //self.rdio.delegate = self;
+    
+    self.userStatus = [self.rdio.user objectForKey:@"productAccess"];
+    NSLog(@"%@", self.userStatus);
     
     self.genreArray = [NSMutableArray array];
     
@@ -198,10 +203,10 @@
     UIBarButtonItem *button = sender;
     
     switch (button.tag) {
-//        case 0:
-//            [self slideBackToOriginalSpot];
-//            NSLog(@"button tag at 0");
-//            break;
+        case 0:
+            [self closeMenu];
+            NSLog(@"button tag at 0");
+            break;
         case 1:
             [self slideRight];
             NSLog(@"button tag at 1");
@@ -230,6 +235,25 @@
         
     }];
     
+}
+
+-(void)closeMenu {
+    
+    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        
+        self.slidemenuWidthConstraint.constant = 0;
+        
+        [self.view layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        
+        if (finished) {
+            
+            self.slideoutMenuButton.tag = 1;
+            
+        }
+        
+    }];
 }
 
 -(void)slideBackToOriginalSpot {
