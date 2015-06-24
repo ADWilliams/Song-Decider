@@ -18,8 +18,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *songNameLabel;
 
-
-
 @end
 
 @implementation PlaylistCell
@@ -112,12 +110,23 @@
     self.albumImageView.image = nil;
 }
 
-
-
-
-
-
-
 - (IBAction)iTunesButtonPressed:(UIButton *)sender {
+    
+    NSString *artistString = [self.song.artistName stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *songString = [self.song.songName stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+
+    NSString *stringURL = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@", artistString];
+    
+    NSURL *url = [NSURL URLWithString:stringURL];
+    
+    NSURL *urlTest = [NSURL URLWithString:@"https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewArtist?id=909253"];
+    
+    [[UIApplication sharedApplication] openURL:urlTest];
+    
+    
+    
+    
+    
+    
 }
 @end

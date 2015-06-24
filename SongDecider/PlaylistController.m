@@ -21,6 +21,8 @@
 
 @property (nonatomic, strong) NSMutableArray *songData;
 
+@property (nonatomic, strong) NSArray *emptyArray;
+
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
 @property (nonatomic) BOOL isFreeUser;
@@ -47,6 +49,8 @@
     self.rdio = rdioManager.rdioInstance;
     //[self.rdio preparePlayerWithDelegate:nil];
     
+    self.emptyArray = @[@"You don't have anything in your playlist"];
+    
     if (self.isFreeUser == YES) {
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning"
@@ -57,63 +61,73 @@
         [alert show];
         
     }
-
-    NSDictionary *param = @{@"keys": self.playlist,
-                            @"extras": @"tracks"};
     
-    [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
+    if (self.playlist == NULL) {
         
-        NSMutableArray *temp = [NSMutableArray array];
+        self.songData = [NSMutableArray arrayWithCapacity:10];
         
-        NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
+    }
+    else {
         
-        for (NSDictionary *dictionary in tracks) {
+        NSDictionary *param = @{@"keys": self.playlist,
+                                @"extras": @"tracks"};
+        
+        [self.rdio callAPIMethod:@"get" withParameters:param success:^(NSDictionary *result) {
             
-            Song *song = [[Song alloc] init];
+            NSMutableArray *temp = [NSMutableArray array];
             
-            song.songName = [dictionary objectForKey:@"name"];
-            song.albumName = [dictionary objectForKey:@"album"];
-            song.artistName = [dictionary objectForKey:@"artist"];
-            song.albumImage = [dictionary objectForKey:@"icon400"];
-            song.songTrackKey = [dictionary objectForKey:@"key"];
+            NSDictionary *tracks = [[result objectForKey:self.playlist] objectForKey:@"tracks"];
             
-            NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
-            
-            BOOL containsSong = NO;
-            
-            for (Song *playlistSong in temp) {
+            for (NSDictionary *dictionary in tracks) {
                 
-                if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
+                Song *song = [[Song alloc] init];
+                
+                song.songName = [dictionary objectForKey:@"name"];
+                song.albumName = [dictionary objectForKey:@"album"];
+                song.artistName = [dictionary objectForKey:@"artist"];
+                song.albumImage = [dictionary objectForKey:@"icon400"];
+                song.songTrackKey = [dictionary objectForKey:@"key"];
+                
+                NSLog(@">>>>>>>>>>>>>>>>>song key %@", song.songTrackKey);
+                
+                BOOL containsSong = NO;
+                
+                for (Song *playlistSong in temp) {
                     
-                    containsSong = YES;
+                    if ([playlistSong.songTrackKey isEqualToString:song.songTrackKey]) {
+                        
+                        containsSong = YES;
+                        
+                    }
+                    
+                }
+                
+                if (!containsSong) {
+                    
+                    [temp addObject:song];
                     
                 }
                 
             }
             
-            if (!containsSong) {
-                
-                [temp addObject:song];
-                
-            }
+            self.songData = temp;
             
-        }
-        
-        self.songData = temp;
-        
-        NSLog(@"%lu", (unsigned long)self.songData.count);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-           
-            [self.tableView reloadData];
+            NSLog(@"%lu", (unsigned long)self.songData.count);
             
-        });
-        
-    } failure:^(NSError *error) {
-        
-        NSLog(@"%@", error);
-        
-    }];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.tableView reloadData];
+                
+            });
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@", error);
+            
+        }];
+    }
+    
+
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -147,8 +161,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    
-    NSLog(@"song data coount %lu", (unsigned long)[self.songData count]);
     
     return [self.songData count];
 }
