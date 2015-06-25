@@ -24,6 +24,14 @@
     self.rdio.delegate = self;
     
 }
+
+-(void)viewDidAppear:(BOOL)animated {
+    if (self.rdio.user) {
+        [self performSegueWithIdentifier:@"showMainView" sender:self];
+    }
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -37,6 +45,7 @@
 }
 
 -(void)rdioDidAuthorizeUser:(NSDictionary *)user {
+    [self performSegueWithIdentifier:@"showMainView" sender:self];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -47,7 +56,7 @@
         [self.rdio callAPIMethod:@"currentUser" withParameters:param success:^(NSDictionary *result) {
             
             
-            BOOL userStatus = [result objectForKey:@"isUnlimited"];
+            BOOL userStatus = (BOOL)[result objectForKey:@"isUnlimited"];
             [defaults setBool:userStatus forKey:@"userStatus"];
             
         } failure:^(NSError *error) {
@@ -58,7 +67,6 @@
         
     }
     
-    [self performSegueWithIdentifier:@"showMainView" sender:self];
     
 }
 
