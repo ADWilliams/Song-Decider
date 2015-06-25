@@ -55,57 +55,58 @@
     self.playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
     self.slideMenuView.delegate = self;
-
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     //self.rdio.delegate = self;
     
-
-    NSDictionary *currentUser = @{@"": @""};
     
-    [self.rdio callAPIMethod:@"currentUser" withParameters:currentUser success:^(NSDictionary *result) {
+    if (!self.playlist) {
+        NSDictionary *currentUser = @{@"": @""};
         
-        self.currentUserKey = [result objectForKey:@"key"];
-        
-        NSDictionary *param = @{@"user": self.currentUserKey};
-        
-        
-        [self.rdio callAPIMethod:@"getPlaylists" withParameters:param success:^(NSDictionary *result) {
+        [self.rdio callAPIMethod:@"currentUser" withParameters:currentUser success:^(NSDictionary *result) {
             
-            NSLog(@">>>>>>>>> %@", result);
+            self.currentUserKey = [result objectForKey:@"key"];
             
-            NSMutableArray *tempArray = [NSMutableArray array];
+            NSDictionary *param = @{@"user": self.currentUserKey};
             
-            NSDictionary *ownedDictionary = [result objectForKey:@"owned"];
             
-            for (NSDictionary *playlistDictonary in ownedDictionary) {
+            [self.rdio callAPIMethod:@"getPlaylists" withParameters:param success:^(NSDictionary *result) {
                 
-                Playlist *playlist = [[Playlist alloc] initWithName:[playlistDictonary objectForKey:@"name"] key:[playlistDictonary objectForKey:@"key"]];
+                NSLog(@">>>>>>>>> %@", result);
                 
-                [tempArray addObject:playlist];
-
-            }
-            
-            for (Playlist *playlist in tempArray) {
+                NSMutableArray *tempArray = [NSMutableArray array];
                 
-                if ([playlist.playlistName isEqualToString:@"Adio Playlist"]) {
+                NSDictionary *ownedDictionary = [result objectForKey:@"owned"];
+                
+                for (NSDictionary *playlistDictonary in ownedDictionary) {
                     
-                    self.playlist = playlist.playlistKey;
+                    Playlist *playlist = [[Playlist alloc] initWithName:[playlistDictonary objectForKey:@"name"] key:[playlistDictonary objectForKey:@"key"]];
                     
-                    [self.playlistKey setObject:self.playlist forKey:@"playlistKey"];
-
-                }
-                else {
-                    
-                    self.playlist =  nil;
+                    [tempArray addObject:playlist];
                     
                 }
                 
+                for (Playlist *playlist in tempArray) {
+                    
+                    if ([playlist.playlistName isEqualToString:@"Adio Playlist"]) {
+                        
+                        self.playlist = playlist.playlistKey;
+                        
+                        [self.playlistKey setObject:self.playlist forKey:@"playlistKey"];
+                        
+                    }
+                    
+                }
                 
-            }
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@", error);
+                
+            }];
             
         } failure:^(NSError *error) {
             
@@ -113,11 +114,8 @@
             
         }];
         
-    } failure:^(NSError *error) {
-        
-        NSLog(@"%@", error);
-
-    }];
+    }
+    
     
     
     
@@ -132,7 +130,7 @@
     
     genre = [[Genre alloc] initWithName:@"Soft Hits" Key:@"sr2885343"];
     [self.genreArray addObject:genre];
-      
+    
     genre = [[Genre alloc] initWithName:@"Country" Key:@"gr359"];
     [self.genreArray addObject:genre];
     
@@ -159,7 +157,7 @@
     
     genre = [[Genre alloc] initWithName:@"Blues" Key:@"gr475"];
     [self.genreArray addObject:genre];
-
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
@@ -167,24 +165,6 @@
     [self.rdio.player stop];
 }
 
-#pragma mark - SwipeGesture
-
--(void) swipeHandler: (UIGestureRecognizer *)sender {
-    
-    self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
-    
-    if ([sender isEqual: self.swipeLeft]) {
-        [self.rdio.player next];
-        [self.artworkView animateLeft];
-        
-    }
-
-    if ([sender isEqual: self.swipeRight]) {
-        
-        }
-        [self.rdio.player next];
-        [self.artworkView animateRight];
-    }
 
 
 
@@ -201,8 +181,8 @@
     NSLog(@"%d", self.rdio.player.currentTrackIndex);
     
     //[self fetchTrackImage];
-
-
+    
+    
 }
 
 #pragma mark - TableView Delegate and Data Source
@@ -233,10 +213,10 @@
     [self slideBackToOriginalSpot];
     
 }
-    
 
-    
-    
+
+
+
 
 
 
