@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
- 
+    
     self.rdio.delegate = self;
     
 }
@@ -38,30 +38,26 @@
 
 -(void)rdioDidAuthorizeUser:(NSDictionary *)user {
     
-    NSDictionary *param = @{@"extras": @"isUnlimited"};
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [self.rdio callAPIMethod:@"currentUser" withParameters:param success:^(NSDictionary *result) {
+    if (![defaults valueForKey:@"userStatus"]) {
         
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        if (![defaults valueForKey:@"userStatus"]) {
+        NSDictionary *param = @{@"extras": @"isUnlimited"};
+        
+        [self.rdio callAPIMethod:@"currentUser" withParameters:param success:^(NSDictionary *result) {
             
-            BOOL userStatus = [defaults objectForKey:@"isUnlimited"];
             
-            NSLog(userStatus ? @"Yes" : @"No");
-            
+            BOOL userStatus = [result objectForKey:@"isUnlimited"];
             [defaults setBool:userStatus forKey:@"userStatus"];
-        }
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@">>>>>>>>>> %@", error);
+            
+        }];
         
-        NSLog(@">>>>>>>>>>>> user status %@", [result objectForKey:@"isUnlimited"]);
-        
-    } failure:^(NSError *error) {
-        
-        NSLog(@">>>>>>>>>> %@", error);
-        
-    }];
-    
-    [self performSegueWithIdentifier:@"showMainView" sender:self];
-    
+        [self performSegueWithIdentifier:@"showMainView" sender:self];
+    }
     
 }
 

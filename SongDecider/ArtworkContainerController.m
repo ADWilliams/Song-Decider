@@ -48,6 +48,9 @@
     
     [self.rdio preparePlayerWithDelegate:self];
     
+    [self.rdio.player addObserver:self forKeyPath:@"currentTrack" options:NSKeyValueObservingOptionNew context:nil];
+    
+    
     self.artworkImageView.image = nil;
     
     int rand = arc4random() % (self.genres.count -1);
@@ -95,6 +98,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == nil) {
+        [self animateLeft];
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 -(void)swipeHandler: (UISwipeGestureRecognizer *)sender {
@@ -270,18 +283,7 @@
 
 
 -(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState {
-    //[self fetchTrackImage];
-    
-    
-    if (oldState == RDPlayerStateStopped && newState == RDPlayerStateBuffering) {
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        BOOL freeUser = (BOOL)[defaults valueForKey:@"userStatus"];
-        
-        if (freeUser == YES) {
-            [self animateLeft];
-        }
-    }
+
 
     
     if (newState == RDPlayerStatePlaying) {

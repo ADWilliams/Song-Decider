@@ -25,7 +25,7 @@
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
-@property (nonatomic) BOOL isFreeUser;
+@property (nonatomic) BOOL isUnlimited;
 
 @end
 
@@ -37,7 +37,7 @@
     
     NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [playlistKey objectForKey:@"playlistKey"];
-    self.isFreeUser = [playlistKey objectForKey:@"userStatus"];
+    self.isUnlimited = [playlistKey objectForKey:@"userStatus"];
     
     [super viewDidLoad];
     
@@ -57,7 +57,7 @@
         [alert show];
     }
     
-    if (self.isFreeUser == YES) {
+    if (self.isUnlimited == NO) {
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning"
                                                         message:@"Please upgrade RDIO account to stream your playlist songs"
@@ -217,7 +217,7 @@
         NSLog(@"%@", song.songTrackKey);
         
 
-        if (self.isFreeUser == YES) {
+        if (self.isUnlimited == YES) {
             
             [self.rdio.player play:song.songTrackKey];
 
