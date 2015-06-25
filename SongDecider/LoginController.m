@@ -56,8 +56,9 @@
             
         }];
         
-        [self performSegueWithIdentifier:@"showMainView" sender:self];
     }
+    
+    [self performSegueWithIdentifier:@"showMainView" sender:self];
     
 }
 
