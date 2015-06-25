@@ -14,6 +14,7 @@
 #import "ArtworkContainerController.h"
 #import "GenreCell.h"
 #import "Genre.h"
+#import "Playlist.h"
 
 
 @interface MainViewController () <RdioDelegate, RDPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -38,6 +39,8 @@
 
 @property (nonatomic, strong) NSString *userStatus;
 
+@property (nonatomic, strong) NSString *currentUserKey;
+
 
 
 @end
@@ -52,13 +55,70 @@
     self.playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
     self.slideMenuView.delegate = self;
-
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    
     RdioManager *rdioManager = [RdioManager sharedRdio];
     self.rdio = rdioManager.rdioInstance;
     //self.rdio.delegate = self;
+    
+    
+    if (!self.playlist) {
+        NSDictionary *currentUser = @{@"": @""};
+        
+        [self.rdio callAPIMethod:@"currentUser" withParameters:currentUser success:^(NSDictionary *result) {
+            
+            self.currentUserKey = [result objectForKey:@"key"];
+            
+            NSDictionary *param = @{@"user": self.currentUserKey};
+            
+            
+            [self.rdio callAPIMethod:@"getPlaylists" withParameters:param success:^(NSDictionary *result) {
+                
+                NSLog(@">>>>>>>>> %@", result);
+                
+                NSMutableArray *tempArray = [NSMutableArray array];
+                
+                NSDictionary *ownedDictionary = [result objectForKey:@"owned"];
+                
+                for (NSDictionary *playlistDictonary in ownedDictionary) {
+                    
+                    Playlist *playlist = [[Playlist alloc] initWithName:[playlistDictonary objectForKey:@"name"] key:[playlistDictonary objectForKey:@"key"]];
+                    
+                    [tempArray addObject:playlist];
+                    
+                }
+                
+                for (Playlist *playlist in tempArray) {
+                    
+                    if ([playlist.playlistName isEqualToString:@"Adio Playlist"]) {
+                        
+                        self.playlist = playlist.playlistKey;
+                        
+                        [self.playlistKey setObject:self.playlist forKey:@"playlistKey"];
+                        
+                    }
+                    
+                }
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@", error);
+                
+            }];
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@", error);
+            
+        }];
+        
+    }
+    
+    
+    
+    
     
     self.userStatus = [self.rdio.user objectForKey:@"productAccess"];
     NSLog(@"%@", self.userStatus);
@@ -70,7 +130,7 @@
     
     genre = [[Genre alloc] initWithName:@"Soft Hits" Key:@"sr2885343"];
     [self.genreArray addObject:genre];
-      
+    
     genre = [[Genre alloc] initWithName:@"Country" Key:@"gr359"];
     [self.genreArray addObject:genre];
     
@@ -97,7 +157,7 @@
     
     genre = [[Genre alloc] initWithName:@"Blues" Key:@"gr475"];
     [self.genreArray addObject:genre];
-
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
@@ -105,24 +165,6 @@
     [self.rdio.player stop];
 }
 
-#pragma mark - SwipeGesture
-
--(void) swipeHandler: (UIGestureRecognizer *)sender {
-    
-    self.playlist = [self.playlistKey objectForKey:@"playlistKey"];
-    
-    if ([sender isEqual: self.swipeLeft]) {
-        [self.rdio.player next];
-        [self.artworkView animateLeft];
-        
-    }
-
-    if ([sender isEqual: self.swipeRight]) {
-        
-        }
-        [self.rdio.player next];
-        [self.artworkView animateRight];
-    }
 
 
 
@@ -139,8 +181,8 @@
     NSLog(@"%d", self.rdio.player.currentTrackIndex);
     
     //[self fetchTrackImage];
-
-
+    
+    
 }
 
 #pragma mark - TableView Delegate and Data Source
@@ -171,10 +213,10 @@
     [self slideBackToOriginalSpot];
     
 }
-    
 
-    
-    
+
+
+
 
 
 

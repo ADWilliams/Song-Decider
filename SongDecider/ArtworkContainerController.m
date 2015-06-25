@@ -55,11 +55,6 @@
     [self.rdio.player play:self.genres[rand]];
     
     
-    self.mainView.playlistKey = [NSUserDefaults standardUserDefaults];
-    self.mainView.playlist = [self.mainView.playlistKey objectForKey:@"playlistKey"];
-    
-    NSLog(@"playlist key %@", self.mainView.playlistKey);
-    
     self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     self.swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -316,7 +311,7 @@
 -(void) addToPlaylist {
     if (self.mainView.playlist ==  nil) {
         
-        NSDictionary *param = @{@"name": @"mobile playlist",
+        NSDictionary *param = @{@"name": @"Adio Playlist",
                                 @"description": @"mobile playlist",
                                 @"tracks": self.rdio.player.currentTrack};
         

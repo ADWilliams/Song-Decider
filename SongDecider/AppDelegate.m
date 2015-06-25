@@ -34,8 +34,8 @@
     Rdio *rdio = manager.rdioInstance;
     rdio.delegate = self;
     
-    self.window = [[UIWindow alloc]initWithFrame:UIScreen.mainScreen.bounds];
-    [self.window makeKeyAndVisible];
+//    self.window = [[UIWindow alloc]initWithFrame:UIScreen.mainScreen.bounds];
+//    [self.window makeKeyAndVisible];
 
 //    if (rdio.user) {
 //        UINavigationController *navcontroller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"mainView"];
