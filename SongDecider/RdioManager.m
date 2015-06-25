@@ -25,7 +25,7 @@
 
 -(instancetype)init {
     if (self = [super init]) {
-        rdioInstance = [[Rdio alloc]initWithClientId:@"v2m4glmzrjahhahztx3qzn5skq" andSecret:@"1Vc9Hhe-JNLMIkc7UR-k2g" delegate:nil];
+        rdioInstance = [[Rdio alloc]initWithClientId:@"v2m4glmzrjahhahztx3qzn5skq" andSecret:@"MzMEF1MEQSuFNGRBGLCiSw" delegate:nil];
     }
     return self;
 }
