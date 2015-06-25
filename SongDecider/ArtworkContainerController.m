@@ -54,7 +54,6 @@
 
     [self.rdio.player play:self.genres[rand]];
     
-    
     self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     self.swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -62,6 +61,10 @@
     [self.view addGestureRecognizer:self.swipeLeft];
     
 }
+
+
+
+
 
 -(void)viewWillAppear:(BOOL)animated {
     
@@ -88,7 +91,7 @@
 -(void)viewDidAppear:(BOOL)animated {
     
     self.mainView = (MainViewController *)self.parentViewController;
-    
+    [self animateLeft];
     
 }
 
@@ -274,11 +277,15 @@
 
 -(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState {
 
-
     
     if (newState == RDPlayerStatePlaying) {
+        double position = [[self.rdio.player valueForKey:@"position"] doubleValue];
+        double duration = [[self.rdio.player valueForKey:@"duration"]doubleValue];
 
-        
+        if (position == duration) {
+            [self animateLeft];
+            [self.rdio.player next];
+        }
         
         if (self.switching == YES) {
             [self dropInAnimation];
