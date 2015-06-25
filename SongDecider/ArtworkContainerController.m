@@ -54,6 +54,8 @@
 
     [self.rdio.player play:self.genres[rand]];
     
+    [self.rdio.player addObserver:self forKeyPath:@"currentTrack" options:NSKeyValueObservingOptionNew context:nil];
+    
     self.swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     self.swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandler:)];
     self.swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -63,7 +65,17 @@
 }
 
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    double position = [[self.rdio.player valueForKey:@"position"] doubleValue];
+    double duration = [[self.rdio.player valueForKey:@"duration"]doubleValue];
+    
+    if (position == duration && position > 0) {
+        [self animateLeft];
+        [self.rdio.player next];
 
+    }
+}
 
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -279,13 +291,6 @@
 
     
     if (newState == RDPlayerStatePlaying) {
-        double position = [[self.rdio.player valueForKey:@"position"] doubleValue];
-        double duration = [[self.rdio.player valueForKey:@"duration"]doubleValue];
-
-        if (position == duration) {
-            [self animateLeft];
-            [self.rdio.player next];
-        }
         
         if (self.switching == YES) {
             [self dropInAnimation];
