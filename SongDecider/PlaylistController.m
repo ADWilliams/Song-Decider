@@ -37,7 +37,7 @@
     
     NSUserDefaults *playlistKey = [NSUserDefaults standardUserDefaults];
     self.playlist = [playlistKey objectForKey:@"playlistKey"];
-    self.isUnlimited = [playlistKey objectForKey:@"userStatus"];
+    self.isUnlimited = [playlistKey boolForKey:@"userStatus"];
     
     [super viewDidLoad];
     

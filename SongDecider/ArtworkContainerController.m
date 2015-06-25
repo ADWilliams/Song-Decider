@@ -47,10 +47,7 @@
     self.rdio = manager.rdioInstance;
     
     [self.rdio preparePlayerWithDelegate:self];
-    
-    [self.rdio.player addObserver:self forKeyPath:@"currentTrack" options:NSKeyValueObservingOptionNew context:nil];
-    
-    
+
     self.artworkImageView.image = nil;
     
     int rand = arc4random() % (self.genres.count -1);
@@ -101,14 +98,7 @@
 }
 
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (context == nil) {
-        [self animateLeft];
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
+
 
 -(void)swipeHandler: (UISwipeGestureRecognizer *)sender {
     if ([sender isEqual:self.swipeLeft]) {
