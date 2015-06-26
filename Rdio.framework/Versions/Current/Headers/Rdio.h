@@ -79,10 +79,9 @@
 - (id)initWithConsumerKey:(NSString *)key andSecret:(NSString *)secret delegate:(id<RdioDelegate>)delegate;
 
 /**
- * Initializes the Rdio API with your OAuth 2.0 client id and client secret.
+ * Initializes the Rdio API with your OAuth 2.0 client ID and client secret.
  * 
- * Note that OAuth 2.0 is only available in the iOS SDK for select partners.
- * @param clientId Your OAuth 2.0 client id
+ * @param clientId Your OAuth 2.0 client ID
  * @param secret Your OAuth 2.0 client secret, or nil if you expect to obtain an access token from some other channel.
  * @param delegate Delegate for receiving state changes, or nil
  */
