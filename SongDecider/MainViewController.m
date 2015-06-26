@@ -41,6 +41,7 @@
 
 @property (nonatomic, strong) NSString *currentUserKey;
 
+@property (weak, nonatomic) IBOutlet UILabel *instructionLabel;
 
 
 @end
@@ -117,6 +118,14 @@
     }
     
     
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.instructionLabel.alpha = 1;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.25 delay:5 options:UIViewAnimationOptionCurveLinear animations:^{
+            self.instructionLabel.alpha = 0;
+        } completion:nil];
+    }];
     
     
     

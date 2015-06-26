@@ -67,10 +67,10 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    double position = [[self.rdio.player valueForKey:@"position"] doubleValue];
-    double duration = [[self.rdio.player valueForKey:@"duration"]doubleValue];
+    int position = (int)[[self.rdio.player valueForKey:@"position"] integerValue];
+    int duration = (int)[[self.rdio.player valueForKey:@"duration"] integerValue];
     
-    if (position == duration && position > 0) {
+    if (position >= (duration -1) && position > 0) {
         [self animateLeft];
         [self.rdio.player next];
 
@@ -269,6 +269,7 @@
             
             self.mainView.bgImage.image = self.artworkImageView.image;
             
+            
         }];
     }
     
@@ -383,7 +384,7 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.artworkImageView.image = fetchedImage;
-            
+            self.mainView.bgImage.image = fetchedImage;
             
         });
     }];

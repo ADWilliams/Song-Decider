@@ -347,20 +347,41 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe right for YES  left for NO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CNC-Ca-5N7">
+                                <rect key="frame" x="0.0" y="64" width="600" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.63" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="949-e9-9lz"/>
+                                    <constraint firstAttribute="height" constant="40" id="CHw-bc-6hU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" red="0.29411764709999999" green="0.68627450980000004" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="949-e9-9lz"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="o8N-Jf-Exz" firstAttribute="top" secondItem="8c0-9G-pLM" secondAttribute="bottom" id="Dg8-7Z-8m5"/>
                             <constraint firstAttribute="height" secondItem="cSR-v2-4ci" secondAttribute="height" id="GSL-6x-NzN"/>
+                            <constraint firstItem="CNC-Ca-5N7" firstAttribute="leading" secondItem="tCh-Bh-2OK" secondAttribute="leading" id="H2Y-iq-dPQ"/>
                             <constraint firstItem="oTh-Dd-q5M" firstAttribute="top" secondItem="o8N-Jf-Exz" secondAttribute="bottom" id="JuG-7N-mOx"/>
                             <constraint firstAttribute="width" secondItem="cSR-v2-4ci" secondAttribute="width" id="R3M-qE-UO7"/>
                             <constraint firstItem="0TO-M0-p1Q" firstAttribute="height" secondItem="tCh-Bh-2OK" secondAttribute="height" id="T7A-Zy-W1b"/>
+                            <constraint firstItem="CNC-Ca-5N7" firstAttribute="trailing" secondItem="tCh-Bh-2OK" secondAttribute="trailing" id="WO2-Pt-epr"/>
                             <constraint firstItem="o8N-Jf-Exz" firstAttribute="leading" secondItem="tCh-Bh-2OK" secondAttribute="leading" id="aaL-cu-0nk"/>
                             <constraint firstAttribute="height" secondItem="jgO-4X-wKm" secondAttribute="height" id="bLw-cV-ewa"/>
                             <constraint firstAttribute="width" secondItem="jgO-4X-wKm" secondAttribute="width" id="cQ9-AO-je8"/>
                             <constraint firstAttribute="trailing" secondItem="o8N-Jf-Exz" secondAttribute="trailing" id="pQe-Bs-iTV"/>
                             <constraint firstAttribute="height" secondItem="cSR-v2-4ci" secondAttribute="height" id="suP-0f-6cM"/>
                             <constraint firstItem="0TO-M0-p1Q" firstAttribute="width" secondItem="tCh-Bh-2OK" secondAttribute="width" id="u7O-5T-sB8"/>
+                            <constraint firstItem="CNC-Ca-5N7" firstAttribute="top" secondItem="8c0-9G-pLM" secondAttribute="bottom" id="zHj-z3-AvK"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -379,6 +400,7 @@
                     <connections>
                         <outlet property="artworkView" destination="o8N-Jf-Exz" id="SiL-Un-old"/>
                         <outlet property="bgImage" destination="jgO-4X-wKm" id="54I-P8-Sfh"/>
+                        <outlet property="instructionLabel" destination="CNC-Ca-5N7" id="1pf-jC-eSf"/>
                         <outlet property="slideMenuView" destination="7y6-HD-cEX" id="t3a-PA-dQX"/>
                         <outlet property="slidemenuWidthConstraint" destination="RyE-ba-ci1" id="rDk-AV-JWo"/>
                         <outlet property="slideoutMenuButton" destination="E4c-j1-lUf" id="6EW-ai-ZNI"/>
