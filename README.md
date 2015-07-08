@@ -10,12 +10,12 @@ functions from scratch.
 
 # Using the App
 
-If user have premium account from RDIO the app will:
+If the user have a premium account from RDIO the app will:
   1. Every song will play will be full tracks.
   2. Give user unlimited swipe left or right.
   3. Play full track in playlist when user selects a track.
 
-If user don't have premium account from RDIO the app will:
+If the user doesn't have a premium account from RDIO the app will:
   1. Play 30 seconds of a track.
   2. Have only 6 swipe left or right.
   3. Not play the track in playlist.
