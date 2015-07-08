@@ -1,6 +1,6 @@
 # Aido (Song-Decider)
 
-LHL final project. 
+Lighthouse Labs final project. 
 
 We developed an app that helps users to discover new songs or artists on the go. The app generates random song from RDIO API
 and user can like or dislike the song by swiping left or right. 
