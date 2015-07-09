@@ -8,7 +8,7 @@ and user can like or dislike the song by swiping left or right.
 We know there are APIs out there that does the Tinder swipe, and hamburger button, but we decided to build all the 
 functions from scratch.
 
-
+![Screengrab](AidoGif.gif)
 
 # Using the App
 
