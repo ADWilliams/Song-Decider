@@ -8,6 +8,8 @@ and user can like or dislike the song by swiping left or right.
 We know there are APIs out there that does the Tinder swipe, and hamburger button, but we decided to build all the 
 functions from scratch.
 
+![Screengrab](Aido/Song-Decider/AdioGif.gif)
+
 # Using the App
 
 If the user have a premium account from RDIO the app will:
