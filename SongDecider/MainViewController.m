@@ -126,46 +126,27 @@
             self.instructionLabel.alpha = 0;
         } completion:nil];
     }];
-    
-    
-    
+
     self.userStatus = [self.rdio.user objectForKey:@"productAccess"];
     NSLog(@"%@", self.userStatus);
     
+    //Initialize Genre from plist
+    
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"GenreList" ofType:@"plist"];
+    NSDictionary *genreDictionary = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    
+    NSArray *tempArray = [NSArray array];
+    
     self.genreArray = [NSMutableArray array];
     
-    Genre *genre = [[Genre alloc] initWithName:@"Pop" Key:@"gr723"];
-    [self.genreArray addObject:genre];
+    tempArray = [genreDictionary objectForKey:@"Genre"];
     
-    genre = [[Genre alloc] initWithName:@"Soft Hits" Key:@"sr2885343"];
-    [self.genreArray addObject:genre];
-    
-    genre = [[Genre alloc] initWithName:@"Country" Key:@"gr359"];
-    [self.genreArray addObject:genre];
-    
-    genre = [[Genre alloc] initWithName:@"Rock" Key:@"gr498"];
-    [self.genreArray addObject:genre];
-    
-    genre = [[Genre alloc] initWithName:@"Indie" Key:@"gr58"];
-    [self.genreArray addObject:genre];
-    
-    genre = [[Genre alloc] initWithName:@"Hip Hop" Key:@"gr324"];
-    [self.genreArray addObject:genre];
-    
-    genre = [[Genre alloc] initWithName:@"Electronic" Key:@"gr216"];
-    [self.genreArray addObject:genre];
-    
-    genre = [[Genre alloc] initWithName:@"Reggae" Key:@"gr575"];
-    [self.genreArray addObject:genre];
-    
-    genre = [[Genre alloc] initWithName:@"Dance" Key:@"gr593"];
-    [self.genreArray addObject:genre];
-    
-    genre = [[Genre alloc] initWithName:@"Jazz" Key:@"gr308"];
-    [self.genreArray addObject:genre];
-    
-    genre = [[Genre alloc] initWithName:@"Blues" Key:@"gr475"];
-    [self.genreArray addObject:genre];
+    for (NSDictionary *dic in tempArray) {
+        
+        Genre *genre = [[Genre alloc] initWithName:[dic objectForKey:@"Name"] Key:[dic objectForKey:@"Key"]];
+        
+        [self.genreArray addObject:genre];
+    }
     
 }
 
