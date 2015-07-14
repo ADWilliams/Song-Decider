@@ -10,5 +10,28 @@
 
 @implementation Song
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super init];
+    if (self) {
+        
+        [coder encodeObject:self.songName forKey:@"SongName"];
+        [coder encodeObject:self.artistName forKey:@"ArtistName"];
+        [coder encodeObject:self.albumName forKey:@"AlbumName"];
+        [coder encodeObject:self.albumImage forKey:@"AlbumImageLink"];
+        [coder encodeObject:self.songTrackKey forKey:@"SongTrackKey"];
+        
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    
+    
+    
+    
+}
+
 
 @end
