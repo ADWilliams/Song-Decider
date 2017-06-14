@@ -12,6 +12,8 @@ functions from scratch.
 
 # Using the App
 
+# No longer functional RIP RDIO :(
+
 If the user have a premium account from RDIO the app will:
   1. Every song will play will be full tracks.
   2. Give user unlimited swipe left or right.
